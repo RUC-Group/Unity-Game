@@ -8,8 +8,6 @@ public class Spawner : MonoBehaviour
     public GameObject spikeTile;
     public GameObject enemyTile;
     public GameObject treasureTile;
-
-    int nextPosition = 0;
     public int roomSize = 3;
     
     // Start is called before the first frame update

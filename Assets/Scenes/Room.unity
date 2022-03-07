@@ -225,7 +225,7 @@ MonoBehaviour:
   spikeTile: {fileID: 4501640392279846359, guid: 511063383b4fd444aa12a9c29d7fc6bb, type: 3}
   enemyTile: {fileID: 4845998946723634470, guid: 87f1c292901476e40ba8bf0ed058ccec, type: 3}
   treasureTile: {fileID: 307916289412118429, guid: 393f62cab674c1445850faaf38b83ae2, type: 3}
-  roomSize: 10
+  roomSize: 3
 --- !u!4 &924504032
 Transform:
   m_ObjectHideFlags: 0

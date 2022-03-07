@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour{
     public int speed;
+    int score = 0;
+    int Health = 100;
+    
+
+    Rigidbody myRigidbody;
     // Start is called before the first frame update
     void Start(){
-        
     }
 
     // Update is called once per frame
@@ -17,5 +21,19 @@ public class PlayerMovement : MonoBehaviour{
         Vector3 position = velocity * Time.deltaTime;
 
         transform.Translate(position);
+    }
+
+    void OnTriggerEnter(Collider triggerCollider) {
+        if (triggerCollider.tag == "Treasure"){
+            Destroy (triggerCollider.gameObject);
+            score++;
+            print("Score: " + score);   
+        }
+
+        if (triggerCollider.tag == "Spike"){
+            Health--;
+            print("Health: " + Health);   
+        }
+
     }
 }
