@@ -6,11 +6,13 @@ public class PlayerMovement : MonoBehaviour{
     public int speed;
     int score = 0;
     int Health = 100;
+    Spawner spawner;
     
 
     Rigidbody myRigidbody;
     // Start is called before the first frame update
     void Start(){
+        spawner = GameObject.FindGameObjectWithTag("newDoor").GetComponent<Spawner>();
     }
 
     // Update is called once per frame
@@ -33,6 +35,10 @@ public class PlayerMovement : MonoBehaviour{
         if (triggerCollider.tag == "Spike"){
             Health--;
             print("Health: " + Health);   
+        }
+        if(triggerCollider.tag == "newDoor"){
+            print("door");
+            spawner.makeRoom();
         }
 
     }
