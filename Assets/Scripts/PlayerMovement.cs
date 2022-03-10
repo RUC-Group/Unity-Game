@@ -7,9 +7,8 @@ public class PlayerMovement : MonoBehaviour{
     int score = 0;
     int Health = 100;
     Spawner spawner;
-    
+    public Transform door;
 
-    Rigidbody myRigidbody;
     // Start is called before the first frame update
     void Start(){
         spawner = GameObject.FindGameObjectWithTag("newDoor").GetComponent<Spawner>();
@@ -37,9 +36,10 @@ public class PlayerMovement : MonoBehaviour{
             print("Health: " + Health);   
         }
         if(triggerCollider.tag == "newDoor"){
-            print("door");
-            spawner.makeRoom();
+            if (spawner.passed == false){
+                spawner.passed = true;
+                spawner.makeRoom(0,0);
+            } 
         }
-
     }
 }

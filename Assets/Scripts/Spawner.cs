@@ -11,11 +11,12 @@ public class Spawner : MonoBehaviour
     public GameObject treasureTile;
     public GameObject wallTile;
     public GameObject cornerTile;
+    public GameObject doorTile;
     public int roomSize = 3;
+    public bool passed = false;
     
     // Start is called before the first frame update
     void Start(){
-        
     }
 
     GameObject pickTile(){
@@ -33,51 +34,47 @@ public class Spawner : MonoBehaviour
             default:
                 return null;
         }
-        
-        
-        
-    }
-    void OnTriggerEnter(Collider triggerCollider) {
-        if (triggerCollider.tag == "newDoor"){
-            makeRoom();  
-            print("walked through door");
-        }
     }
 
-    public void makeRoom(){
+    public void makeRoom(int spawnX, int spawnY){
         int trueRoomSize = roomSize + 2;
         int tileSize = 5;
-        for (var x = 0; x < trueRoomSize; x++){
-            for (var y = 0; y < trueRoomSize; y++){
-                if (x == 0 && y == 0){
+        int doorX = 3;
+        for (var x = spawnX; x < trueRoomSize + spawnX; x++){
+            for (var y = spawnY; y < trueRoomSize + spawnY; y++){
+                if (x == spawnX && y == spawnY){
                     var position = new Vector3(x * tileSize, 0, y * tileSize);
                     Instantiate(cornerTile, position, Quaternion.Euler(Vector3.down * 270));
                 } 
-                else if (x == trueRoomSize - 1 && y == trueRoomSize - 1){
+                else if (x == spawnX + doorX && y == spawnY + trueRoomSize - 1){
+                    var position = new Vector3(x * tileSize, 0, y * tileSize);
+                    Instantiate(doorTile, position, Quaternion.Euler(Vector3.down * 180));
+                }
+                else if (x == spawnX + trueRoomSize - 1 && y == spawnY + trueRoomSize - 1){
                     var position = new Vector3(x * tileSize, 0, y * tileSize);
                     Instantiate(cornerTile, position, Quaternion.Euler(Vector3.down * 90));
                 } 
-                else if (x == trueRoomSize - 1 && y == 0){
+                else if (x == spawnX +  trueRoomSize - 1 && y == spawnY + 0){
                     var position = new Vector3(x * tileSize, 0, y * tileSize);
                     Instantiate(cornerTile, position, Quaternion.Euler(Vector3.down * 0));
                 } 
-                else if (y == trueRoomSize - 1 && x == 0){
+                else if (y == spawnY + trueRoomSize - 1 && x == spawnX + 0){
                     var position = new Vector3(x * tileSize, 0, y * tileSize);
                     Instantiate(cornerTile, position, Quaternion.Euler(Vector3.down * 180));
                 } 
-                else if (x == 0){
+                else if (x == spawnX + 0){
                     var position = new Vector3(x * tileSize, 0, y * tileSize);
                     Instantiate(wallTile, position, Quaternion.Euler(Vector3.down * 270));
                 } 
-                else if (y == 0){
+                else if (y == spawnY + 0){
                     var position = new Vector3(x * tileSize, 0, y * tileSize);
                     Instantiate(wallTile, position, Quaternion.Euler(Vector3.down * 0));
                 } 
-                else if (y == trueRoomSize - 1){
+                else if (y == spawnY + trueRoomSize - 1){
                     var position = new Vector3(x * tileSize, 0, y * tileSize);
                     Instantiate(wallTile, position, Quaternion.Euler(Vector3.down * 180));
                 } 
-                else if (x == trueRoomSize - 1){
+                else if (x == spawnX + trueRoomSize - 1){
                     var position = new Vector3(x * tileSize, 0, y * tileSize);
                     Instantiate(wallTile, position, Quaternion.Euler(Vector3.down * 90));
                 } 

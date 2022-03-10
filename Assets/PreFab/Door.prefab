@@ -656,7 +656,9 @@ MonoBehaviour:
   treasureTile: {fileID: 307916289412118429, guid: 393f62cab674c1445850faaf38b83ae2, type: 3}
   wallTile: {fileID: 7948942339734267596, guid: fe2fac0da242450438be926476c7e7e4, type: 3}
   cornerTile: {fileID: 8941676268904225611, guid: a8bbaa10d6daea641b79f6a9f1ad9d0d, type: 3}
+  doorTile: {fileID: 8447505780591899700}
   roomSize: 3
+  passed: 0
 --- !u!1 &8447505780591899700
 GameObject:
   m_ObjectHideFlags: 0
