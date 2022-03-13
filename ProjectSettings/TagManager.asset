@@ -8,6 +8,7 @@ TagManager:
   - Treasure
   - Door
   - newDoor
+  - RoomSpawner
   layers:
   - Default
   - TransparentFX

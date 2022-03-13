@@ -5,13 +5,14 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour{
     public int speed;
     int score = 0;
-    int Health = 100;
+    int health = 100;
     Spawner spawner;
-    public Transform door;
+    Door door;
 
     // Start is called before the first frame update
     void Start(){
-        spawner = GameObject.FindGameObjectWithTag("newDoor").GetComponent<Spawner>();
+        spawner = GameObject.FindGameObjectWithTag("RoomSpawner").GetComponent<Spawner>();
+        door = GameObject.FindGameObjectWithTag("newDoor").GetComponent<Door>();
     }
 
     // Update is called once per frame
@@ -24,22 +25,27 @@ public class PlayerMovement : MonoBehaviour{
         transform.Translate(position);
     }
 
-    void OnTriggerEnter(Collider triggerCollider) {
+    //hitbox events
+    void OnTriggerStay(Collider triggerCollider) {
+        // walkinto coin/treasure
         if (triggerCollider.tag == "Treasure"){
             Destroy (triggerCollider.gameObject);
             score++;
             print("Score: " + score);   
         }
-
+        //walk on spikes
         if (triggerCollider.tag == "Spike"){
-            Health--;
-            print("Health: " + Health);   
+            health--;
+            print("Player health: " + health);   
         }
+        //walk through door
         if(triggerCollider.tag == "newDoor"){
-            if (spawner.passed == false){
-                spawner.passed = true;
-                spawner.makeRoom(0,0);
-            } 
+            if(door.passed == false){
+                door.passed = true;
+                int doorPositionX = (int)GameObject.FindGameObjectWithTag("newDoor").transform.position.x;
+                int doorPositionZ = (int)GameObject.FindGameObjectWithTag("newDoor").transform.position.z;
+                spawner.makeRoom(doorPositionX, doorPositionZ);
+            }
         }
     }
 }
