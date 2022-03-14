@@ -40,8 +40,8 @@ public class PlayerMovement : MonoBehaviour{
         }
         //walk through door
         if(triggerCollider.tag == "newDoor"){
-            if(door.passed == false){
-                door.passed = true;
+            if(GameObject.FindGameObjectWithTag("newDoor").GetComponent<Door>().passed == false){
+                GameObject.FindGameObjectWithTag("newDoor").GetComponent<Door>().passed = true;
                 int doorPositionX = (int)GameObject.FindGameObjectWithTag("newDoor").transform.position.x;
                 int doorPositionZ = (int)GameObject.FindGameObjectWithTag("newDoor").transform.position.z;
                 spawner.makeRoom(doorPositionX, doorPositionZ);
