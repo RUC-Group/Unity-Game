@@ -12,7 +12,6 @@ public class PlayerMovement : MonoBehaviour{
     // Start is called before the first frame update
     void Start(){
         spawner = GameObject.FindGameObjectWithTag("RoomSpawner").GetComponent<Spawner>();
-        door = GameObject.FindGameObjectWithTag("newDoor").GetComponent<Door>();
     }
 
     // Update is called once per frame
@@ -38,14 +37,29 @@ public class PlayerMovement : MonoBehaviour{
             health--;
             print("Player health: " + health);   
         }
+        
         //walk through door
         if(triggerCollider.tag == "newDoor"){
-            if(GameObject.FindGameObjectWithTag("newDoor").GetComponent<Door>().passed == false){
-                GameObject.FindGameObjectWithTag("newDoor").GetComponent<Door>().passed = true;
-                int doorPositionX = (int)GameObject.FindGameObjectWithTag("newDoor").transform.position.x;
-                int doorPositionZ = (int)GameObject.FindGameObjectWithTag("newDoor").transform.position.z;
+            Door triggerDoor = triggerCollider.gameObject.GetComponent<Door>();
+            if( triggerDoor.passed == false){
+                Destroy (triggerCollider.gameObject);
+                triggerDoor.passed = true;
+                int doorPositionX = (int)triggerDoor.transform.position.x;
+                int doorPositionZ = (int)triggerDoor.transform.position.z;
                 spawner.makeRoom(doorPositionX, doorPositionZ);
             }
         }
+        
     }
 }
+/*
+    void OnTriggerEnter(Collider other){
+        if(other.tag == "newDoor"){
+            other.passed = true;
+                int doorPositionX = (int)GameObject.FindGameObjectWithTag("newDoor").transform.position.x;
+                int doorPositionZ = (int)GameObject.FindGameObjectWithTag("newDoor").transform.position.z;
+                spawner.makeRoom(doorPositionX, doorPositionZ);
+        }
+    }
+}
+*/
