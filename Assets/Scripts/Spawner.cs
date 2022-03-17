@@ -42,53 +42,53 @@ public class Spawner : MonoBehaviour{
                 if (x == spawnX && z == spawnZ){
                     var position = new Vector3(spawnX + localX * tileSize, 0, spawnZ + localZ * tileSize);
                     Instantiate(cornerTile, position, Quaternion.Euler(Vector3.down * 270));
-                    newRoom.setTile(localX, localZ, cornerTile);
+                    //newRoom.setTile(localX, localZ, cornerTile);
                 } 
                 else if (x == spawnX + doorSpawnPos && z == spawnZ + trueRoomSize - 1){
                     var position = new Vector3(spawnX + localX * tileSize, 0, spawnZ + localZ * tileSize);
                     Instantiate(doorTile, position, Quaternion.Euler(Vector3.down * 180));
-                    newRoom.setTile(localX, localZ, doorTile);
+                    //newRoom.setTile(localX, localZ, doorTile);
                 }
                 else if (x == spawnX + trueRoomSize - 1 && z == spawnZ + trueRoomSize - 1){
                     var position = new Vector3(spawnX + localX * tileSize, 0, spawnZ + localZ * tileSize);
                     Instantiate(cornerTile, position, Quaternion.Euler(Vector3.down * 90));
-                    newRoom.setTile(localX, localZ, cornerTile);
+                    //newRoom.setTile(localX, localZ, cornerTile);
                 } 
                 else if (x == spawnX +  trueRoomSize - 1 && z == spawnZ + 0){
                     var position = new Vector3(spawnX + localX * tileSize, 0, spawnZ + localZ * tileSize);
                     Instantiate(cornerTile, position, Quaternion.Euler(Vector3.down * 0));
-                    newRoom.setTile(localX, localZ, cornerTile);
+                    //newRoom.setTile(localX, localZ, cornerTile);
                 } 
                 else if (z == spawnZ + trueRoomSize - 1 && x == spawnX + 0){
                     var position = new Vector3(spawnX + localX * tileSize, 0, spawnZ + localZ * tileSize);
                     Instantiate(cornerTile, position, Quaternion.Euler(Vector3.down * 180));
-                    newRoom.setTile(localX, localZ, cornerTile);
+                    //newRoom.setTile(localX, localZ, cornerTile);
                 } 
                 else if (x == spawnX + 0){
                     var position = new Vector3(spawnX + localX * tileSize, 0, spawnZ + localZ * tileSize);
                     Instantiate(wallTile, position, Quaternion.Euler(Vector3.down * 270));
-                    newRoom.setTile(localX, localZ, wallTile);
+                    //newRoom.setTile(localX, localZ, wallTile);
                 } 
                 else if (z == spawnZ + 0){
                     var position = new Vector3(spawnX + localX * tileSize, 0, spawnZ + localZ * tileSize);
                     Instantiate(wallTile, position, Quaternion.Euler(Vector3.down * 0));
-                    newRoom.setTile(localX, localZ, wallTile);
+                    //newRoom.setTile(localX, localZ, wallTile);
                 } 
                 else if (z == spawnZ + trueRoomSize - 1){
                     var position = new Vector3(spawnX + localX * tileSize, 0, spawnZ + localZ * tileSize);
                     Instantiate(wallTile, position, Quaternion.Euler(Vector3.down * 180));
-                    newRoom.setTile(localX, localZ, wallTile);
+                    //newRoom.setTile(localX, localZ, wallTile);
                 } 
                 else if (x == spawnX + trueRoomSize - 1){
                     var position = new Vector3(spawnX + localX * tileSize, 0, spawnZ + localZ * tileSize);
                     Instantiate(wallTile, position, Quaternion.Euler(Vector3.down * 90));
-                    newRoom.setTile(localX, localZ, wallTile);
+                    //newRoom.setTile(localX, localZ, wallTile);
                 } 
                 else{
                     var position = new Vector3(spawnX + localX * tileSize, 0, spawnZ + localZ * tileSize);
                     GameObject randomTile = pickTile();
                     Instantiate(randomTile, position, Quaternion.identity);
-                    newRoom.setTile(localX, localZ, randomTile);
+                    //newRoom.setTile(localX, localZ, randomTile);
                 }
                 localZ++;
             }
