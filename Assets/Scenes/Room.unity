@@ -380,6 +380,58 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 103183974398818111, guid: 1c807c91a2652544e8f76067c556a55c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1c807c91a2652544e8f76067c556a55c, type: 3}
+--- !u!1 &1417094896
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1417094898}
+  - component: {fileID: 1417094897}
+  m_Layer: 0
+  m_Name: RoomSpawner
+  m_TagString: RoomSpawner
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1417094897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1417094896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d0962bb228276144bc7792e802cde36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allDoors: []
+  emptyTile: {fileID: 7948942339734267596, guid: 7df2232dd9dcd55488e1e31170cfe5c2, type: 3}
+  spikeTile: {fileID: 4501640392279846359, guid: 511063383b4fd444aa12a9c29d7fc6bb, type: 3}
+  enemyTile: {fileID: 4845998946723634470, guid: 87f1c292901476e40ba8bf0ed058ccec, type: 3}
+  treasureTile: {fileID: 307916289412118429, guid: 393f62cab674c1445850faaf38b83ae2, type: 3}
+  wallTile: {fileID: 7948942339734267596, guid: fe2fac0da242450438be926476c7e7e4, type: 3}
+  cornerTile: {fileID: 8941676268904225611, guid: a8bbaa10d6daea641b79f6a9f1ad9d0d, type: 3}
+  doorTile: {fileID: 8447505780591899700, guid: 1c807c91a2652544e8f76067c556a55c, type: 3}
+  roomSize: 3
+--- !u!4 &1417094898
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1417094896}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 61.176422, y: 2.8806727, z: 24.625748}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1439922136
 PrefabInstance:
   m_ObjectHideFlags: 0
