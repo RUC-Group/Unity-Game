@@ -40,7 +40,7 @@ public class EnemyBehavior : MonoBehaviour{
         //walk on spikes
         if (triggerCollider.tag == "Spike" && enemyAlive == true){
             health--;
-            print("Enemy health: " + health);   
+            //print("Enemy health: " + health);   
         }
     }
     void killEnemy(){

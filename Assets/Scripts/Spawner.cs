@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour{
+
+    public GameObject room;
     public GameObject emptyTile;
     public GameObject spikeTile;
     public GameObject enemyTile;
@@ -11,11 +13,15 @@ public class Spawner : MonoBehaviour{
     public GameObject cornerTile;
     public GameObject doorTile;
 
-    void Start() {
+    public Spawner(){
+
+    }
+
+    /*void Start() {
         makeFloor();
     }
 
-    void makeFloor(){
+    /*void makeFloor(){
         int floorSize = 10;
         int roomX = 0;
         int roomY = 0;
@@ -32,7 +38,7 @@ public class Spawner : MonoBehaviour{
     
     int trueRoomSize = 3 + 2;
     int tileSize = 5;
-    Room makeRoom(int spawnX, int spawnZ){
+    /*public Room makeRoom(int spawnX=0, int spawnZ=0){
         Room newRoom = new Room();
         int localX = 0;
         int doorSpawnPos = 3;
@@ -87,12 +93,24 @@ public class Spawner : MonoBehaviour{
                 else{
                     var position = new Vector3(spawnX + localX * tileSize, 0, spawnZ + localZ * tileSize);
                     GameObject randomTile = pickTile();
-                    Instantiate(randomTile, position, Quaternion.identity);
-                    //newRoom.setTile(localX, localZ, randomTile);
+                    //Instantiate(randomTile, position, Quaternion.identity);
+                    newRoom.setTile(localX, localZ, randomTile);
                 }
                 localZ++;
             }
             localX++;
+        }
+        return newRoom;
+    }
+
+    public Room makeRoom(int spawnX=0, int spawnZ=0){
+        int roomSize = 5;
+        Room newRoom = new Room(spawnX,spawnZ,roomSize);
+
+        for (var i = 0; i < roomSize; i++){
+            for( var j = 0; j< roomSize; j++){
+                //newRoom.setTile(i,j,pickTile());
+            }
         }
         return newRoom;
     }
@@ -111,6 +129,6 @@ public class Spawner : MonoBehaviour{
             default:
                 return null;
         }
-    }
+    }*/
 
 }
