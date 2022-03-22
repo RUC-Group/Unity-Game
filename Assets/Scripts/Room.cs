@@ -60,12 +60,13 @@ public class Room : MonoBehaviour{
         for(int i = -1; i < roomSize+1; i++){
             for(int j = -1; j< roomSize+1; j++){
                 var position = new Vector3(i*5, 0, j*5 + posZ);
-                var rotation = ;
                 
                 if(i == -1 && j==-1 || i==-1 && j==roomSize || i==roomSize && j == -1 || i==roomSize && j ==roomSize){
                     Instantiate(cornerTile, position, Quaternion.identity);
-                }else if(i==-1 || j == -1 || i== roomSize || j == roomSize){
-                    Instantiate(wallTile, position, Quaternion.Euler(Vector3.down * rotation));
+                }else if(i==-1 || i == roomSize){
+                    Instantiate(wallTile, position, Quaternion.Euler(Vector3.down * 90));
+                }else if ( j== roomSize || j == -1){
+                    Instantiate(wallTile, position, Quaternion.Euler(Vector3.down * 0));
                 }
                 else{
                     Instantiate(roomTiles[i,j], position, Quaternion.identity);
