@@ -10,6 +10,7 @@ public class Floor : MonoBehaviour{
     public GameObject room;
 
     int floorSize=5;
+    int tileSize = 5;
 
     public Floor(int floorSize){
         this.floorSize = floorSize;
@@ -37,17 +38,16 @@ public class Floor : MonoBehaviour{
         int roomX = 0;
         int roomZ = 0;
         floorSize=5;
-        Room newRoom = makeRoom(roomX,roomZ);
         count++;
-        rooms.Add(newRoom);
+        rooms.Add(makeRoom(roomX, roomZ, 0));
         for (int i = 0; i < floorSize-1; i++){
             count++;
             Room lastRoom = rooms[i];
-            roomZ+=lastRoom.posZ+lastRoom.roomSize;
-            newRoom = makeRoom(roomX,roomZ);
-            rooms.Add(newRoom);
+            roomZ = lastRoom.posZ + lastRoom.roomSize * 5 + 15;
+            print(roomZ);
+            rooms.Add(makeRoom(roomX,roomZ, i + 1));
         }
-        print("created " + count + " rooms.");
+        //print("created " + count + " rooms.");
         showFloor();
     }
 
@@ -64,14 +64,16 @@ public class Floor : MonoBehaviour{
             var position = new Vector3(0, 0, room.posZ);
             Instantiate(room, position, Quaternion.identity);
             room.showRoom();
+            print(room.nameOfRoom);
         }
     }
 
-    public Room makeRoom(int roomX=0, int roomZ=0){
+    public Room makeRoom(int roomX, int roomZ, int name){
         int roomSize = 5;
-        GameObject newRoomObject = room;
+        var position = new Vector3(0, 0, roomZ);
+        GameObject newRoomObject = Instantiate(room,position,Quaternion.identity);;
         Room newRoom = newRoomObject.GetComponent<Room>();
-        newRoom.setRoom(roomX,roomZ,roomSize);
+        newRoom.setRoom(roomX,roomZ,roomSize, name);
         int count=0;
 
         for (var i = 0; i < roomSize; i++){
@@ -80,7 +82,7 @@ public class Floor : MonoBehaviour{
                 newRoom.setTile(i,j);
             }
         }
-        print("room has "+count+" tiles.");
+        //print("room has "+count+" tiles.");
         return newRoom;
     }
 }

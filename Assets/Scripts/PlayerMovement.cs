@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour{
         //walk on spikes
         if (triggerCollider.tag == "Spike"){
             health--;
-            print("Player health: " + health);   
+            //print("Player health: " + health);   
         }
         /*
         //walk through door

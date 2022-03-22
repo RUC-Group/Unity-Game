@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Room : MonoBehaviour{
     GameObject[,] roomTiles = new GameObject[5,5];
+    public int nameOfRoom;
 
     public GameObject emptyTile;
     public GameObject spikeTile;
@@ -20,10 +21,11 @@ public class Room : MonoBehaviour{
 
     Vector2 globalPosition;
     
-    public void setRoom(int posX, int posZ, int roomSize){
+    public void setRoom(int posX, int posZ, int roomSize, int name){
         this.posX=posX;
         this.posZ=posZ;
         this.roomSize=roomSize;
+        this.nameOfRoom = name;
     }
     
 
@@ -31,7 +33,6 @@ public class Room : MonoBehaviour{
     void Start(){
     }
     public void setTile(int x, int z){
-        var position = new Vector3(x+5, 0, z+5);
         roomTiles[x,z] = pickTile();
     }
 
@@ -55,12 +56,20 @@ public class Room : MonoBehaviour{
         globalPosition = position;
     }
 
-    public void showRoom(){
-        for(int i = 0; i < roomSize-1; i++){
-            for(int j = 0; j< roomSize-1; j++){
-                var position = new Vector3(i+5, 0, j+5);
-                Instantiate(roomTiles[i,j], position, Quaternion.identity);
-                //tiles should move to their position
+    public async void showRoom(){
+        for(int i = -1; i < roomSize+1; i++){
+            for(int j = -1; j< roomSize+1; j++){
+                var position = new Vector3(i*5, 0, j*5 + posZ);
+                var rotation = ;
+                
+                if(i == -1 && j==-1 || i==-1 && j==roomSize || i==roomSize && j == -1 || i==roomSize && j ==roomSize){
+                    Instantiate(cornerTile, position, Quaternion.identity);
+                }else if(i==-1 || j == -1 || i== roomSize || j == roomSize){
+                    Instantiate(wallTile, position, Quaternion.Euler(Vector3.down * rotation));
+                }
+                else{
+                    Instantiate(roomTiles[i,j], position, Quaternion.identity);
+                }
             }
         }
     }
