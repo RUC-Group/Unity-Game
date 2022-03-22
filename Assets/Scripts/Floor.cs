@@ -15,37 +15,20 @@ public class Floor : MonoBehaviour{
     public Floor(int floorSize){
         this.floorSize = floorSize;
     }
-    // Start is called before the first frame update
-    /*void Start(){
-        rooms=new GameObject[floorSize];
-        int roomX = 0;
-        int roomZ = 0;
-        GameObject newRoom = makeRoom(roomX,roomZ);
-        rooms[0]=newRoom;
-        print("room gen");
-         for (int i = 1; i < floorSize; i++){
-            print("room gen");
-            GameObject lastRoom = rooms[i];
-            roomZ+=lastRoom.GetComponent<Room>().posZ+lastRoom.GetComponent<Room>().roomSize;
-            newRoom = makeRoom(roomX,roomZ);
-            rooms[i]=newRoom;
-        }
-    }*/
 
     void Start(){
         rooms=new List<Room>();
-        int count=0;
+        int count = 0;
         int roomX = 0;
         int roomZ = 0;
         floorSize=5;
         count++;
-        rooms.Add(makeRoom(roomX, roomZ, 0));
+        rooms.Add(makeRoom(roomX, roomZ));
         for (int i = 0; i < floorSize-1; i++){
             count++;
             Room lastRoom = rooms[i];
             roomZ = lastRoom.posZ + lastRoom.roomSize * 5 + 15;
-            print(roomZ);
-            rooms.Add(makeRoom(roomX,roomZ, i + 1));
+            rooms.Add(makeRoom(roomX,roomZ));
         }
         //print("created " + count + " rooms.");
         showFloor();
@@ -64,16 +47,15 @@ public class Floor : MonoBehaviour{
             var position = new Vector3(0, 0, room.posZ);
             Instantiate(room, position, Quaternion.identity);
             room.showRoom();
-            print(room.nameOfRoom);
         }
     }
 
-    public Room makeRoom(int roomX, int roomZ, int name){
+    public Room makeRoom(int roomX, int roomZ){
         int roomSize = 5;
         var position = new Vector3(0, 0, roomZ);
         GameObject newRoomObject = Instantiate(room,position,Quaternion.identity);;
         Room newRoom = newRoomObject.GetComponent<Room>();
-        newRoom.setRoom(roomX,roomZ,roomSize, name);
+        newRoom.setRoom(roomX,roomZ,roomSize);
         int count=0;
 
         for (var i = 0; i < roomSize; i++){
@@ -82,7 +64,7 @@ public class Floor : MonoBehaviour{
                 newRoom.setTile(i,j);
             }
         }
-        //print("room has "+count+" tiles.");
+        // print("room has " + count + " tiles.");
         return newRoom;
     }
 }
