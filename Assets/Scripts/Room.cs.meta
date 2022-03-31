@@ -1,10 +1,9 @@
 fileFormatVersion: 2
-guid: e63f10e73c75d24418faed4e11cdcbad
+guid: 3d0962bb228276144bc7792e802cde36
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - room: {fileID: 8345788204346026189, guid: e74fc15671889974296ca72829c207e8, type: 3}
   - emptyTile: {fileID: 7948942339734267596, guid: 7df2232dd9dcd55488e1e31170cfe5c2, type: 3}
   - spikeTile: {fileID: 4501640392279846359, guid: 511063383b4fd444aa12a9c29d7fc6bb, type: 3}
   - enemyTile: {fileID: 4845998946723634470, guid: 87f1c292901476e40ba8bf0ed058ccec, type: 3}
