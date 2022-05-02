@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Room : MonoBehaviour{
-    GameObject[,] roomTiles = new GameObject[5,5];
+    GameObject[,] roomTiles = new GameObject[7,7];
 
     public GameObject emptyTile;
     public GameObject spikeTile;
@@ -11,11 +11,11 @@ public class Room : MonoBehaviour{
     public GameObject treasureTile;
     public GameObject wallTile;
     public GameObject cornerTile;
-    public GameObject doorTile;
+    public GameObject door;
 
     public int posX;
     public int posZ;
-    public int roomSize;
+    public int roomSize = 7;
 
     Vector2 globalPosition;
     
@@ -24,8 +24,8 @@ public class Room : MonoBehaviour{
         this.posZ=posZ;
         this.roomSize=roomSize;
 
-        for (var i = 0; i < roomSize; i++){
-            for( var j = 0; j< roomSize; j++){
+        for (var i = 1; i < roomSize-1; i++){
+            for( var j = 1; j< roomSize-1; j++){
                 setTile(i,j);
             }
         }
@@ -56,21 +56,47 @@ public class Room : MonoBehaviour{
         globalPosition = position;
     }
 
-    public int indexToUnitePos(int i){
+    public int indexToUnitPos(int i){
         i = (5*5+15)*i;
         return i;
     }
 
-    public async void showRoom(){
-        for(int i = -1; i < roomSize+1; i++){
-            for(int j = -1; j< roomSize+1; j++){
-                var position = new Vector3(i*5 + indexToUnitePos(posX), 0, j*5 + indexToUnitePos(posZ));
+    public void createDoor(int dir){
+        Quaternion rotation;
+        Vector3 position;
 
-                if(i == -1 && j == -1 || i == -1 && j == roomSize || i == roomSize && j == -1 || i == roomSize && j == roomSize){
+        if (dir == 2){
+            Destroy(roomTiles[3,0]);
+            position = new Vector3(3*5 + indexToUnitPos(posX),0,-1*5 + indexToUnitPos(posZ));
+            rotation = Quaternion.Euler(Vector3.down * 90);
+        } else if(dir == 3){
+            Destroy(roomTiles[6,3]);
+            position = new Vector3(7*5 + indexToUnitPos(posX),0,3*5 + indexToUnitPos(posZ));
+            rotation = Quaternion.Euler(Vector3.down * 0);
+        } else if(dir == 0){
+            Destroy(roomTiles[3,6]);
+            position = new Vector3(3*5 + indexToUnitPos(posX),0,7*5 + indexToUnitPos(posZ));
+            rotation = Quaternion.Euler(Vector3.down * 90);
+        } else {
+            Destroy(roomTiles[0,3]);
+            position = new Vector3(-1*5 + indexToUnitPos(posX),0,3*5 + indexToUnitPos(posZ));
+            rotation = Quaternion.Euler(Vector3.down * 0);
+        }
+        Instantiate(door, position, rotation);
+    }
+
+    public async void showRoom(){
+        for(int i = 0; i < roomSize; i++){
+            for(int j = 0; j< roomSize; j++){
+                var position = new Vector3(i*5 + indexToUnitPos(posX), 0, j*5 + indexToUnitPos(posZ));
+
+                if(i == 0 && j == 0 || i == 0 && j == roomSize-1 || i == roomSize-1 && j == 0 || i == roomSize-1 && j == roomSize-1){
                     Instantiate(cornerTile, position, Quaternion.identity);
-                }else if(i == -1 || i == roomSize){
+                }else if(i == 0 || i == roomSize -1){
+                    roomTiles[i,j] = wallTile;
                     Instantiate(wallTile, position, Quaternion.Euler(Vector3.down * 90));
-                }else if ( j== roomSize || j == -1){
+                }else if ( j== roomSize - 1 || j == 0){
+                    roomTiles[i,j] = wallTile;
                     Instantiate(wallTile, position, Quaternion.Euler(Vector3.down * 0));
                 }
                 else{

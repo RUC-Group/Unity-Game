@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 61.176422, y: 2.8806727, z: 24.625748}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -49,7 +50,7 @@ MonoBehaviour:
   treasureTile: {fileID: 307916289412118429, guid: 393f62cab674c1445850faaf38b83ae2, type: 3}
   wallTile: {fileID: 7948942339734267596, guid: fe2fac0da242450438be926476c7e7e4, type: 3}
   cornerTile: {fileID: 8941676268904225611, guid: a8bbaa10d6daea641b79f6a9f1ad9d0d, type: 3}
-  doorTile: {fileID: 8447505780591899700, guid: 1c807c91a2652544e8f76067c556a55c, type: 3}
+  door: {fileID: 7740712664373306963, guid: ca594abee62ad0d40b5fae06bad00872, type: 3}
   posX: 0
   posZ: 0
-  roomSize: 0
+  roomSize: 7
