@@ -5,7 +5,6 @@ using UnityEngine;
 public class Floor : MonoBehaviour{
     List<Room> rooms;
     //Room[] rooms;
-    Spawner spawner = new Spawner();
 
     public GameObject room;
 
