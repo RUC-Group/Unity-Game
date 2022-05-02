@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 923243109178297279}
   - component: {fileID: 923243109178297278}
   - component: {fileID: 923243109178297277}
+  - component: {fileID: 7051786047384128037}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -28,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0.37253317, y: -0, z: -0, w: 0.92801887}
   m_LocalPosition: {x: -0.53, y: 18.38, z: -20.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7771338028364240578}
   m_RootOrder: 1
@@ -83,6 +85,18 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 923243109178297276}
   m_Enabled: 1
+--- !u!114 &7051786047384128037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923243109178297276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c13bdd4934f0104a86b01220da646d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1190705405025744066
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,6 +125,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.4548454, y: 3.92, z: -3.2282472}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8931932134139401673}
   - {fileID: 923243109178297279}
@@ -175,6 +190,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7771338028364240578}
   m_RootOrder: 0
@@ -198,6 +214,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
