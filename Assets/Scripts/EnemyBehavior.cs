@@ -8,30 +8,42 @@ public class EnemyBehavior : MonoBehaviour{
     bool enemyAlive = true;
     int i;
     public float speed;
+    public float detectionRange;
+    float detectionRangeMod = 1;
     // Start is called before the first frame update
     void Start() {
            
     }
     // Update is called once per frame
     void Update(){
-        playerPos = GameObject.FindGameObjectWithTag("Player").transform.position; 
-        Vector3 displacementFromPlayer = playerPos - transform.position;
-        Vector3 directionToPlayer = displacementFromPlayer.normalized;
-        Vector3 velocity = directionToPlayer * speed;
-        float distanceToTarget = displacementFromPlayer.magnitude;
+
         if(health < 0 ){
             killEnemy();
 
-        }
-
-        //if enemy is far from player, walk to player
-        if(distanceToTarget > 1.5 && enemyAlive == true){
-            transform.Translate(velocity * Time.deltaTime);   
         }
         // else, dmg player or smt.
         else if (enemyAlive == false){
         } 
         else{
+        }
+
+        playerPos = GameObject.FindGameObjectWithTag("Player").transform.position; 
+        Vector3 displacementFromPlayer = playerPos - transform.position;
+        Vector3 directionToPlayer = displacementFromPlayer.normalized;
+        Vector3 velocity = directionToPlayer * speed;
+        float distanceToTarget = displacementFromPlayer.magnitude;
+
+        //if player is within enemy detection range...
+        if(detectionRange * detectionRangeMod > distanceToTarget  && enemyAlive == true){
+            transform.localScale = new Vector3(1,2,1);
+            detectionRangeMod = 2; //expands detection range via multiplication
+            //if enemy is far from player, pursue player
+            if(distanceToTarget > 1.5){
+                transform.Translate(velocity * Time.deltaTime);  
+            }
+        }else{
+            transform.localScale = new Vector3(1,1,1);
+            detectionRangeMod = 1;            
         }   
     }
     
