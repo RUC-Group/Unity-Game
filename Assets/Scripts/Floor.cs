@@ -5,7 +5,7 @@ using UnityEngine;
 public class Floor : MonoBehaviour{
     public GameObject room;
     public GameObject player;
-    public float test = 0;
+    public GameObject hallway;
     int floorSize = 5;
     List<Room> roomsList;
     Room[,] rooms;
@@ -34,6 +34,26 @@ public class Floor : MonoBehaviour{
         print("amount of rooms spawned: " + count);
     }
 
+    public void createHallway(int dir, Room r){
+        Quaternion rotation;
+        Vector3 position;
+
+        if (dir == 2){
+            position = new Vector3(3*5 + r.indexToUnitPos(r.posX),0,-1*5 + r.indexToUnitPos(r.posZ));
+            rotation = Quaternion.Euler(Vector3.down * 90);
+        } else if(dir == 3){
+            position = new Vector3(7*5 + r.indexToUnitPos(r.posX),0,3*5 + r.indexToUnitPos(r.posZ));
+            rotation = Quaternion.Euler(Vector3.down * 0);
+        } else if(dir == 0){
+            position = new Vector3(3*5 + r.indexToUnitPos(r.posX),0,7*5 + r.indexToUnitPos(r.posZ));
+            rotation = Quaternion.Euler(Vector3.down * 90);
+        } else {
+            position = new Vector3(-1*5 + r.indexToUnitPos(r.posX),0,3*5 + r.indexToUnitPos(r.posZ));
+            rotation = Quaternion.Euler(Vector3.down * 0);
+        }
+        Instantiate(hallway, position, rotation);
+    }
+
     public void floorAlgorithm2(){
         int floorSize = 1000;
         rooms = new Room[floorSize,floorSize];
@@ -57,7 +77,10 @@ public class Floor : MonoBehaviour{
                     for (var i = 0; i < spawnCount + 1; i++){
                         if (spawnCount != i && rooms[pickedRoom.posX,pickedRoom.posZ-i]==null){
                             Room r = makeRoom(pickedRoom.posX,pickedRoom.posZ-i);
+                            Room pr = rooms[pickedRoom.posX,pickedRoom.posZ-i+1];
+                            pr.createDoor(2);
                             r.createDoor(dir);
+                            createHallway(dir, r);
                             rooms[pickedRoom.posX,pickedRoom.posZ-i] = r;
                             spawnedRooms.Add(r);
                             numberOfRooms--;
@@ -68,7 +91,10 @@ public class Floor : MonoBehaviour{
                     for (var i = 0; i < spawnCount + 1; i++){
                         if (spawnCount != i && rooms[pickedRoom.posX+i,pickedRoom.posZ]==null){
                             Room r = makeRoom(pickedRoom.posX+i,pickedRoom.posZ);
+                            Room pr = rooms[pickedRoom.posX + i -1,pickedRoom.posZ];
+                            pr.createDoor(3);
                             r.createDoor(dir);
+                            createHallway(dir, r);
                             rooms[pickedRoom.posX+i,pickedRoom.posZ] = r;
                             spawnedRooms.Add(r);
                             numberOfRooms--;
@@ -79,26 +105,34 @@ public class Floor : MonoBehaviour{
                     for (var i = 0; i < spawnCount + 1; i++){
                         if (spawnCount != i && rooms[pickedRoom.posX,pickedRoom.posZ+ i]==null){
                             Room r = makeRoom(pickedRoom.posX,pickedRoom.posZ+i);
+                            Room pr = rooms[pickedRoom.posX,pickedRoom.posZ+i-1];
+                            pr.createDoor(0);
                             r.createDoor(dir);
+                            createHallway(dir, r);
                             rooms[pickedRoom.posX,pickedRoom.posZ+i] = r;
                             spawnedRooms.Add(r);
                             numberOfRooms--;
                         }
                     }
                     break;
-                default:
+                case 3:
                     for (var i = 0; i < spawnCount + 1; i++){
                         if (spawnCount != i && rooms[pickedRoom.posX-i,pickedRoom.posZ]==null){
                             Room r = makeRoom(pickedRoom.posX-i,pickedRoom.posZ);
+                            Room pr = rooms[pickedRoom.posX-i+1,pickedRoom.posZ];
+                            pr.createDoor(1);
                             r.createDoor(dir);
+                            createHallway(dir, r);
                             rooms[pickedRoom.posX-i,pickedRoom.posZ] = r;
                             spawnedRooms.Add(r);
                             numberOfRooms--;
                         }
-                    } 
+                    }
+                    break;
+                default:
+                    print("Error!");
                     break;
             }
-            
             pickedRoom = pickRoom(spawnedRooms);
         }
     }
@@ -108,39 +142,7 @@ public class Floor : MonoBehaviour{
         int num = Random.Range(0,a.Count);
         return a[num];
     }
-/*
-    public void floorAlgorithm(){
-        roomsList = new List<Room>();
-        int count = 0;
-        int roomX = 0;
-        int roomZ = 0;
-        floorSize = 5;
-        count++;
-        rooms.Add(makeRoom(roomX, roomZ));
-        for (int i = 0; i < floorSize-1; i++){
-            count++;
-            Room lastRoom = rooms[i];
-            roomZ = lastRoom.posZ + lastRoom.roomSize;
-            rooms.Add(makeRoom(roomX,roomZ));
-        }
-    }
 
-    public void floorAlgorithm3(){
-        roomsList = new List<Room>();
-        int count = 0;
-        int roomX = 0;
-        int roomZ = 0;
-        floorSize = 5;
-        count++;
-        rooms.Add(makeRoom(roomX, roomZ));
-        for (int i = 0; i < floorSize; i++){
-            count++;
-            Room lastRoom = rooms[i];
-            roomZ = i;
-            rooms.Add(makeRoom(roomX,roomZ));
-        }
-    }
-*/
     public Room makeRoom(int roomX, int roomZ){
         int roomSize = 7;
         var position = new Vector3(roomX, 0, roomZ);
