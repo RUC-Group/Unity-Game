@@ -45,13 +45,9 @@ public class Room : MonoBehaviour{
     public void changeRoom(string typeOfRoom){
         this.typeOfRoom=typeOfRoom;
         if(this.typeOfRoom == "end gate room"){
-            for (var i = 0; i < roomSize; i++){
-                for( var j = 0; j< roomSize; j++){
-                    if(i == 0 && j == 0 || i == 0 && j == roomSize-1 || i == roomSize-1 && j == 0 || i == roomSize-1 && j == roomSize-1){
-                        roomTiles[i,j] = cornerTile;
-                    }else if(i == 0 || i == roomSize -1 || j== roomSize - 1 || j == 0){
-                        roomTiles[i,j] = wallTile;
-                    }else if(i == (roomSize-1)/2 || j == (roomSize-1)/2){
+            for (var i = 1; i < roomSize; i++){
+                for( var j = 1; j< roomSize; j++){
+                    if(i == (roomSize-1)/2 && j == (roomSize-1)/2){
                         roomTiles[i,j] = spikeTile;
                     }else{
                         roomTiles[i,j] = emptyTile;
