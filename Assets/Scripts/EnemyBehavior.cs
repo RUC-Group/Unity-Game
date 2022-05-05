@@ -3,16 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyBehavior : MonoBehaviour{
+
+    DungeonMaster dungeonMaster;
     Vector3 playerPos;
+
+    PlayerMovement player;
     int health = 100;
     bool enemyAlive = true;
     int i;
     public float speed;
     public float detectionRange;
     float detectionRangeMod = 1;
+
+
     // Start is called before the first frame update
-    void Start() {
-           
+    void Start() {  
     }
     // Update is called once per frame
     void Update(){
@@ -26,7 +31,7 @@ public class EnemyBehavior : MonoBehaviour{
         } 
         else{
         }
-
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         playerPos = GameObject.FindGameObjectWithTag("Player").transform.position; 
         Vector3 displacementFromPlayer = playerPos - transform.position;
         Vector3 directionToPlayer = displacementFromPlayer.normalized;
@@ -40,6 +45,8 @@ public class EnemyBehavior : MonoBehaviour{
             //if enemy is far from player, pursue player
             if(distanceToTarget > 1.5){
                 transform.Translate(velocity * Time.deltaTime);  
+            }else{
+                player.getDamage();
             }
         }else{
             transform.localScale = new Vector3(1,1,1);

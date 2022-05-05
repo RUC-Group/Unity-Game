@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour{
     int health = 100;
 
     int keyAmount=0;
+
+    float lastDamageTime=0;
     Door door;
 
     // Start is called before the first frame update
@@ -41,7 +43,6 @@ public class PlayerMovement : MonoBehaviour{
             Destroy (triggerCollider.gameObject);
             keyAmount++;
             print(keyAmount);
-
         }
         if(triggerCollider.tag == "Gate"){
             if(keyAmount==2){
@@ -50,19 +51,15 @@ public class PlayerMovement : MonoBehaviour{
             }else{
                 print("You dont have enough keys");
             }
+        }
+    }
 
+    public void getDamage(){
+        float timeStamp = Time.time;
+        if(timeStamp - lastDamageTime>1){
+            health--;
+            print(health);
+            lastDamageTime = timeStamp;
         }
-        /*
-        //walk through door
-        if(triggerCollider.tag == "newDoor"){
-            Door triggerDoor = triggerCollider.gameObject.GetComponent<Door>();
-            if( triggerDoor.passed == false){
-                Destroy (triggerCollider.gameObject);
-                triggerDoor.passed = true;
-                int doorPositionX = (int)triggerDoor.transform.position.x;
-                int doorPositionZ = (int)triggerDoor.transform.position.z;
-            }
-        }
-        */
     }
 }
