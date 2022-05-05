@@ -6,6 +6,8 @@ public class PlayerMovement : MonoBehaviour{
     public int speed;
     int score = 0;
     int health = 100;
+
+    int keyAmount=0;
     Door door;
 
     // Start is called before the first frame update
@@ -34,6 +36,21 @@ public class PlayerMovement : MonoBehaviour{
         if (triggerCollider.tag == "Spike"){
             health--;
             //print("Player health: " + health);   
+        }
+        if(triggerCollider.tag == "Key"){
+            Destroy (triggerCollider.gameObject);
+            keyAmount++;
+            print(keyAmount);
+
+        }
+        if(triggerCollider.tag == "Gate"){
+            if(keyAmount==2){
+                Destroy (triggerCollider.gameObject);
+                print("You can pass");
+            }else{
+                print("You dont have enough keys");
+            }
+
         }
         /*
         //walk through door
