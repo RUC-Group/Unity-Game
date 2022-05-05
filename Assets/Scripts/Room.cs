@@ -38,6 +38,10 @@ public class Room : MonoBehaviour{
         }
     }
 
+    public GameObject[,] getRoomTiles(){
+        return roomTiles;
+    }
+
     GameObject pickTile(){
         int randNum = Random.Range(0,4);
         switch (randNum){
@@ -53,6 +57,8 @@ public class Room : MonoBehaviour{
                 return null;
         }
     }
+
+    
 
     public void setPosition(Vector2 position){
         globalPosition = position;
@@ -78,7 +84,7 @@ public class Room : MonoBehaviour{
         }
     }
 
-    public async void showRoom(){
+    public void showRoom(){
         for(int i = 0; i < roomSize; i++){
             for(int j = 0; j< roomSize; j++){
                 var position = new Vector3(i*5 + indexToUnitPos(posX), 0, j*5 + indexToUnitPos(posZ));

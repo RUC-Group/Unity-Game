@@ -9,6 +9,9 @@ TagManager:
   - Door
   - newDoor
   - RoomSpawner
+  - PathFindingWAypoint
+  - floor
+  - pathHolder
   layers:
   - Default
   - TransparentFX

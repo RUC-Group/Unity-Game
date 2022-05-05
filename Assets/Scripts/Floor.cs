@@ -10,6 +10,7 @@ public class Floor : MonoBehaviour{
     List<Room> roomsList;
     Room[,] rooms;
     List<Room> spawnedRooms;
+    List<Transform> waypoints;
 
     public Floor(int floorSize){
         this.floorSize = floorSize;
@@ -17,12 +18,16 @@ public class Floor : MonoBehaviour{
 
     void Start(){
         floorAlgorithm2();
-        //print("created " + count + " rooms.");
         showFloor();
+        waypoints = getAllWaypoints(getTiles());
+        print(waypoints.Count + " waypoints in the map");
     }
 
     // Update is called once per frame
     void Update(){
+    }
+    public List<Room> getSpawnedRooms(){
+        return spawnedRooms;
     }
 
     public void showFloor(){
@@ -32,6 +37,7 @@ public class Floor : MonoBehaviour{
             count ++;
         }
         print("amount of rooms spawned: " + count);
+        
     }
 
     public void createHallway(int dir, Room r){
@@ -59,7 +65,7 @@ public class Floor : MonoBehaviour{
         rooms = new Room[floorSize,floorSize];
         spawnedRooms = new List<Room>();
         Room pickedRoom;
-        int numberOfRooms = Random.Range(99,100);
+        int numberOfRooms = 3; //Random.Range(99,100);
         print("number of rooms to spawn: " + numberOfRooms);
         int indexX = Random.Range(150,151);
         int indexZ = Random.Range(150,151);
@@ -70,7 +76,7 @@ public class Floor : MonoBehaviour{
         spawnedRooms.Add(pickedRoom);
         while (numberOfRooms > 0){
             int dir = Random.Range(0,4);
-            int spawnCount = Random.Range(1,5);
+            int spawnCount = 1;//Random.Range(1,5);
 
             switch (dir){
                 case 0:
@@ -143,6 +149,48 @@ public class Floor : MonoBehaviour{
         return a[num];
     }
 
+    // Method to return all the waypoints from a list of tiles
+    List<Transform> getAllWaypoints(List<GameObject> tiles){
+        
+        waypoints = new List<Transform>();
+        foreach (GameObject tile in tiles){
+            
+            for (var i = 0; i < tile.transform.childCount; i++){
+                
+                if (tile.transform.GetChild(i).gameObject.tag == "pathHolder"){
+                    
+                    for (var j = 0; j < tile.transform.GetChild(i).childCount; j++){
+
+                        if(tile.transform.GetChild(i).transform.GetChild(j).gameObject.tag == "PathFindingWAypoint"){
+                            waypoints.Add(tile.transform.GetChild(i).transform.GetChild(j));
+                            
+                        }
+                    }
+                }
+            }
+        }
+        return waypoints;
+    }
+
+    //method that returns a list of all tiles in the game
+    public List<GameObject> getTiles(){
+        List<GameObject> allTiles = new List<GameObject>();
+        foreach (Room r in spawnedRooms){
+            GameObject[,] roomTiles = r.getRoomTiles();
+            for (var i = 0; i < roomTiles.Length/7; i++){
+                for (var j = 0; j < roomTiles.Length/7; j++){
+                    allTiles.Add(roomTiles[i,j]);
+                }
+            }
+        }
+        return allTiles;
+    }
+
+    void OnDrawGizmos(){
+        foreach (Transform waypoint in waypoints){
+            Gizmos.DrawSphere(waypoint.position,.3f);
+        }   
+    }
     public Room makeRoom(int roomX, int roomZ){
         int roomSize = 7;
         var position = new Vector3(roomX, 0, roomZ);

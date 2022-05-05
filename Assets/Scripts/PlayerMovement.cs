@@ -35,17 +35,5 @@ public class PlayerMovement : MonoBehaviour{
             health--;
             //print("Player health: " + health);   
         }
-        /*
-        //walk through door
-        if(triggerCollider.tag == "newDoor"){
-            Door triggerDoor = triggerCollider.gameObject.GetComponent<Door>();
-            if( triggerDoor.passed == false){
-                Destroy (triggerCollider.gameObject);
-                triggerDoor.passed = true;
-                int doorPositionX = (int)triggerDoor.transform.position.x;
-                int doorPositionZ = (int)triggerDoor.transform.position.z;
-            }
-        }
-        */
     }
 }

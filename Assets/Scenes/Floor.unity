@@ -228,10 +228,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Floor (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7545402782463387389, guid: 199a86bbb4a747544906a8659ca62723, type: 3}
+      propertyPath: m_TagString
+      value: floor
+      objectReference: {fileID: 0}
     - target: {fileID: 7545402782463387390, guid: 199a86bbb4a747544906a8659ca62723, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1190705405025744066, guid: c763331b44770e94cb50ed798f498966, type: 3}
+    - target: {fileID: 7545402782463387390, guid: 199a86bbb4a747544906a8659ca62723, type: 3}
+      propertyPath: hallway
+      value: 
+      objectReference: {fileID: 7740712664373306963, guid: ca594abee62ad0d40b5fae06bad00872, type: 3}
     - target: {fileID: 7545402782463387391, guid: 199a86bbb4a747544906a8659ca62723, type: 3}
       propertyPath: m_RootOrder
       value: 1
