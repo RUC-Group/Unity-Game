@@ -43,6 +43,15 @@ public class PlayerMovement : MonoBehaviour{
             print(keyAmount);
 
         }
+        if(triggerCollider.tag == "Gate"){
+            if(keyAmount==2){
+                Destroy (triggerCollider.gameObject);
+                print("You can pass");
+            }else{
+                print("You dont have enough keys");
+            }
+
+        }
         /*
         //walk through door
         if(triggerCollider.tag == "newDoor"){
