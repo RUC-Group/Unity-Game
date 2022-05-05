@@ -11,6 +11,8 @@ TagManager:
   - RoomSpawner
   - Key
   - Gate
+  - Dungeon Master
+  - Enemy
   layers:
   - Default
   - TransparentFX

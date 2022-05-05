@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour{
+
+    public GameObject sword;
     public int speed;
     int score = 0;
     int health = 100;
 
     int keyAmount=0;
+
+    bool alive=true;
 
     float lastDamageTime=0;
     Door door;
@@ -18,12 +22,17 @@ public class PlayerMovement : MonoBehaviour{
 
     // Update is called once per frame
     void Update(){
-        Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"),0 ,Input.GetAxisRaw("Vertical"));   
-        Vector3 direction = input.normalized; 
-        Vector3 velocity = direction * speed;
-        Vector3 position = velocity * Time.deltaTime;
+        if(alive){
+            Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"),0 ,Input.GetAxisRaw("Vertical"));   
+            Vector3 direction = input.normalized; 
+            Vector3 velocity = direction * speed;
+            Vector3 position = velocity * Time.deltaTime;
 
-        transform.Translate(position);
+            transform.Translate(position);
+        }else{
+            Quaternion target = Quaternion.Euler(0,90,90);
+            transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime);
+        }
     }
 
     //hitbox events
@@ -57,9 +66,12 @@ public class PlayerMovement : MonoBehaviour{
     public void getDamage(){
         float timeStamp = Time.time;
         if(timeStamp - lastDamageTime>1){
-            health--;
+            health-=25;
             print(health);
             lastDamageTime = timeStamp;
+        }
+        if(health<=0){
+            alive=false;
         }
     }
 }
