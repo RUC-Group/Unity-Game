@@ -13,6 +13,8 @@ public class Room : MonoBehaviour{
     public GameObject cornerTile;
     public GameObject door;
 
+    public GameObject keyTile;
+
     public GameObject endGate;
 
     public int posX;
@@ -44,17 +46,19 @@ public class Room : MonoBehaviour{
 
     public void changeRoom(string typeOfRoom){
         this.typeOfRoom=typeOfRoom;
-        if(this.typeOfRoom == "end gate room"){
-            for (var i = 1; i < roomSize-1; i++){
+        for (var i = 1; i < roomSize-1; i++){
                 for( var j = 1; j< roomSize-1; j++){
                     if(i == (roomSize-1)/2 && j == (roomSize-1)/2){
-                        roomTiles[i,j] = endGate;
+                        if(this.typeOfRoom == "end gate room"){
+                            roomTiles[i,j] = endGate;
+                        }else if(this.typeOfRoom == "key room"){
+                            roomTiles[i,j] = keyTile;
+                        }
                     }else{
                         roomTiles[i,j] = emptyTile;
                     }
                 }
             }
-        }
     }
     public void setRoom(int posX, int posZ, int roomSize, string typeOfRoom){
         this.posX=posX;

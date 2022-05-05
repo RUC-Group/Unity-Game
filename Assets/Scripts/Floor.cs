@@ -139,6 +139,15 @@ public class Floor : MonoBehaviour{
             pickedRoom = pickRoom(spawnedRooms);
         }
         pickedRoom.changeRoom("end gate room");
+        while(pickedRoom.typeOfRoom!=null){
+            pickedRoom = pickRoom(spawnedRooms);
+        }
+        pickedRoom.changeRoom("key room");
+
+        while(pickedRoom.typeOfRoom!=null){
+            pickedRoom = pickRoom(spawnedRooms);
+        }
+        pickedRoom.changeRoom("key room");
     }
 
 
