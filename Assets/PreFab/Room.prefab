@@ -51,7 +51,8 @@ MonoBehaviour:
   wallTile: {fileID: 7948942339734267596, guid: fe2fac0da242450438be926476c7e7e4, type: 3}
   cornerTile: {fileID: 8941676268904225611, guid: a8bbaa10d6daea641b79f6a9f1ad9d0d, type: 3}
   door: {fileID: 8447505780591899700, guid: 1c807c91a2652544e8f76067c556a55c, type: 3}
-  hallway: {fileID: 7740712664373306963, guid: ca594abee62ad0d40b5fae06bad00872, type: 3}
+  endGate: {fileID: 4543572776158442085, guid: 24388152d293f614c92e640a1ad1a4a7, type: 3}
   posX: 0
   posZ: 0
   roomSize: 7
+  typeOfRoom: 

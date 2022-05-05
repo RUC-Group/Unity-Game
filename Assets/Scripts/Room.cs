@@ -45,10 +45,10 @@ public class Room : MonoBehaviour{
     public void changeRoom(string typeOfRoom){
         this.typeOfRoom=typeOfRoom;
         if(this.typeOfRoom == "end gate room"){
-            for (var i = 1; i < roomSize; i++){
-                for( var j = 1; j< roomSize; j++){
+            for (var i = 1; i < roomSize-1; i++){
+                for( var j = 1; j< roomSize-1; j++){
                     if(i == (roomSize-1)/2 && j == (roomSize-1)/2){
-                        roomTiles[i,j] = spikeTile;
+                        roomTiles[i,j] = endGate;
                     }else{
                         roomTiles[i,j] = emptyTile;
                     }
