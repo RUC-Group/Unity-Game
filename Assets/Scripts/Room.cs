@@ -20,6 +20,8 @@ public class Room : MonoBehaviour{
     public int posX;
     public int posZ;
     public int roomSize = 7;
+    int roomTreasureCount;
+    int roomMaxTreasure = 3;
 
     public string typeOfRoom = null;
 
@@ -38,7 +40,7 @@ public class Room : MonoBehaviour{
                 }else if(i == 0 || i == roomSize -1 || j== roomSize - 1 || j == 0){
                     roomTiles[i,j] = wallTile;
                 }else{
-                    roomTiles[i,j] = pickTile();
+                    roomTiles[i,j] = pickTile(i,j);
                 }
             }
         }
@@ -79,9 +81,34 @@ public class Room : MonoBehaviour{
         }
     }
 
-    GameObject pickTile(){
-        int randNum = Random.Range(0,4);
-        switch (randNum){
+    GameObject pickTile(int x, int y){
+        //Determination of tileID based off of algo
+        //int tileID = Random.Range(0,4);
+        int tileID = 0;
+        if (x == 3 && y == 1 || x == 5 && y == 3 || x == 3 && y == 5 || x == 1 && y == 3){ //if there's a door adjacant to this tile... (3,0+1)(6-1,3)(3,6-1)(0+1,3)
+            tileID = 0; //...set this tile to be empty
+        }else if (x == 1 && y == 1 || x == 5 && y == 1 || x == 1 && y == 5 || x == 5 && y == 5 || x == 3 && y == 3){ //if tile is a corner or at center of room
+            int r = Random.Range(0,5);
+            if (r == 0 && roomTreasureCount < roomMaxTreasure){
+                tileID = 3;
+                roomTreasureCount ++;
+            }else{
+                tileID = Random.Range(0,3);
+            }
+        } else if(x == 1 && y != 3 && roomTiles[x,y] != treasureTile || x == 2 && y != 3 || x == 4 && y != 3 || x == 4 && y != 3 && roomTiles[x,y] != treasureTile ){ //if tile surrounds where a treasure could be
+            int r = Random.Range(0,3);
+            if(r <= 1){
+                tileID = 2;
+            } else if(r == 2){
+                tileID = 0;
+            } else {
+                tileID = 1;
+            }
+        } else {
+            tileID = Random.Range(0,2);
+        }
+        //Set tile based off of tileID
+        switch (tileID){
             case 0:
                 return emptyTile;
             case 1:
