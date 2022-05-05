@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour{
             Vector3 position = velocity * Time.deltaTime;
 
             transform.Translate(position);
-            sword.move(transform.position);
+            sword.updatePosition(transform.position);
         }else{
             Quaternion target = Quaternion.Euler(0,90,90);
             transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime);

@@ -13,6 +13,7 @@ TagManager:
   - Gate
   - Dungeon Master
   - Enemy
+  - Player Sword
   layers:
   - Default
   - TransparentFX
