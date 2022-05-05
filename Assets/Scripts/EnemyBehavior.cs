@@ -57,9 +57,11 @@ public class EnemyBehavior : MonoBehaviour{
     //hitbox events
     void OnTriggerStay(Collider triggerCollider) {
         //walk on spikes
-        if (triggerCollider.tag == "Spike" && enemyAlive == true){
-            health--;
-            //print("Enemy health: " + health);   
+        if(enemyAlive){
+            if (triggerCollider.tag == "Spike" || triggerCollider.tag == "Player Sword"){
+                health--;
+                //print("Enemy health: " + health);   
+            }
         }
     }
     void killEnemy(){

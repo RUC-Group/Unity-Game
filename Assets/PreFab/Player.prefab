@@ -148,6 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c85b575950833cd478ef3d8595694138, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swordGameObject: {fileID: 5824239708807477059, guid: 76a35cc95ef705548881f0f9633e17aa, type: 3}
+  sword: {fileID: 5824239708807477059, guid: 76a35cc95ef705548881f0f9633e17aa, type: 3}
   speed: 7
 --- !u!65 &9088053130704102024
 BoxCollider:

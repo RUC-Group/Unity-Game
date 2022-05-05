@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour{
 
-    public GameObject sword;
+    public GameObject swordGameObject;
+    Sword sword;
     public int speed;
     int score = 0;
     int health = 100;
@@ -18,10 +19,14 @@ public class PlayerMovement : MonoBehaviour{
 
     // Start is called before the first frame update
     void Start(){
+        swordGameObject=Instantiate(swordGameObject, new Vector3(0, 0,0),Quaternion.Euler(Vector3.down * 0));
+        sword = swordGameObject.GetComponent<Sword>();
     }
 
     // Update is called once per frame
     void Update(){
+        //swordGameObject = GameObject.FindGameObjectWithTag("Player Sword");
+        sword = swordGameObject.GetComponent<Sword>();
         if(alive){
             Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"),0 ,Input.GetAxisRaw("Vertical"));   
             Vector3 direction = input.normalized; 
@@ -29,6 +34,7 @@ public class PlayerMovement : MonoBehaviour{
             Vector3 position = velocity * Time.deltaTime;
 
             transform.Translate(position);
+            sword.move(transform.position);
         }else{
             Quaternion target = Quaternion.Euler(0,90,90);
             transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime);
