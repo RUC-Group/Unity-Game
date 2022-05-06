@@ -85,7 +85,7 @@ public class Room : MonoBehaviour{
         //Determination of tileID based off of algo
         //int tileID = Random.Range(0,4);
         int tileID = 0;
-        if (x == 3 && y == 1 || x == 5 && y == 3 || x == 3 && y == 5 || x == 1 && y == 3){ //if there's a door adjacant to this tile... (3,0+1)(6-1,3)(3,6-1)(0+1,3)
+        if (x == roomSize/2 && y == 1 || x == roomSize-1 && y == roomSize/2 || x == roomSize/2 && y == roomSize-1 || x == 1 && y == roomSize/2){ //if there's a door adjacant to this tile... (3,0+1)(6-1,3)(3,6-1)(0+1,3)
             tileID = 0; //...set this tile to be empty
         }else if (x == 1 && y == 1 || x == 5 && y == 1 || x == 1 && y == 5 || x == 5 && y == 5 || x == 3 && y == 3){ //if tile is a corner or at center of room
             int r = Random.Range(0,5);
@@ -95,14 +95,16 @@ public class Room : MonoBehaviour{
             }else{
                 tileID = Random.Range(0,3);
             }
-        } else if(x == 1 && y != 3 && roomTiles[x,y] != treasureTile || x == 2 && y != 3 || x == 4 && y != 3 || x == 4 && y != 3 && roomTiles[x,y] != treasureTile ){ //if tile surrounds where a treasure could be
-            int r = Random.Range(0,3);
-            if(r <= 1){
-                tileID = 2;
-            } else if(r == 2){
-                tileID = 0;
-            } else {
-                tileID = 1;
+        } else if(x == 1 || x == 2 || x == roomSize-1 || x == roomSize-2){ //if tile surrounds where a treasure would be (x)
+            if (y == 1 || y == 2 || y == roomSize-1 || y == roomSize-2 && roomTiles[x,y] != treasureTile){ //if tile surrounds where a treasure would be (y), and ISN'T treasure
+                int r = Random.Range(0,3);
+                if(r <= 1){
+                    tileID = 2;
+                } else if(r == 2){
+                    tileID = 0;
+                } else {
+                    tileID = 1;
+                }                
             }
         } else {
             tileID = Random.Range(0,2);
