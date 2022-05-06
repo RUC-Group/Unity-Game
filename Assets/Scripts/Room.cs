@@ -85,19 +85,20 @@ public class Room : MonoBehaviour{
     }
 
     public void showRoom(){
+        
         for(int i = 0; i < roomSize; i++){
             for(int j = 0; j< roomSize; j++){
                 var position = new Vector3(i*5 + indexToUnitPos(posX), 0, j*5 + indexToUnitPos(posZ));
                 
 
                 if(i == 0 && j == 0 || i == 0 && j == roomSize-1 || i == roomSize-1 && j == 0 || i == roomSize-1 && j == roomSize-1){
-                    Instantiate(roomTiles[i,j], position, Quaternion.identity);
+                    roomTiles[i,j]=(GameObject)Instantiate(roomTiles[i,j], position, Quaternion.identity);
                 }else if(i == 0 || i == roomSize -1){
-                    Instantiate(roomTiles[i,j], position, Quaternion.Euler(Vector3.down * 90));
+                    roomTiles[i,j]=(GameObject)Instantiate(roomTiles[i,j], position, Quaternion.Euler(Vector3.down * 90));
                 }else if ( j== roomSize - 1 || j == 0){
-                    Instantiate(roomTiles[i,j], position, Quaternion.Euler(Vector3.down * 0));
+                    roomTiles[i,j]=(GameObject)Instantiate(roomTiles[i,j], position, Quaternion.Euler(Vector3.down * 0));
                 }else{
-                    Instantiate(roomTiles[i,j], position, Quaternion.identity);
+                    roomTiles[i,j]=(GameObject)Instantiate(roomTiles[i,j], position, Quaternion.identity);
                 }
             }
         }

@@ -11,6 +11,7 @@ public class Floor : MonoBehaviour{
     Room[,] rooms;
     List<Room> spawnedRooms;
     List<Transform> waypoints;
+    public Transform path;
 
     public Floor(int floorSize){
         this.floorSize = floorSize;
@@ -22,10 +23,10 @@ public class Floor : MonoBehaviour{
         waypoints = getAllWaypoints(getTiles());
         print(waypoints.Count + " waypoints in the map");
     }
-
-    // Update is called once per frame
     void Update(){
+        
     }
+
     public List<Room> getSpawnedRooms(){
         return spawnedRooms;
     }
@@ -76,7 +77,7 @@ public class Floor : MonoBehaviour{
         spawnedRooms.Add(pickedRoom);
         while (numberOfRooms > 0){
             int dir = Random.Range(0,4);
-            int spawnCount = 1;//Random.Range(1,5);
+            int spawnCount = Random.Range(1,5);
 
             switch (dir){
                 case 0:
@@ -150,20 +151,17 @@ public class Floor : MonoBehaviour{
     }
 
     // Method to return all the waypoints from a list of tiles
-    List<Transform> getAllWaypoints(List<GameObject> tiles){
+    List<Transform> getAllWaypoints(List<Transform> tiles){
         
         waypoints = new List<Transform>();
-        foreach (GameObject tile in tiles){
-            
-            for (var i = 0; i < tile.transform.childCount; i++){
-                
-                if (tile.transform.GetChild(i).gameObject.tag == "pathHolder"){
-                    
+        foreach (Transform tile in tiles){
+            for (var i = 0; i < tile.childCount; i++){
+                if (tile.GetChild(i).gameObject.tag == "pathHolder"){
                     for (var j = 0; j < tile.transform.GetChild(i).childCount; j++){
-
-                        if(tile.transform.GetChild(i).transform.GetChild(j).gameObject.tag == "PathFindingWAypoint"){
-                            waypoints.Add(tile.transform.GetChild(i).transform.GetChild(j));
-                            
+                        if(tile.GetChild(i).transform.GetChild(j).gameObject.tag == "PathFindingWAypoint"){
+                            waypoints.Add(tile.GetChild(i).transform.GetChild(j).transform);
+                            //print("a" +tile.position);
+                            //print("b" +tile.GetChild(i).transform.GetChild(j).transform.position);
                         }
                     }
                 }
@@ -173,24 +171,26 @@ public class Floor : MonoBehaviour{
     }
 
     //method that returns a list of all tiles in the game
-    public List<GameObject> getTiles(){
-        List<GameObject> allTiles = new List<GameObject>();
+    public List<Transform> getTiles(){
+        List<Transform> allTiles = new List<Transform>();
         foreach (Room r in spawnedRooms){
             GameObject[,] roomTiles = r.getRoomTiles();
+            print(roomTiles[1,1].transform.position);
             for (var i = 0; i < roomTiles.Length/7; i++){
                 for (var j = 0; j < roomTiles.Length/7; j++){
-                    allTiles.Add(roomTiles[i,j]);
+                    allTiles.Add(roomTiles[i,j].transform);
                 }
             }
         }
         return allTiles;
     }
-
+    
     void OnDrawGizmos(){
         foreach (Transform waypoint in waypoints){
             Gizmos.DrawSphere(waypoint.position,.3f);
-        }   
+        }
     }
+
     public Room makeRoom(int roomX, int roomZ){
         int roomSize = 7;
         var position = new Vector3(roomX, 0, roomZ);
