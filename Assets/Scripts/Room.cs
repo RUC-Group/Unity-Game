@@ -38,12 +38,12 @@ public class Room : MonoBehaviour{
                 }
             }
         }
-        createRoomGrid();
+        
     }
 
     public void createRoomGrid(){
         roomGrid = new AdjacencyGraph();
-        List<Transform> waypoints = this.getWaypointsForRoom();
+        List<Transform> waypoints = getWaypointsForRoom();
         foreach (Transform waypoint in waypoints){
             Vertex v = new Vertex(waypoint.position);
             roomGrid.addVertex(v);
@@ -56,10 +56,7 @@ public class Room : MonoBehaviour{
     }
 
     public double dist(Vector3 a, Vector3 b){
-        double x = Math.Pow((b.x - a.x),2);
-        double y = Math.Pow((b.y - a.y),2);
-        double z = Math.Pow((b.z - a.z),2);
-        return Math.Pow(x + y + z, (float).5f); // https://www.engineeringtoolbox.com/distance-relationship-between-two-points-d_1854.html
+        return Math.Pow(Math.Pow((b.x - a.x),2) + Math.Pow((b.y - a.y),2) + Math.Pow((b.z - a.z),2), (float).5f); // https://www.engineeringtoolbox.com/distance-relationship-between-two-points-d_1854.html
     }
 
     // Method to return all the waypoints from a list of tiles
@@ -99,15 +96,20 @@ public class Room : MonoBehaviour{
         }
     }
     void OnDrawGizmos(){
-        foreach (Transform waypoint in this.getWaypointsForRoom()){
-            Gizmos.DrawSphere(waypoint.position,.3f);
+        List<Vertex> lv = roomGrid.GetVertices();
+        foreach (Vertex v in lv){
+            Gizmos.DrawSphere(v.getPos(),.3f);
+            foreach (Edge e in v.getEdgeList()){
+                Gizmos.DrawLine(e.getFrom().getPos(), e.getTo().getPos());
+            }
         }
     }
 
     public int indexToUnitPos(int i){
-        i = (5*5+15)*i;
-        return i;
+        return (5*5+15)*i;
     }
+
+
 
     public void createDoor(int dir){
         if (dir == 2){
@@ -124,13 +126,10 @@ public class Room : MonoBehaviour{
         }
     }
 
-    public void showRoom(){
-        
+    public void showRoom(){        
         for(int i = 0; i < roomSize; i++){
             for(int j = 0; j< roomSize; j++){
                 var position = new Vector3(i*5 + indexToUnitPos(posX), 0, j*5 + indexToUnitPos(posZ));
-                
-
                 if(i == 0 && j == 0 || i == 0 && j == roomSize-1 || i == roomSize-1 && j == 0 || i == roomSize-1 && j == roomSize-1){
                     roomTiles[i,j]=(GameObject)Instantiate(roomTiles[i,j], position, Quaternion.identity);
                 }else if(i == 0 || i == roomSize -1){

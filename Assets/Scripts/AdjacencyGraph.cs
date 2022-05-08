@@ -25,6 +25,10 @@ public class AdjacencyGraph{
         }
     }
 
+    public List<Vertex> GetVertices(){
+        return vertecies;
+    }
+
     public bool contains(List<Vertex> l, Vertex element){
         for (var i = 0; i < l.Count; i++){
             if (l[i] == element){

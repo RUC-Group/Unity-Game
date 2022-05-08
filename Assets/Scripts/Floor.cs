@@ -24,6 +24,9 @@ public class Floor : MonoBehaviour{
         showFloor();
         waypoints = getAllWaypoints(getTiles());
         print(waypoints.Count + " waypoints in the map");
+        foreach (Room r in spawnedRooms){
+            r.createRoomGrid();
+        }
     }
     void Update(){
         
@@ -68,7 +71,7 @@ public class Floor : MonoBehaviour{
         rooms = new Room[floorSize,floorSize];
         spawnedRooms = new List<Room>();
         Room pickedRoom;
-        int numberOfRooms = 100; //Random.Range(99,100);
+        int numberOfRooms = 10; //Random.Range(99,100);
         print("number of rooms to spawn: " + numberOfRooms);
         int indexX = Random.Range(150,151);
         int indexZ = Random.Range(150,151);
@@ -159,7 +162,6 @@ public class Floor : MonoBehaviour{
         List<Transform> allTiles = new List<Transform>();
         foreach (Room r in spawnedRooms){
             GameObject[,] roomTiles = r.getRoomTiles();
-            print(roomTiles[1,1].transform.position);
             for (var i = 0; i < roomTiles.Length/7; i++){
                 for (var j = 0; j < roomTiles.Length/7; j++){
                     allTiles.Add(roomTiles[i,j].transform);

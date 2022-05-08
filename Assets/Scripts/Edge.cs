@@ -14,4 +14,12 @@ public class Edge{
     public bool compareTo(Edge o){
         return this.weight > o.weight;
     }
+
+    public Vertex getTo(){
+        return to;
+    }
+
+    public Vertex getFrom(){
+        return from;
+    }
 }
