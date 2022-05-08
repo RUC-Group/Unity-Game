@@ -12,6 +12,8 @@ public class Floor : MonoBehaviour{
     List<Room> spawnedRooms;
     List<Transform> waypoints;
     public Transform path;
+    int x;
+    static int y;
 
     public Floor(int floorSize){
         this.floorSize = floorSize;
@@ -66,7 +68,7 @@ public class Floor : MonoBehaviour{
         rooms = new Room[floorSize,floorSize];
         spawnedRooms = new List<Room>();
         Room pickedRoom;
-        int numberOfRooms = 3; //Random.Range(99,100);
+        int numberOfRooms = 100; //Random.Range(99,100);
         print("number of rooms to spawn: " + numberOfRooms);
         int indexX = Random.Range(150,151);
         int indexZ = Random.Range(150,151);
@@ -150,25 +152,7 @@ public class Floor : MonoBehaviour{
         return a[num];
     }
 
-    // Method to return all the waypoints from a list of tiles
-    List<Transform> getAllWaypoints(List<Transform> tiles){
-        
-        waypoints = new List<Transform>();
-        foreach (Transform tile in tiles){
-            for (var i = 0; i < tile.childCount; i++){
-                if (tile.GetChild(i).gameObject.tag == "pathHolder"){
-                    for (var j = 0; j < tile.transform.GetChild(i).childCount; j++){
-                        if(tile.GetChild(i).transform.GetChild(j).gameObject.tag == "PathFindingWAypoint"){
-                            waypoints.Add(tile.GetChild(i).transform.GetChild(j).transform);
-                            //print("a" +tile.position);
-                            //print("b" +tile.GetChild(i).transform.GetChild(j).transform.position);
-                        }
-                    }
-                }
-            }
-        }
-        return waypoints;
-    }
+    
 
     //method that returns a list of all tiles in the game
     public List<Transform> getTiles(){
@@ -184,13 +168,35 @@ public class Floor : MonoBehaviour{
         }
         return allTiles;
     }
-    
-    void OnDrawGizmos(){
-        foreach (Transform waypoint in waypoints){
-            Gizmos.DrawSphere(waypoint.position,.3f);
+    // Method to return all the waypoints from a list of tiles
+    List<Transform> getAllWaypoints(List<Transform> tiles){
+        
+        waypoints = new List<Transform>();
+        foreach (Transform tile in tiles){
+            for (var i = 0; i < tile.childCount; i++){
+                if (tile.GetChild(i).gameObject.tag == "pathHolder"){
+                    for (var j = 0; j < tile.transform.GetChild(i).childCount; j++){
+                        if(tile.GetChild(i).transform.GetChild(j).gameObject.tag == "PathFindingWAypoint"){
+                            waypoints.Add(tile.GetChild(i).transform.GetChild(j).transform);
+                        }
+                    }
+                }
+            }
         }
+        return waypoints;
     }
 
+    //draws Gizmos (3d objects that can only be seen in the editor and is not displayed on player camera)
+    void OnDrawGizmos(){
+        if(false){
+            foreach (Transform waypoint in waypoints){
+                Gizmos.DrawSphere(waypoint.position,.3f);
+            }
+        }
+        
+    }
+
+    //method that makes a room at the coordinate (roomX,0,roomZ)
     public Room makeRoom(int roomX, int roomZ){
         int roomSize = 7;
         var position = new Vector3(roomX, 0, roomZ);

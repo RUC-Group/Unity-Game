@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Room : MonoBehaviour{
     GameObject[,] roomTiles = new GameObject[7,7];
@@ -17,14 +18,15 @@ public class Room : MonoBehaviour{
     public int posX;
     public int posZ;
     public int roomSize = 7;
+    public int longestEdge = 5;
 
-    Vector2 globalPosition;
+    AdjacencyGraph roomGrid;
     
+    //constructor ... kindof XD
     public void setRoom(int posX, int posZ, int roomSize){
         this.posX=posX;
         this.posZ=posZ;
         this.roomSize=roomSize;
-
         for (var i = 0; i < roomSize; i++){
             for( var j = 0; j< roomSize; j++){
                 if(i == 0 && j == 0 || i == 0 && j == roomSize-1 || i == roomSize-1 && j == 0 || i == roomSize-1 && j == roomSize-1){
@@ -36,6 +38,45 @@ public class Room : MonoBehaviour{
                 }
             }
         }
+        createRoomGrid();
+    }
+
+    public void createRoomGrid(){
+        roomGrid = new AdjacencyGraph();
+        List<Transform> waypoints = this.getWaypointsForRoom();
+        foreach (Transform waypoint in waypoints){
+            Vertex v = new Vertex(waypoint.position);
+            roomGrid.addVertex(v);
+            for (int i = 0; i < waypoints.Count; i++){
+                if (dist(waypoint.position, waypoints[i].position) < longestEdge){
+                    roomGrid.addEdge(v, new Vertex(waypoints[i].position), (float)dist(waypoint.position, waypoints[i].position));
+                }
+            }
+        }
+    }
+
+    public double dist(Vector3 a, Vector3 b){
+        double x = Math.Pow((b.x - a.x),2);
+        double y = Math.Pow((b.y - a.y),2);
+        double z = Math.Pow((b.z - a.z),2);
+        return Math.Pow(x + y + z, (float).5f); // https://www.engineeringtoolbox.com/distance-relationship-between-two-points-d_1854.html
+    }
+
+    // Method to return all the waypoints from a list of tiles
+    public List<Transform> getWaypointsForRoom(){
+        List<Transform> l = new List<Transform>();
+        foreach (GameObject tile in roomTiles){
+            for (var i = 0; i < tile.transform.childCount; i++){
+                if (tile.transform.GetChild(i).gameObject.tag == "pathHolder"){
+                    for (var j = 0; j < tile.transform.GetChild(i).childCount; j++){
+                        if(tile.transform.GetChild(i).transform.GetChild(j).gameObject.tag == "PathFindingWAypoint"){
+                            l.Add(tile.transform.GetChild(i).transform.GetChild(j).transform);
+                        }
+                    }
+                }
+            }
+        }
+        return l;
     }
 
     public GameObject[,] getRoomTiles(){
@@ -43,7 +84,7 @@ public class Room : MonoBehaviour{
     }
 
     GameObject pickTile(){
-        int randNum = Random.Range(0,4);
+        int randNum = UnityEngine.Random.Range(0,4);
         switch (randNum){
             case 0:
                 return emptyTile;
@@ -57,11 +98,10 @@ public class Room : MonoBehaviour{
                 return null;
         }
     }
-
-    
-
-    public void setPosition(Vector2 position){
-        globalPosition = position;
+    void OnDrawGizmos(){
+        foreach (Transform waypoint in this.getWaypointsForRoom()){
+            Gizmos.DrawSphere(waypoint.position,.3f);
+        }
     }
 
     public int indexToUnitPos(int i){
@@ -106,3 +146,4 @@ public class Room : MonoBehaviour{
 
     
 }
+
