@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour{
+public class Player : MonoBehaviour{
     public int speed;
     int score = 0;
     int health = 100;
-    Door door;
+
 
     // Start is called before the first frame update
     void Start(){
@@ -33,7 +33,6 @@ public class PlayerMovement : MonoBehaviour{
         //walk on spikes
         if (triggerCollider.tag == "Spike"){
             health--;
-            //print("Player health: " + health);   
         }
     }
 }

@@ -48,7 +48,7 @@ public class Room : MonoBehaviour{
             Vertex v = new Vertex(waypoint.position);
             roomGrid.addVertex(v);
             for (int i = 0; i < waypoints.Count; i++){
-                if (dist(waypoint.position, waypoints[i].position) < longestEdge){
+                if (dist(waypoint.position, waypoints[i].position) < longestEdge && (v.getEdgeList().Count != 8)){
                     roomGrid.addEdge(v, new Vertex(waypoints[i].position), (float)dist(waypoint.position, waypoints[i].position));
                 }
             }
@@ -95,12 +95,14 @@ public class Room : MonoBehaviour{
                 return null;
         }
     }
+
+    //draws Gizmos (3d objects that can only be seen in the editor and is not displayed on player camera)
     void OnDrawGizmos(){
-        List<Vertex> lv = roomGrid.GetVertices();
-        foreach (Vertex v in lv){
+        // draw adjacency tree for the enemies
+        foreach (Vertex v in roomGrid.GetVertices()){
             Gizmos.DrawSphere(v.getPos(),.3f);
             foreach (Edge e in v.getEdgeList()){
-                Gizmos.DrawLine(e.getFrom().getPos(), e.getTo().getPos());
+                Gizmos.DrawLine(e.from.getPos(), e.to.getPos());
             }
         }
     }

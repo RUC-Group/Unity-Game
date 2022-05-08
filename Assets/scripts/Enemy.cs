@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBehavior : MonoBehaviour{
+public class Enemy : MonoBehaviour{
     Vector3 playerPos;
     int health = 100;
     bool enemyAlive = true;
@@ -14,8 +14,6 @@ public class EnemyBehavior : MonoBehaviour{
 
     // Start is called before the first frame update
     void Start() {
-
-
            
     }
 
@@ -25,7 +23,6 @@ public class EnemyBehavior : MonoBehaviour{
     void Update(){
         if(health < 0 ){
             killEnemy();
-
         }
         // else, dmg player or smt.
         else if (enemyAlive == false){
@@ -68,7 +65,29 @@ public class EnemyBehavior : MonoBehaviour{
         Quaternion target = Quaternion.Euler(0,90,90);
         transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime);
     }
-
+    /*
+    List<Vertex> dijkstra(Vertex s){
+        MinHeap<Vertex> q = new MinHeap<Vertex>();
+        List<int> d = new List<int>();
+        List<Vertex> p = new List<Vertex>();
+        for (var i = 0; i < length; i++){
+            d[i] = 100;
+            p[i] = null;
+            q.insert((d[i], v))
+        }
+        while (!q.isEmpty()){
+            Vertex v = q.extractMin();
+            foreach (Edge e in v.getEdgeList()){
+                if (d[e.from] + e.weight < d[e.to]){
+                    d[e.to] = d[e.from] + e.weight;
+                    p[e.to] = e.from;
+                    q.decreaseKey(e.to);
+                }
+            }
+        }
+        return d;
+    }
+    */
 
 }
 

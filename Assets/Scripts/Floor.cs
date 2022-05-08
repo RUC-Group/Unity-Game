@@ -190,11 +190,6 @@ public class Floor : MonoBehaviour{
 
     //draws Gizmos (3d objects that can only be seen in the editor and is not displayed on player camera)
     void OnDrawGizmos(){
-        if(false){
-            foreach (Transform waypoint in waypoints){
-                Gizmos.DrawSphere(waypoint.position,.3f);
-            }
-        }
         
     }
 
