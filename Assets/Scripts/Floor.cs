@@ -5,6 +5,7 @@ using UnityEngine;
 public class Floor : MonoBehaviour{
     public GameObject room;
     public GameObject player;
+    public GameObject playerSword;
     public GameObject hallway;
     int floorSize = 5;
     List<Room> roomsList;

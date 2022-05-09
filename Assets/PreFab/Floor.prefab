@@ -46,4 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   room: {fileID: 8345788204346026189, guid: e74fc15671889974296ca72829c207e8, type: 3}
   player: {fileID: 1190705405025744066, guid: c763331b44770e94cb50ed798f498966, type: 3}
+  playerSword: {fileID: 5824239708807477059, guid: 76a35cc95ef705548881f0f9633e17aa, type: 3}
   hallway: {fileID: 7740712664373306963, guid: ca594abee62ad0d40b5fae06bad00872, type: 3}
