@@ -21,15 +21,15 @@ public class PlayerMovement : MonoBehaviour{
 
     // Start is called before the first frame update
     void Start(){
-        //swordGameObject=Instantiate(swordGameObject, new Vector3(0, 0,0),Quaternion.Euler(Vector3.down * 0));
-        sword = transform.Find("sword").GetComponent<Sword>();
+        swordGameObject=Instantiate(swordGameObject, new Vector3(0, 0,0),Quaternion.Euler(Vector3.down * 0));
+        sword = swordGameObject.transform.GetComponent<Sword>();
         model = transform.Find("Capsule").gameObject;
     }
 
     // Update is called once per frame
     void Update(){
         //swordGameObject = GameObject.FindGameObjectWithTag("Player Sword");
-        sword = transform.Find("sword").GetComponent<Sword>();
+        sword = swordGameObject.transform.GetComponent<Sword>();
         model = transform.Find("Capsule").gameObject;
         if(alive){
             Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"),0 ,Input.GetAxisRaw("Vertical"));   
@@ -82,7 +82,7 @@ public class PlayerMovement : MonoBehaviour{
     public void getDamage(){
         float timeStamp = Time.time;
         if(timeStamp - lastDamageTime>1){
-            //health-=25;
+            health-=25;
             print(health);
             lastDamageTime = timeStamp;
         }
