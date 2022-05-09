@@ -44,6 +44,8 @@ public class Room : MonoBehaviour{
     public void createRoomGrid(){
         roomGrid = new AdjacencyGraph();
         List<Transform> waypoints = getWaypointsForRoom();
+        Vertex pw = new Vertex(playerWaypoint.position);
+        roomGrid.addVertex(pw);
         foreach (Transform waypoint in waypoints){
             Vertex v = new Vertex(waypoint.position);
             roomGrid.addVertex(v);
@@ -53,6 +55,9 @@ public class Room : MonoBehaviour{
                 }
             }
         }
+    }
+    public getAdjacencyGraph(){
+        return roomGrid;
     }
 
     public double dist(Vector3 a, Vector3 b){

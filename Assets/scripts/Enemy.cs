@@ -11,10 +11,12 @@ public class Enemy : MonoBehaviour{
     public float detectionRange;
     float detectionRangeMod = 1;
     public float waitTime = .3f;
+    Dictionary<Vertex, Vertex> pathToPlayer;
+    AdjacencyGraph roomGrid;
 
     // Start is called before the first frame update
     void Start() {
-           
+        roomGrid = gameObject.GetComponent<Room>().getAdjacencyGraph();
     }
 
     
@@ -23,11 +25,6 @@ public class Enemy : MonoBehaviour{
     void Update(){
         if(health < 0 ){
             killEnemy();
-        }
-        // else, dmg player or smt.
-        else if (enemyAlive == false){
-        } 
-        else{
         }
 
         playerPos = GameObject.FindGameObjectWithTag("Player").transform.position; 
@@ -42,9 +39,8 @@ public class Enemy : MonoBehaviour{
             detectionRangeMod = 2; //expands detection range via multiplication
             //if enemy is far from player, pursue player
             if(distanceToTarget > 1.5){
+                Dictionary = dijkstra();
                 transform.Translate(velocity * Time.deltaTime);  
-            }else{
-
             }
         }else{
             transform.localScale = new Vector3(1,1,1);
@@ -65,30 +61,37 @@ public class Enemy : MonoBehaviour{
         Quaternion target = Quaternion.Euler(0,90,90);
         transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime);
     }
-    /*
-    List<Vertex> dijkstra(Vertex s){
-        MinHeap<Vertex> q = new MinHeap<Vertex>();
-        List<int> d = new List<int>();
-        List<Vertex> p = new List<Vertex>();
-        for (var i = 0; i < length; i++){
-            d[i] = 100;
-            p[i] = null;
-            q.insert((d[i], v))
+
+
+    Dictionary<Vertex,Vertex> dijkstra(Vertex s, AdjacencyGraph graph){
+
+        MinHeap<Pair> q = new MinHeap<Pair>();
+        Dictionary<Vertex,int> d = new Dictionary<Vertex,int>();
+        Dictionary<Vertex,Vertex> p = new Dictionary<Vertex,Vertex>();
+        List<Vertex> allVertecies = graph.GetVertices();
+        for (var i = 0; i < allVertecies.Count; i++){
+            d[allVertecies[i]] = 100;
+            p[allVertecies[i]] = null;
+            q.insert(new Pair(allVertecies[i], d[allVertecies[i]], i));
         }
         while (!q.isEmpty()){
-            Vertex v = q.extractMin();
-            foreach (Edge e in v.getEdgeList()){
+            Pair pair = q.extractMin();
+            foreach (Edge e in pair.v.getEdgeList()){
                 if (d[e.from] + e.weight < d[e.to]){
-                    d[e.to] = d[e.from] + e.weight;
+                    d[e.to] = d[e.from] + (int)e.weight;
                     p[e.to] = e.from;
-                    q.decreaseKey(e.to);
+                    q.decreaseKey(pair.index);
                 }
             }
         }
-        return d;
+        return p;
     }
-    */
 
+    public OnDrawGizmos(){
+        foreach (Vertex v in Dictionary){
+            Gizmos.DrawLine(v.pos, Dictionary[v].pos);            
+        }
+    }
 }
 
 /*
