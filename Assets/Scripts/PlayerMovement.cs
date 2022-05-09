@@ -28,7 +28,6 @@ public class PlayerMovement : MonoBehaviour{
 
     // Update is called once per frame
     void Update(){
-        //swordGameObject = GameObject.FindGameObjectWithTag("Player Sword");
         sword = swordGameObject.transform.GetComponent<Sword>();
         model = transform.Find("Capsule").gameObject;
         if(alive){
@@ -38,7 +37,6 @@ public class PlayerMovement : MonoBehaviour{
             Vector3 position = velocity * Time.deltaTime;
 
             transform.Translate(position);
-            //transform.rotation = Quaternion.LookRotation(position);
             model.transform.rotation = Quaternion.LookRotation(position);
             sword.updatePosition(model.transform,position);
             if (Input.GetKeyDown(KeyCode.Space))
@@ -61,8 +59,7 @@ public class PlayerMovement : MonoBehaviour{
         }
         //walk on spikes
         if (triggerCollider.tag == "Spike"){
-            health--;
-            //print("Player health: " + health);   
+            health--;   
         }
         if(triggerCollider.tag == "Key"){
             Destroy (triggerCollider.gameObject);
