@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour{
     public int speed;
@@ -22,6 +23,9 @@ public class PlayerMovement : MonoBehaviour{
         Vector3 position = velocity * Time.deltaTime;
 
         transform.Translate(position);
+        if (health < 0){
+            SceneManager.LoadScene(2);
+        }
     }
 
     //hitbox events
@@ -46,6 +50,7 @@ public class PlayerMovement : MonoBehaviour{
         if(triggerCollider.tag == "Gate"){
             if(keyAmount==2){
                 Destroy (triggerCollider.gameObject);
+                SceneManager.LoadScene(2);
                 print("You can pass");
             }else{
                 print("You dont have enough keys");
