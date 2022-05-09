@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour{
 
@@ -35,17 +36,19 @@ public class PlayerMovement : MonoBehaviour{
             Vector3 direction = input.normalized; 
             Vector3 velocity = direction * speed;
             Vector3 position = velocity * Time.deltaTime;
-
             transform.Translate(position);
             model.transform.rotation = Quaternion.LookRotation(position);
             sword.updatePosition(model.transform,position);
             if (Input.GetKeyDown(KeyCode.Space))
-        {
-            sword.attack();
-        }
+            {
+              sword.attack();
+            }
         }else{
             Quaternion target = Quaternion.Euler(0,90,90);
             transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime);
+        }
+        if (health < 0){
+            SceneManager.LoadScene(2);
         }
     }
 
@@ -69,6 +72,7 @@ public class PlayerMovement : MonoBehaviour{
         if(triggerCollider.tag == "Gate"){
             if(keyAmount==2){
                 Destroy (triggerCollider.gameObject);
+                SceneManager.LoadScene(2);
                 print("You can pass");
             }else{
                 print("You dont have enough keys");
