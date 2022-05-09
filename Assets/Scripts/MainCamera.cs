@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Camera : MonoBehaviour
+public class MainCamera : MonoBehaviour
 {
 
     public Transform player;
@@ -16,6 +16,7 @@ public class Camera : MonoBehaviour
     void Update()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        print(player.transform.position);
         
         transform.position = player.transform.position + new Vector3((float)-0.53,(float) 18.38,(float) -20.45);
     }
