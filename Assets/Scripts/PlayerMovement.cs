@@ -6,6 +6,8 @@ public class PlayerMovement : MonoBehaviour{
 
     public GameObject swordGameObject;
     Sword sword;
+
+    GameObject model;
     public int speed;
     int score = 0;
     int health = 100;
@@ -19,14 +21,16 @@ public class PlayerMovement : MonoBehaviour{
 
     // Start is called before the first frame update
     void Start(){
-        swordGameObject=Instantiate(swordGameObject, new Vector3(0, 0,0),Quaternion.Euler(Vector3.down * 0));
-        sword = swordGameObject.GetComponent<Sword>();
+        //swordGameObject=Instantiate(swordGameObject, new Vector3(0, 0,0),Quaternion.Euler(Vector3.down * 0));
+        sword = transform.Find("sword").GetComponent<Sword>();
+        model = transform.Find("Capsule").gameObject;
     }
 
     // Update is called once per frame
     void Update(){
         //swordGameObject = GameObject.FindGameObjectWithTag("Player Sword");
-        sword = swordGameObject.GetComponent<Sword>();
+        sword = transform.Find("sword").GetComponent<Sword>();
+        model = transform.Find("Capsule").gameObject;
         if(alive){
             Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"),0 ,Input.GetAxisRaw("Vertical"));   
             Vector3 direction = input.normalized; 
@@ -34,7 +38,13 @@ public class PlayerMovement : MonoBehaviour{
             Vector3 position = velocity * Time.deltaTime;
 
             transform.Translate(position);
-            sword.updatePosition(transform.position);
+            //transform.rotation = Quaternion.LookRotation(position);
+            model.transform.rotation = Quaternion.LookRotation(position);
+            sword.updatePosition(model.transform,position);
+            if (Input.GetKeyDown(KeyCode.Space))
+        {
+            sword.attack();
+        }
         }else{
             Quaternion target = Quaternion.Euler(0,90,90);
             transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime);
@@ -72,7 +82,7 @@ public class PlayerMovement : MonoBehaviour{
     public void getDamage(){
         float timeStamp = Time.time;
         if(timeStamp - lastDamageTime>1){
-            health-=25;
+            //health-=25;
             print(health);
             lastDamageTime = timeStamp;
         }

@@ -15,6 +15,8 @@ public class EnemyBehavior : MonoBehaviour{
     public float detectionRange;
     float detectionRangeMod = 1;
 
+    float lastDamageTime=0;
+
 
     // Start is called before the first frame update
     void Start() {  
@@ -58,9 +60,13 @@ public class EnemyBehavior : MonoBehaviour{
     void OnTriggerStay(Collider triggerCollider) {
         //walk on spikes
         if(enemyAlive){
-            if (triggerCollider.tag == "Spike" || triggerCollider.tag == "Player Sword"){
+            float timeStamp = Time.time;
+            if (triggerCollider.tag == "Spike"){
                 health--;
                 //print("Enemy health: " + health);   
+            }else if(triggerCollider.tag == "Player Sword" && triggerCollider.gameObject.GetComponent<Sword>().active && timeStamp - lastDamageTime>1){
+                health-=50;
+                lastDamageTime = timeStamp;
             }
         }
     }
