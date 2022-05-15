@@ -22,7 +22,7 @@ public class Sword : MonoBehaviour
     // Update is called once per frame
     void Update(){
         if(active){
-            if (timeCount<=1.2){
+            if (timeCount<=2){
                 yRotation += timeCount * speed;
                 transform.rotation=Quaternion.Euler(transform.rotation.eulerAngles.x,transform.rotation.eulerAngles.y-90+yRotation,transform.rotation.eulerAngles.z);
             }else{
