@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour{
         }
         //walk on spikes
         if (triggerCollider.tag == "Spike"){
-            health--;   
+            getDamage();   
         }
         if(triggerCollider.tag == "Key"){
             Destroy (triggerCollider.gameObject);
@@ -83,7 +83,7 @@ public class PlayerMovement : MonoBehaviour{
     public void getDamage(){
         float timeStamp = Time.time;
         if(timeStamp - lastDamageTime>1){
-            health-=25;
+            health-=10;
             print(health);
             lastDamageTime = timeStamp;
         }
