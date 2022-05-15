@@ -20,11 +20,16 @@ public class PlayerMovement : MonoBehaviour{
     float lastDamageTime=0;
     Door door;
 
+    Rigidbody myRigidbody;
+
+    Vector3 position;
+
     // Start is called before the first frame update
     void Start(){
         swordGameObject=Instantiate(swordGameObject, new Vector3(0, 0,0),Quaternion.Euler(Vector3.down * 0));
         sword = swordGameObject.transform.GetComponent<Sword>();
         model = transform.Find("Capsule").gameObject;
+        myRigidbody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -35,10 +40,11 @@ public class PlayerMovement : MonoBehaviour{
             Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"),0 ,Input.GetAxisRaw("Vertical"));   
             Vector3 direction = input.normalized; 
             Vector3 velocity = direction * speed;
-            Vector3 position = velocity * Time.deltaTime;
-            transform.Translate(position);
+            position = velocity * Time.deltaTime;
+
             model.transform.rotation = Quaternion.LookRotation(position);
             sword.updatePosition(model.transform,position);
+            
             if (Input.GetKeyDown(KeyCode.Space))
             {
               sword.attack();
@@ -50,6 +56,10 @@ public class PlayerMovement : MonoBehaviour{
         if (health < 0){
             SceneManager.LoadScene(2);
         }
+    }
+
+    void FixedUpdate(){
+        myRigidbody.position += position;
     }
 
     //hitbox events
