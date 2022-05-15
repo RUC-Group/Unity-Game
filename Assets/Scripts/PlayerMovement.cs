@@ -71,6 +71,8 @@ public class PlayerMovement : MonoBehaviour{
             health--;   
         }
         if(triggerCollider.tag == "Key"){
+            gameUI.key1.color=new Color32(255, 255, 225, 225);
+            if(keyAmount>0) gameUI.key2.color=new Color32(255, 255, 225, 225);
             Destroy (triggerCollider.gameObject);
             keyAmount++;
             print(keyAmount);
