@@ -58,6 +58,7 @@ public class PlayerMovement : MonoBehaviour{
         if (triggerCollider.tag == "Treasure"){
             Destroy (triggerCollider.gameObject);
             score++;
+            if(score%10==0) health+=20;
             print("Score: " + score);   
         }
         //walk on spikes

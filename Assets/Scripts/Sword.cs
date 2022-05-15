@@ -30,7 +30,7 @@ public class Sword : MonoBehaviour
                 timeCount = 0.0f;
                 active = false;
             }
-            print(timeCount);
+            //print(timeCount);
             timeCount = timeCount + Time.deltaTime*2;
         }
     }

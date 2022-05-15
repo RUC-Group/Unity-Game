@@ -16,7 +16,6 @@ public class MainCamera : MonoBehaviour
     void Update()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        print(player.transform.position);
         
         transform.position = player.transform.position + new Vector3((float)-0.53,(float) 18.38,(float) -20.45);
     }
