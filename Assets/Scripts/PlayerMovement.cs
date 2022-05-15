@@ -55,6 +55,7 @@ public class PlayerMovement : MonoBehaviour{
             SceneManager.LoadScene(2);
         }
         gameUI.healthPoints=health;
+        gameUI.score=score;
     }
 
     //hitbox events
