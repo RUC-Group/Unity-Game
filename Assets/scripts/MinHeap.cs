@@ -50,6 +50,17 @@ public class MinHeap<T> {
         decreaseKey(size-1);
     }
 
+    private void decreaseKey(int i) {
+        for (int left = leftChild(i); left < minHeap.Count; left = leftChild(i)) {
+            int smallest = comparer.Compare(minHeap[left], minHeap[i]) <= 0 ? left : i;
+            int right = rightChild(i);
+            if (right < minHeap.Count && comparer.Compare(minHeap[right], minHeap[smallest]) <= 0) smallest = right;
+            if (smallest == i) return;
+            (minHeap[i], minHeap[smallest]) = (minHeap[smallest], minHeap[i]);
+            i = smallest;
+        }
+    }
+    /*
     public void decreaseKey(int pos){
         int currPos = pos;
         while (comparer.Compare(minHeap[currPos], minHeap[parent(currPos)]) < 0){
@@ -57,7 +68,7 @@ public class MinHeap<T> {
             currPos = parent(currPos);
         }
     }
-
+    */
     public T peak(){
         return minHeap[0];
     }

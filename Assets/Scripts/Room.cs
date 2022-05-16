@@ -5,6 +5,8 @@ using System;
 
 public class Room : MonoBehaviour{
     GameObject[,] roomTiles = new GameObject[7,7];
+    List<Enemy> emenyList = new List<Enemy>();
+
 
     public GameObject emptyTile;
     public GameObject spikeTile;
@@ -15,11 +17,10 @@ public class Room : MonoBehaviour{
     public GameObject door;
     public GameObject hallway;
 
-    public int posX;
+    public int posX; 
     public int posZ;
     public int roomSize = 7;
-    public int longestEdge = 5;
-
+    
     AdjacencyGraph roomGrid;
     
     //constructor ... kindof XD
@@ -38,14 +39,14 @@ public class Room : MonoBehaviour{
                 }
             }
         }
+       
         
-    }
-
-    public void createRoomGrid(){
+    }   
+    /*
+    AdjacencyGraph createGrid(){
         roomGrid = new AdjacencyGraph();
         List<Transform> waypoints = getWaypointsForRoom();
-        Vertex pw = new Vertex(playerWaypoint.position);
-        roomGrid.addVertex(pw);
+
         foreach (Transform waypoint in waypoints){
             Vertex v = new Vertex(waypoint.position);
             roomGrid.addVertex(v);
@@ -55,14 +56,11 @@ public class Room : MonoBehaviour{
                 }
             }
         }
-    }
-    public getAdjacencyGraph(){
         return roomGrid;
-    }
+    } */
 
-    public double dist(Vector3 a, Vector3 b){
-        return Math.Pow(Math.Pow((b.x - a.x),2) + Math.Pow((b.y - a.y),2) + Math.Pow((b.z - a.z),2), (float).5f); // https://www.engineeringtoolbox.com/distance-relationship-between-two-points-d_1854.html
-    }
+    
+    
 
     // Method to return all the waypoints from a list of tiles
     public List<Transform> getWaypointsForRoom(){
@@ -94,6 +92,7 @@ public class Room : MonoBehaviour{
                 return spikeTile;
             case 2:
                 return enemyTile;
+
             case 3:
                 return treasureTile;
             default:
@@ -101,16 +100,7 @@ public class Room : MonoBehaviour{
         }
     }
 
-    //draws Gizmos (3d objects that can only be seen in the editor and is not displayed on player camera)
-    void OnDrawGizmos(){
-        // draw adjacency tree for the enemies
-        foreach (Vertex v in roomGrid.GetVertices()){
-            Gizmos.DrawSphere(v.getPos(),.3f);
-            foreach (Edge e in v.getEdgeList()){
-                Gizmos.DrawLine(e.from.getPos(), e.to.getPos());
-            }
-        }
-    }
+    
 
     public int indexToUnitPos(int i){
         return (5*5+15)*i;
@@ -148,8 +138,22 @@ public class Room : MonoBehaviour{
                 }
             }
         }
+        giveEnemyWaypoints();
     }
 
+    void giveEnemyWaypoints(){
+        List<Transform> waypoints = getWaypointsForRoom();
+        for(int i = 1; i < roomSize-1; i++){
+            for(int j = 1; j< roomSize-1; j++){
+                if(roomTiles[i,j].tag == "enemyTile"){
+                    print("room waypints " + waypoints.Count);
+                    roomTiles[i,j].GetComponentInChildren<Enemy>().setWaypoints(waypoints);
+
+                    //roomTiles[i,j].transform.GetChild().FindWithTag("Enemy").GetComponent<Enemy>().setWaypoints(waypoints);
+                }
+            }
+        }
+    }
     
 }
 

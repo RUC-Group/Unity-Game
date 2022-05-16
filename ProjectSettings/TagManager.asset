@@ -13,6 +13,11 @@ TagManager:
   - floor
   - pathHolder
   - path
+  - Key
+  - Gate
+  - Player Sword
+  - Enemy
+  - enemyTile
   layers:
   - Default
   - TransparentFX

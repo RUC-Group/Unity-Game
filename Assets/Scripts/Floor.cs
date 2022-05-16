@@ -24,9 +24,6 @@ public class Floor : MonoBehaviour{
         showFloor();
         waypoints = getAllWaypoints(getTiles());
         print(waypoints.Count + " waypoints in the map");
-        foreach (Room r in spawnedRooms){
-            r.createRoomGrid();
-        }
     }
     void Update(){
         
