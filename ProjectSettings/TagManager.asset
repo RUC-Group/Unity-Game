@@ -9,6 +9,11 @@ TagManager:
   - Door
   - newDoor
   - RoomSpawner
+  - Key
+  - Gate
+  - Dungeon Master
+  - Enemy
+  - Player Sword
   layers:
   - Default
   - TransparentFX
