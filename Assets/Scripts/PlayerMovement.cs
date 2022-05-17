@@ -64,11 +64,12 @@ public class PlayerMovement : MonoBehaviour{
         if (triggerCollider.tag == "Treasure"){
             Destroy (triggerCollider.gameObject);
             score++;
+            if(score%10==0) health+=20;
             print("Score: " + score);   
         }
         //walk on spikes
         if (triggerCollider.tag == "Spike"){
-            health--;   
+            getDamage();   
         }
         if(triggerCollider.tag == "Key"){
             gameUI.key1.color=new Color32(255, 255, 225, 225);
@@ -91,7 +92,7 @@ public class PlayerMovement : MonoBehaviour{
     public void getDamage(){
         float timeStamp = Time.time;
         if(timeStamp - lastDamageTime>1){
-            health-=25;
+            health-=10;
             print(health);
             lastDamageTime = timeStamp;
         }
