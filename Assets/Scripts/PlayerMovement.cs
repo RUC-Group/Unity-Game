@@ -20,11 +20,14 @@ public class PlayerMovement : MonoBehaviour{
     float lastDamageTime=0;
     Door door;
 
+    private GameUI gameUI;
+
     // Start is called before the first frame update
     void Start(){
         swordGameObject=Instantiate(swordGameObject, new Vector3(0, 0,0),Quaternion.Euler(Vector3.down * 0));
         sword = swordGameObject.transform.GetComponent<Sword>();
         model = transform.Find("Capsule").gameObject;
+        gameUI = GameObject.Find("GameUI").GetComponent<GameUI>();
     }
 
     // Update is called once per frame
@@ -48,8 +51,11 @@ public class PlayerMovement : MonoBehaviour{
             transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime);
         }
         if (health < 0){
+            health=0;
             SceneManager.LoadScene(2);
         }
+        gameUI.healthPoints=health;
+        gameUI.score=score;
     }
 
     //hitbox events
@@ -66,6 +72,8 @@ public class PlayerMovement : MonoBehaviour{
             getDamage();   
         }
         if(triggerCollider.tag == "Key"){
+            gameUI.key1.color=new Color32(255, 255, 225, 225);
+            if(keyAmount>0) gameUI.key2.color=new Color32(255, 255, 225, 225);
             Destroy (triggerCollider.gameObject);
             keyAmount++;
             print(keyAmount);
