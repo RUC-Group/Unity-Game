@@ -1,23 +1,23 @@
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System;
 
-public class MinHeap<T> {
-    Dictionary<T,int> positionTable = new Dictionary<T,int>();
-    private readonly IComparer<T> comparer;
-    List<T> minHeap;
+public class MinHeap<Pair> {
+    Dictionary<Pair,int> positionTable = new Dictionary<Pair,int>();
+    List<Pair> minHeap;
     private int size = 0;
     // Start is called before the first frame update
     public MinHeap(){
-        minHeap = new List<T>();
+        minHeap = new List<Pair>();
         this.size = 0;
     }
-    public int getPosition(T item){
+    public int getPosition(Pair item){
         return positionTable[item];
     }
 
     public bool isEmpty(){
-        return size >=0;
+        return size <= 0;
     }
 
     private int parent(int pos){
@@ -33,7 +33,7 @@ public class MinHeap<T> {
     }
 
     private void swap(int pos1, int pos2){
-        T temp = minHeap[pos1];
+        Pair temp = minHeap[pos1];
 
         minHeap[pos1] = minHeap[pos2];
         minHeap[pos2] = temp;
@@ -43,7 +43,7 @@ public class MinHeap<T> {
         
     }
 
-    public void insert(T item){
+    public void insert(Pair item){
         minHeap.Add(item);
         positionTable[item] = size;
         size++;
@@ -52,14 +52,15 @@ public class MinHeap<T> {
 
     private void decreaseKey(int i) {
         for (int left = leftChild(i); left < minHeap.Count; left = leftChild(i)) {
-            int smallest = comparer.Compare(minHeap[left], minHeap[i]) <= 0 ? left : i;
+            int smallest = minHeap[left].CompareTo(minHeap[i]) <= 0 ? left : i;
             int right = rightChild(i);
-            if (right < minHeap.Count && comparer.Compare(minHeap[right], minHeap[smallest]) <= 0) smallest = right;
+            if (right < minHeap.Count && minHeap[right].CompareTo(minHeap[smallest]) <= 0) smallest = right;
             if (smallest == i) return;
             (minHeap[i], minHeap[smallest]) = (minHeap[smallest], minHeap[i]);
             i = smallest;
         }
     }
+
     /*
     public void decreaseKey(int pos){
         int currPos = pos;
@@ -69,13 +70,14 @@ public class MinHeap<T> {
         }
     }
     */
-    public T peak(){
+    public Pair peak(){
         return minHeap[0];
     }
 
     private bool moveDown(int pos){
-        bool leftSmaller = leftChild(pos) < size && comparer.Compare(minHeap[leftChild(pos)],minHeap[pos]) < 0;
-        bool rightSmaller = rightChild(pos) < size && comparer.Compare(minHeap[rightChild(pos)],minHeap[pos]) < 0;
+        Debug.Log(minHeap[leftChild(pos)].CompareTo(minHeap[pos]));
+        bool leftSmaller = leftChild(pos) < size && minHeap[leftChild(pos)].CompareTo(minHeap[pos]) < 0;
+        bool rightSmaller = rightChild(pos) < size && minHeap[rightChild(pos)].CompareTo(minHeap[pos]) < 0;
         return leftSmaller || rightSmaller;
     }
 
@@ -84,7 +86,7 @@ public class MinHeap<T> {
         while(moveDown(currPos)){
             int rPos = rightChild(currPos);
             int lPos = leftChild(currPos);
-            if (rPos < size && comparer.Compare(minHeap[rPos],minHeap[lPos]) < 0){
+            if (rPos < size && minHeap[rPos].CompareTo(minHeap[lPos]) < 0){
                 swap(rPos, currPos);
                 currPos = rPos;
             }
@@ -96,8 +98,8 @@ public class MinHeap<T> {
     }
 
     
-    public T extractMin(){
-        T min = minHeap[0];
+    public Pair extractMin(){
+        Pair min = minHeap[0];
         minHeap[0] = minHeap[size-1];
         positionTable[minHeap[0]] = 0;
         size--;

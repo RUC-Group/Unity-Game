@@ -76,9 +76,9 @@ public class Enemy : MonoBehaviour{
             //if enemy is far from player, pursue player
             if(distanceToTarget > 1.5){
                 createGrid(waypoints);
-                followPath(findPath(dijkstra(roomGrid), roomGrid.GetVertices()[1]));
+                StartCoroutine(followPath(findPath(dijkstra(roomGrid), roomGrid.GetVertices()[1])));
 
-                transform.Translate(velocity * Time.deltaTime);  
+                //transform.Translate(velocity * Time.deltaTime);  
             }
         }else{
             transform.localScale = new Vector3(1,1,1);
@@ -91,7 +91,6 @@ public class Enemy : MonoBehaviour{
         //walk on spikes
         if (triggerCollider.tag == "Spike" && enemyAlive == true){
             health--;
-            //print("Enemy health: " + health);   
         }
     }
     void killEnemy(){
@@ -104,7 +103,6 @@ public class Enemy : MonoBehaviour{
     //draws Gizmos (3d objects that can only be seen in the editor and is not displayed on player camera)
     void OnDrawGizmos(){
         if(roomGrid !=null){
-            print(roomGrid.GetVertices().Count);
             // draw adjacency tree for the enemies
             foreach (Vertex v in roomGrid.GetVertices()){
                 Gizmos.DrawSphere(v.getPos(),.3f);
@@ -115,14 +113,15 @@ public class Enemy : MonoBehaviour{
         }
     }
 
-    IEnumerator followPath(Vector3[] pathPoints){
+    IEnumerator followPath(List<Vector3> pathPoints){
+        print("path size " + pathPoints.Count);
         transform.position = pathPoints[0];
         int targetWaypointIndex = 1;
         Vector3 targetWaypoint = pathPoints[targetWaypointIndex];
         while (true){
             transform.position = Vector3.MoveTowards(transform.position,targetWaypoint,speed * Time.deltaTime);
             if(transform.position == targetWaypoint){
-                targetWaypointIndex = (targetWaypointIndex + 1) % pathPoints.Length;
+                targetWaypointIndex = (targetWaypointIndex + 1) % pathPoints.Count;
                 targetWaypoint = pathPoints[targetWaypointIndex];
                 yield return new WaitForSeconds(waitTime);
             }
@@ -133,14 +132,24 @@ public class Enemy : MonoBehaviour{
     
 
     
-    Dictionary<Vertex,Vertex> findPath(Dictionary<Vertex,Vertex> input, Vertex target){
-        Vector3[] res;
+    List<Vector3> findPath(Dictionary<Vertex,Vertex> input, Vertex target){
+        List<Vector3> res = new List<Vector3>();
         Vertex temp = target;
+        Vertex value;
+        print("pre-temp" + temp.getPos());
+        //print("size of input " + input.Count);
 
-        foreach (KeyValuePair<Vertex, Vertex> v in input){
-            if(v.Key == temp){
-                res[v.Key] = v.Value;
-                temp = v.Key;
+        foreach (var k in input.Keys){
+            if(k.Equals(temp)){
+                if(input[k]!=null){
+                    print("temp" + temp.getPos());
+                    print("k: " + k.getPos());
+                    value = input[k];
+                    print(value.getPos());
+                    res.Add(value.getPos());
+                    temp = k;
+                }
+                i++;
             }
         }
         return res; 
@@ -149,6 +158,7 @@ public class Enemy : MonoBehaviour{
 
 
     Dictionary<Vertex,Vertex> dijkstra(AdjacencyGraph graph){
+        print("dijkstra");
         Dictionary<Vertex,float> d = new Dictionary<Vertex,float>();
         Dictionary<Vertex,Vertex> p = new Dictionary<Vertex,Vertex>();
         Vertex s = new Vertex(this.transform.position); 
@@ -161,14 +171,18 @@ public class Enemy : MonoBehaviour{
         d[s] = 0.0f;
         while (!q.isEmpty()){
             Pair u = q.extractMin();
+            print("help");
             foreach (Edge e in u.v.getEdgeList()){
                 float alt = d[u.v] + e.weight;
+                print("alt: "+alt);
                 if (alt < d[e.to]){
+                    print("aloha");
                     d[e.to] = alt;
                     p[e.to] = u.v;
                 }
             }
         }
+        
         return p;
     }
 

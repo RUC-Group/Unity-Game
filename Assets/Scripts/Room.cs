@@ -146,10 +146,7 @@ public class Room : MonoBehaviour{
         for(int i = 1; i < roomSize-1; i++){
             for(int j = 1; j< roomSize-1; j++){
                 if(roomTiles[i,j].tag == "enemyTile"){
-                    print("room waypints " + waypoints.Count);
                     roomTiles[i,j].GetComponentInChildren<Enemy>().setWaypoints(waypoints);
-
-                    //roomTiles[i,j].transform.GetChild().FindWithTag("Enemy").GetComponent<Enemy>().setWaypoints(waypoints);
                 }
             }
         }
