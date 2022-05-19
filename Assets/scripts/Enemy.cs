@@ -8,10 +8,14 @@ public class Enemy : MonoBehaviour{
     AdjacencyGraph roomGrid;
     List<Transform> waypoints = new List<Transform>();
     Vector3 playerPos;
+    Vector3 velocity;
+    Vector3 directionToPlayer;
+    Vector3 displacementFromPlayer;
     int health = 100;
     bool enemyAlive = true;
     int i;
     float detectionRangeMod = 1;
+    float distanceToTarget;
     
     
     public float speed;
@@ -62,30 +66,37 @@ public class Enemy : MonoBehaviour{
         if(health < 0 ){
             killEnemy();
         }
-
-        playerPos = GameObject.FindGameObjectWithTag("Player").transform.position; 
-        Vector3 displacementFromPlayer = playerPos - transform.position;
-        Vector3 directionToPlayer = displacementFromPlayer.normalized;
-        Vector3 velocity = directionToPlayer * speed;
-        float distanceToTarget = displacementFromPlayer.magnitude;
-
-        //if player is within enemy detection range...
-        if(detectionRange * detectionRangeMod > distanceToTarget  && enemyAlive == true){
-            transform.localScale = new Vector3(1,2,1);
-            detectionRangeMod = 2; //expands detection range via multiplication
-            //if enemy is far from player, pursue player
-            if(distanceToTarget > 1.5){
-                createGrid(waypoints);
-                StartCoroutine(followPath(findPath(dijkstra(roomGrid), roomGrid.GetVertices()[1])));
-
-                //transform.Translate(velocity * Time.deltaTime);  
+        else{
+            playerPos = GameObject.FindGameObjectWithTag("Player").transform.position; 
+            displacementFromPlayer = playerPos - transform.position;
+            directionToPlayer = displacementFromPlayer.normalized;
+            velocity = directionToPlayer * speed;
+            distanceToTarget = displacementFromPlayer.magnitude;
+            if(detectionRange * detectionRangeMod > distanceToTarget){
+                followPlayer();
             }
-        }else{
-            transform.localScale = new Vector3(1,1,1);
-            detectionRangeMod = 1;         
-        }   
+            else{
+                returnToIdle();
+            }
+        }
     }
-    
+
+    void followPlayer(){
+        transform.localScale = new Vector3(1,2,1);
+        detectionRangeMod = 2; //expands detection range via multiplication
+        //if enemy is far from player, pursue player
+        if(distanceToTarget > 1.5){
+            createGrid(waypoints);
+            //StartCoroutine(followPath(findPath(dijkstra(roomGrid), roomGrid.GetVertices()[1])));
+            transform.Translate(velocity * Time.deltaTime);  
+        } 
+    }
+
+    void returnToIdle(){
+        transform.localScale = new Vector3(1,1,1);
+        detectionRangeMod = 1;   
+    }
+
     //hitbox events
     void OnTriggerStay(Collider triggerCollider) {
         //walk on spikes
@@ -136,16 +147,12 @@ public class Enemy : MonoBehaviour{
         List<Vector3> res = new List<Vector3>();
         Vertex temp = target;
         Vertex value;
-        print("pre-temp" + temp.getPos());
         //print("size of input " + input.Count);
 
         foreach (var k in input.Keys){
             if(k.Equals(temp)){
                 if(input[k]!=null){
-                    print("temp" + temp.getPos());
-                    print("k: " + k.getPos());
                     value = input[k];
-                    print(value.getPos());
                     res.Add(value.getPos());
                     temp = k;
                 }
@@ -168,12 +175,16 @@ public class Enemy : MonoBehaviour{
             p[v] = null;
             q.insert(new Pair(v, d[v]));
         }
-        d[s] = 0.0f;
+        d[graph.GetVertices()[0]] = 0.0f;
         while (!q.isEmpty()){
             Pair u = q.extractMin();
-            print("help");
             foreach (Edge e in u.v.getEdgeList()){
                 float alt = d[u.v] + e.weight;
+                print("d[u.v]" + d[u.v]);
+                print("e weight" + e.weight);
+                print("e type" + e.to.getPos());
+                print("d[e.to]" + d[e.to]);
+
                 print("alt: "+alt);
                 if (alt < d[e.to]){
                     print("aloha");

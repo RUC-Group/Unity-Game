@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public class MinHeap<Pair> {
+public class MinHeap<Pair> where Pair : IComparable<Pair> {
     Dictionary<Pair,int> positionTable = new Dictionary<Pair,int>();
     List<Pair> minHeap;
     private int size = 0;
@@ -75,7 +75,6 @@ public class MinHeap<Pair> {
     }
 
     private bool moveDown(int pos){
-        Debug.Log(minHeap[leftChild(pos)].CompareTo(minHeap[pos]));
         bool leftSmaller = leftChild(pos) < size && minHeap[leftChild(pos)].CompareTo(minHeap[pos]) < 0;
         bool rightSmaller = rightChild(pos) < size && minHeap[rightChild(pos)].CompareTo(minHeap[pos]) < 0;
         return leftSmaller || rightSmaller;

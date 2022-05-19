@@ -16,7 +16,12 @@ public class Pair:IComparable<Pair>{
         if(this.d > o.d){
             return 1;
         }
-        return 0;
+        else if(this.d == o.d){
+            return 0;
+
+        }else{
+            return -1;
+        }
     }
 
 }
