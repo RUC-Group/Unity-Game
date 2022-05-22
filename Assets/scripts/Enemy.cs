@@ -50,7 +50,7 @@ public class Enemy : MonoBehaviour{
             Vertex v = new Vertex(waypoint.position);
             roomGrid.addVertex(v);
             for (int i = 0; i < waypoints.Count; i++){
-                if (dist(waypoint.position, waypoints[i].position) < longestEdge && (v.getEdgeList().Count != 8)){
+                if (dist(waypoint.position, waypoints[i].position) < longestEdge && (v.outEdges.Count != 8)){
                     roomGrid.addEdge(v, new Vertex(waypoints[i].position), (float)dist(waypoint.position, waypoints[i].position));
                 }
             }
@@ -114,9 +114,9 @@ public class Enemy : MonoBehaviour{
         if(roomGrid !=null){
             // draw adjacency tree for the enemies
             foreach (Vertex v in roomGrid.GetVertices()){
-                Gizmos.DrawSphere(v.getPos(),.3f);
-                foreach (Edge e in v.getEdgeList()){
-                    Gizmos.DrawLine(e.from.getPos(), e.to.getPos());
+                Gizmos.DrawSphere(v.pos,.3f);
+                foreach (Edge e in v.outEdges){
+                    Gizmos.DrawLine(e.from.pos, e.to.pos);
                 }
             }
         }
@@ -151,7 +151,7 @@ public class Enemy : MonoBehaviour{
             if(k.Equals(temp)){
                 if(input[k]!=null){
                     value = input[k];
-                    res.Add(value.getPos());
+                    res.Add(value.pos);
                     temp = k;
                 }
                 i++;
@@ -174,7 +174,7 @@ public class Enemy : MonoBehaviour{
         d[graph.GetVertices()[0]] = 0.0f;
         while (!q.isEmpty()){
             Pair u = q.extractMin();
-            foreach (Edge e in u.v.getEdgeList()){
+            foreach (Edge e in u.v.outEdges){
                 float alt = d[u.v] + e.weight;
                 if (alt < d[e.to]){
                     print("aloha");
