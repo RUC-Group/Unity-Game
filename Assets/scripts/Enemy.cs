@@ -85,11 +85,9 @@ public class Enemy : MonoBehaviour{
         transform.localScale = new Vector3(1,2,1);
         detectionRangeMod = 2; //expands detection range via multiplication
         //if enemy is far from player, pursue player
-        if(distanceToTarget > 1.5){
-            createGrid(waypoints);
-            //StartCoroutine(followPath(findPath(dijkstra(roomGrid), roomGrid.GetVertices()[1])));
-            transform.Translate(velocity * Time.deltaTime);  
-        } 
+        createGrid(waypoints);
+        //StartCoroutine(followPath(findPath(dijkstra(roomGrid), roomGrid.GetVertices()[1])));
+        transform.Translate(velocity * Time.deltaTime);  
     }
 
     void returnToIdle(){
@@ -165,10 +163,8 @@ public class Enemy : MonoBehaviour{
 
 
     Dictionary<Vertex,Vertex> dijkstra(AdjacencyGraph graph){
-        print("dijkstra");
         Dictionary<Vertex,float> d = new Dictionary<Vertex,float>();
         Dictionary<Vertex,Vertex> p = new Dictionary<Vertex,Vertex>();
-        Vertex s = new Vertex(this.transform.position); 
         MinHeap<Pair> q = new MinHeap<Pair>();
         foreach (Vertex v in graph.GetVertices()){
             d[v] = 100.0f;
@@ -180,12 +176,6 @@ public class Enemy : MonoBehaviour{
             Pair u = q.extractMin();
             foreach (Edge e in u.v.getEdgeList()){
                 float alt = d[u.v] + e.weight;
-                print("d[u.v]" + d[u.v]);
-                print("e weight" + e.weight);
-                print("e type" + e.to.getPos());
-                print("d[e.to]" + d[e.to]);
-
-                print("alt: "+alt);
                 if (alt < d[e.to]){
                     print("aloha");
                     d[e.to] = alt;
