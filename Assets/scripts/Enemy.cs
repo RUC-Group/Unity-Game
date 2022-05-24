@@ -25,23 +25,16 @@ public class Enemy : MonoBehaviour{
 
     // Start is called before the first frame update
     void Start() {
+        
     }
 
     public void setWaypoints(List<Transform> w){
         waypoints.Add(transform);
         waypoints.Add(GameObject.FindGameObjectWithTag("Player").transform);
-        foreach (var waypoint in w){
+        foreach (Transform waypoint in w){
             waypoints.Add(waypoint);
         }
     }
-
-    /*
-    void setRoomGrid(AdjacencyGraph graph){
-        roomGrid = graph;
-        playerEnemyGrid = graph;
-
-    }*/
-    
 
     void createGrid(List<Transform> w){
         roomGrid = new AdjacencyGraph();
@@ -50,8 +43,9 @@ public class Enemy : MonoBehaviour{
             Vertex v = new Vertex(waypoint.position);
             roomGrid.addVertex(v);
             for (int i = 0; i < waypoints.Count; i++){
-                if (dist(waypoint.position, waypoints[i].position) < longestEdge && (v.outEdges.Count != 8)){
-                    roomGrid.addEdge(v, new Vertex(waypoints[i].position), (float)dist(waypoint.position, waypoints[i].position));
+                float distBetween = (float)dist(waypoint.position, waypoints[i].position);
+                if (distBetween < longestEdge && distBetween != 0) {
+                    roomGrid.addEdge(v, new Vertex(waypoints[i].position), distBetween);
                 }
             }
         }
@@ -85,9 +79,11 @@ public class Enemy : MonoBehaviour{
         transform.localScale = new Vector3(1,2,1);
         detectionRangeMod = 2; //expands detection range via multiplication
         //if enemy is far from player, pursue player
+        print("waypoints in room" + waypoints.Count);
         createGrid(waypoints);
-        //StartCoroutine(followPath(findPath(dijkstra(roomGrid), roomGrid.GetVertices()[1])));
-        transform.Translate(velocity * Time.deltaTime);  
+        print("room Grid vertices " + roomGrid.GetVertices().Count);
+        StartCoroutine(followPath(findPath(dijkstra(roomGrid), roomGrid.GetVertices()[1])));
+        //transform.Translate(velocity * Time.deltaTime);  
     }
 
     void returnToIdle(){
@@ -171,10 +167,15 @@ public class Enemy : MonoBehaviour{
             p[v] = null;
             q.insert(new Pair(v, d[v]));
         }
+
+        print("d is this long: " + d.Count);
         d[graph.GetVertices()[0]] = 0.0f;
         while (!q.isEmpty()){
             Pair u = q.extractMin();
+            print("in while");
             foreach (Edge e in u.v.outEdges){
+                print(e.to.pos);
+                print("outedges " + u.v.outEdges.Count);
                 float alt = d[u.v] + e.weight;
                 if (alt < d[e.to]){
                     print("aloha");

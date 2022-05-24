@@ -6,12 +6,13 @@ using System;
 public class Pair:IComparable<Pair>{
     public Vertex v {get;set;}
     public float d {get; set;}
-    public int index;
+    //constructor
     public Pair(Vertex v, float d){
         this.v = v;
         this.d = d;
     }
 
+    //compareTo that compares a pair to a pair based on their d value
     public int CompareTo(Pair o){
         if(this.d > o.d){
             return 1;
@@ -23,5 +24,4 @@ public class Pair:IComparable<Pair>{
             return -1;
         }
     }
-
 }

@@ -3,16 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public class MinHeap<Pair> where Pair : IComparable<Pair> {
-    Dictionary<Pair,int> positionTable = new Dictionary<Pair,int>();
-    List<Pair> minHeap;
+public class MinHeap<T> where T : IComparable<T> {
+    Dictionary<T,int> positionTable = new Dictionary<T,int>();
+    List<T> minHeap;
     private int size = 0;
     // Start is called before the first frame update
     public MinHeap(){
-        minHeap = new List<Pair>();
+        minHeap = new List<T>();
         this.size = 0;
     }
-    public int getPosition(Pair item){
+    public int getPosition(T item){
         return positionTable[item];
     }
 
@@ -33,7 +33,7 @@ public class MinHeap<Pair> where Pair : IComparable<Pair> {
     }
 
     private void swap(int pos1, int pos2){
-        Pair temp = minHeap[pos1];
+        T temp = minHeap[pos1];
 
         minHeap[pos1] = minHeap[pos2];
         minHeap[pos2] = temp;
@@ -43,7 +43,7 @@ public class MinHeap<Pair> where Pair : IComparable<Pair> {
         
     }
 
-    public void insert(Pair item){
+    public void insert(T item){
         minHeap.Add(item);
         positionTable[item] = size;
         size++;
@@ -70,7 +70,7 @@ public class MinHeap<Pair> where Pair : IComparable<Pair> {
         }
     }
     */
-    public Pair peak(){
+    public T peak(){
         return minHeap[0];
     }
 
@@ -97,8 +97,8 @@ public class MinHeap<Pair> where Pair : IComparable<Pair> {
     }
 
     
-    public Pair extractMin(){
-        Pair min = minHeap[0];
+    public T extractMin(){
+        T min = minHeap[0];
         minHeap[0] = minHeap[size-1];
         positionTable[minHeap[0]] = 0;
         size--;
