@@ -79,7 +79,7 @@ public class Player : MonoBehaviour{
             print(keyAmount);
         }
         if(triggerCollider.tag == "Gate"){
-            if(keyAmount==2){
+            if(keyAmount>=2){
                 Destroy (triggerCollider.gameObject);
                 SceneManager.LoadScene(2);
                 print("You can pass");
