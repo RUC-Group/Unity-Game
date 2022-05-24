@@ -128,6 +128,7 @@ public class Enemy : MonoBehaviour{
     
     //draws Gizmos (3d objects that can only be seen in the editor and is not displayed on player camera)
     void OnDrawGizmos(){
+        /*
         if(roomGrid !=null){
             // draw adjacency tree for the enemies
             foreach (Vertex v in roomGrid.GetVertices()){
@@ -137,11 +138,12 @@ public class Enemy : MonoBehaviour{
                 }
             }
         }
+        */
         if(pathToFollow != null){
             Vector3 shift = new Vector3(0,2,0);
             for(var i =0; i<pathToFollow.Count; i++){
                 Gizmos.DrawSphere(pathToFollow[i] + shift, .3f);
-                if(pathToFollow[i+1] != null){
+                if(i < pathToFollow.Count - 1){
                     Gizmos.DrawLine(pathToFollow[i] + shift, pathToFollow[1+i] + shift);
                 }
             }
@@ -149,7 +151,6 @@ public class Enemy : MonoBehaviour{
     }
 
     IEnumerator followPath(List<Vector3> pathPoints){
-        print("path size " + pathPoints.Count);
         //transform.position = pathPoints[0];
         int targetWaypointIndex = 0;
         Vector3 targetWaypoint = new Vector3(pathPoints[targetWaypointIndex].x,transform.position.y,pathPoints[targetWaypointIndex].z);
@@ -175,13 +176,20 @@ public class Enemy : MonoBehaviour{
         List<Vector3> res = new List<Vector3>();
         Vertex temp = target;
         Vertex startVertex = roomGrid.GetVertices()[0];
-
-        while (!temp.Equals(startVertex)&& !checkScanTimer()){
+        if (temp != null && startVertex != null){
+            while (!temp.Equals(startVertex) && !checkScanTimer()){
+                res.Add(temp.pos);
+                temp = input[temp];
+                if(temp==null){
+                    temp = startVertex;
+                    res = new List<Vector3>();
+                    print("temp is null");
+                    break;
+                }
+            }
             res.Add(temp.pos);
-            temp = input[temp];
+            res.Reverse();
         }
-        res.Add(temp.pos);
-        res.Reverse();
 
         return res; 
     }
