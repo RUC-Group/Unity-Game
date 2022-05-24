@@ -36,16 +36,17 @@ public class Enemy : MonoBehaviour{
         }
     }
 
-    void createGrid(List<Transform> w){
+    void createGrid(){
         roomGrid = new AdjacencyGraph();
-        List<Transform> waypoints = w;
         foreach (Transform waypoint in waypoints){
             Vertex v = new Vertex(waypoint.position);
             roomGrid.addVertex(v);
-            for (int i = 0; i < waypoints.Count; i++){
-                float distBetween = (float)dist(waypoint.position, waypoints[i].position);
+        }
+        foreach (Vertex v in roomGrid.GetVertices()){
+            foreach (Vertex v2 in roomGrid.GetVertices()){
+                float distBetween = (float)dist(v.pos, v2.pos);
                 if (distBetween < longestEdge && distBetween != 0) {
-                    roomGrid.addEdge(v, new Vertex(waypoints[i].position), distBetween);
+                    roomGrid.addEdge(v, v2, distBetween);
                 }
             }
         }
@@ -79,9 +80,9 @@ public class Enemy : MonoBehaviour{
         transform.localScale = new Vector3(1,2,1);
         detectionRangeMod = 2; //expands detection range via multiplication
         //if enemy is far from player, pursue player
-        print("waypoints in room" + waypoints.Count);
-        createGrid(waypoints);
-        print("room Grid vertices " + roomGrid.GetVertices().Count);
+        //print("waypoints in room" + waypoints.Count);
+        createGrid();
+        //print("room Grid vertices " + roomGrid.GetVertices().Count);
         StartCoroutine(followPath(findPath(dijkstra(roomGrid), roomGrid.GetVertices()[1])));
         //transform.Translate(velocity * Time.deltaTime);  
     }
@@ -119,7 +120,7 @@ public class Enemy : MonoBehaviour{
     }
 
     IEnumerator followPath(List<Vector3> pathPoints){
-        print("path size " + pathPoints.Count);
+        //print("path size " + pathPoints.Count);
         transform.position = pathPoints[0];
         int targetWaypointIndex = 1;
         Vector3 targetWaypoint = pathPoints[targetWaypointIndex];
@@ -141,7 +142,6 @@ public class Enemy : MonoBehaviour{
         List<Vector3> res = new List<Vector3>();
         Vertex temp = target;
         Vertex value;
-        //print("size of input " + input.Count);
 
         foreach (var k in input.Keys){
             if(k.Equals(temp)){
@@ -163,93 +163,26 @@ public class Enemy : MonoBehaviour{
         Dictionary<Vertex,Vertex> p = new Dictionary<Vertex,Vertex>();
         MinHeap<Pair> q = new MinHeap<Pair>();
         foreach (Vertex v in graph.GetVertices()){
+
             d[v] = 100.0f;
             p[v] = null;
             q.insert(new Pair(v, d[v]));
         }
-
-        print("d is this long: " + d.Count);
+        print(d.Keys.Count);
+        //print("d is this long: " + d.Count);
         d[graph.GetVertices()[0]] = 0.0f;
         while (!q.isEmpty()){
             Pair u = q.extractMin();
-            print("in while");
+            //print("in while");
             foreach (Edge e in u.v.outEdges){
                 print(e.to.pos);
-                print("outedges " + u.v.outEdges.Count);
                 float alt = d[u.v] + e.weight;
                 if (alt < d[e.to]){
-                    print("aloha");
                     d[e.to] = alt;
                     p[e.to] = u.v;
                 }
             }
         }
-        
         return p;
     }
-
-    
-
-    
-    /*
-    Dictionary<Vertex,Vertex> findPath(Dictionary<Vertex,Vertex> input, Vertex target){
-        Dictionary<Vertex,Vertex> res = new Dictionary<Vertex,Vertex>();
-        foreach (Vertex v in input){
-            if(v == target){
-            }
-        }
-    }
-
-    Dictionary<Vertex,Vertex> dijkstra(Vertex s, AdjacencyGraph graph){
-
-        MinHeap<Pair> q = new MinHeap<Pair>();
-        Dictionary<Vertex,int> d = new Dictionary<Vertex,int>();
-        Dictionary<Vertex,Vertex> p = new Dictionary<Vertex,Vertex>();
-        List<Vertex> allVertecies = graph.GetVertices();
-        for (var i = 0; i < allVertecies.Count; i++){
-            d[allVertecies[i]] = 100; // big value to simulate inf distance
-            p[allVertecies[i]] = null;
-            q.insert(new Pair(allVertecies[i], d[allVertecies[i]], i));
-        }
-        while (!q.isEmpty()){
-            Pair pair = q.extractMin();
-            foreach (Edge e in pair.v.getEdgeList()){
-                if (d[e.from] + e.weight < d[e.to]){
-                    d[e.to] = d[e.from] + (int)e.weight;
-                    p[e.to] = e.from;
-                    q.decreaseKey(pair.index);
-                }
-            }
-        }
-        return p;
-    }
-
-    void OnDrawGizmos(){
-        foreach (Vertex v in Dictionary){
-            Gizmos.DrawLine(v.pos, Dictionary[v].pos);            
-        }
-    }
-    */
 }
-
-/*
-
-    
-    Vector3[] waypoints = new Vector3[path.childCount];
-    for (var i = 0; i < waypoints.Length; i++){
-        waypoints[i] = path.GetChild(i).position;
-    }
-
-    StartCoroutine(followPath(waypoints));
-
-    void OnDrawGizmos(){
-        Vector3 startPosition = path.GetChild(0).position;
-        Vector3 prevPosition = startPosition;
-        foreach (Transform waypoint in path){
-            Gizmos.DrawSphere(waypoint.position,.3f);
-            Gizmos.DrawLine(prevPosition, waypoint.position);
-            prevPosition = waypoint.position;
-        }   
-        Gizmos.DrawLine(prevPosition,startPosition);
-    }
-*/
