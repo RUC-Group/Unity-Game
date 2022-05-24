@@ -21,9 +21,11 @@ public class Enemy : MonoBehaviour{
     public float speed;
     public float detectionRange;
     public float waitTime = .1f;
-    public float longestEdge = 1f;
+     float longestEdge = 4.5f;
 
     float lastScan = 0;
+
+    List<Vector3> pathToFollow;
 
     // Start is called before the first frame update
     void Start() {
@@ -58,6 +60,15 @@ public class Enemy : MonoBehaviour{
         return Math.Pow(Math.Pow((b.x - a.x),2) + Math.Pow((b.y - a.y),2) + Math.Pow((b.z - a.z),2), (float).5f); // https://www.engineeringtoolbox.com/distance-relationship-between-two-points-d_1854.html
     }
 
+    bool checkScanTimer(){
+        float timeStamp = Time.time;
+        if(timeStamp<2 || timeStamp - lastScan>2){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     // Update is called once per frame
     void Update(){
         if(health < 0 ){
@@ -81,16 +92,17 @@ public class Enemy : MonoBehaviour{
     void followPlayer(){
 
         transform.localScale = new Vector3(1,2,1);
-        detectionRangeMod = 2; //expands detection range via multiplication
+        detectionRangeMod = 4; //expands detection range via multiplication
         //if enemy is far from player, pursue player
         //print("waypoints in room" + waypoints.Count);
         float timeStamp = Time.time;
 
-        if(timeStamp<3 || timeStamp - lastScan>3){
+        if(checkScanTimer()){
             lastScan = timeStamp;
             createGrid();
             //print("room Grid vertices " + roomGrid.GetVertices().Count);
-            StartCoroutine(followPath(findPath(dijkstra(roomGrid), roomGrid.GetVertices()[1])));
+            pathToFollow = findPath(dijkstra(), roomGrid.GetVertices()[1]);
+            StartCoroutine(followPath(pathToFollow));
             //transform.Translate(velocity * Time.deltaTime);  
         }
     }
@@ -125,6 +137,15 @@ public class Enemy : MonoBehaviour{
                 }
             }
         }
+        if(pathToFollow != null){
+            Vector3 shift = new Vector3(0,2,0);
+            for(var i =0; i<pathToFollow.Count; i++){
+                Gizmos.DrawSphere(pathToFollow[i] + shift, .3f);
+                if(pathToFollow[i+1] != null){
+                    Gizmos.DrawLine(pathToFollow[i] + shift, pathToFollow[1+i] + shift);
+                }
+            }
+        }
     }
 
     IEnumerator followPath(List<Vector3> pathPoints){
@@ -134,7 +155,7 @@ public class Enemy : MonoBehaviour{
         Vector3 targetWaypoint = new Vector3(pathPoints[targetWaypointIndex].x,transform.position.y,pathPoints[targetWaypointIndex].z);
         float timeStamp = Time.time;
 
-        while (targetWaypointIndex<= pathPoints.Count-1 && !(timeStamp-lastScan>3)){
+        while (targetWaypointIndex<= pathPoints.Count-1 && !checkScanTimer()){
             timeStamp = Time.time;
             targetWaypoint = new Vector3(pathPoints[targetWaypointIndex].x,transform.position.y,pathPoints[targetWaypointIndex].z);
             transform.position = Vector3.MoveTowards(transform.position,targetWaypoint,speed * Time.deltaTime);
@@ -155,7 +176,7 @@ public class Enemy : MonoBehaviour{
         Vertex temp = target;
         Vertex startVertex = roomGrid.GetVertices()[0];
 
-        while (!temp.Equals(startVertex)){
+        while (!temp.Equals(startVertex)&& !checkScanTimer()){
             res.Add(temp.pos);
             temp = input[temp];
         }
@@ -166,11 +187,11 @@ public class Enemy : MonoBehaviour{
     }
     
 
-    Dictionary<Vertex,Vertex> dijkstra(AdjacencyGraph graph){
+    Dictionary<Vertex,Vertex> dijkstra(){
         Dictionary<Vertex,float> d = new Dictionary<Vertex,float>();
         Dictionary<Vertex,Vertex> p = new Dictionary<Vertex,Vertex>();
         MinHeap<Pair> q = new MinHeap<Pair>();
-        foreach (Vertex v in graph.GetVertices()){
+        foreach (Vertex v in roomGrid.GetVertices()){
 
             d[v] = 100.0f;
             p[v] = null;
@@ -178,8 +199,8 @@ public class Enemy : MonoBehaviour{
         }
         //print(d.Keys.Count);
         //print("d is this long: " + d.Count);
-        d[graph.GetVertices()[0]] = 0.0f;
-        while (!q.isEmpty()){
+        d[roomGrid.GetVertices()[0]] = 0.0f;
+        while (!q.isEmpty()&&!checkScanTimer()){
             Pair u = q.extractMin();
             //print("in while");
             foreach (Edge e in u.v.outEdges){
