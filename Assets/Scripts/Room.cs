@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Room : MonoBehaviour{
     GameObject[,] roomTiles = new GameObject[7,7];
+    List<Enemy> emenyList = new List<Enemy>();
+
 
     public GameObject emptyTile;
     public GameObject spikeTile;
@@ -17,7 +20,7 @@ public class Room : MonoBehaviour{
 
     public GameObject endGate;
 
-    public int posX;
+    public int posX; 
     public int posZ;
     public int roomSize = 7;
     int roomTreasureCount;
@@ -27,6 +30,9 @@ public class Room : MonoBehaviour{
 
     Vector2 globalPosition;
     
+    AdjacencyGraph roomGrid;
+    
+    //constructor ... kindof XD
     public void setRoom(int posX, int posZ, int roomSize){
         this.posX=posX;
         this.posZ=posZ;
@@ -44,6 +50,48 @@ public class Room : MonoBehaviour{
                 }
             }
         }
+       
+        
+    }   
+    /*
+    AdjacencyGraph createGrid(){
+        roomGrid = new AdjacencyGraph();
+        List<Transform> waypoints = getWaypointsForRoom();
+
+        foreach (Transform waypoint in waypoints){
+            Vertex v = new Vertex(waypoint.position);
+            roomGrid.addVertex(v);
+            for (int i = 0; i < waypoints.Count; i++){
+                if (dist(waypoint.position, waypoints[i].position) < longestEdge && (v.getEdgeList().Count != 8)){
+                    roomGrid.addEdge(v, new Vertex(waypoints[i].position), (float)dist(waypoint.position, waypoints[i].position));
+                }
+            }
+        }
+        return roomGrid;
+    } */
+
+    
+    
+
+    // Method to return all the waypoints from a list of tiles
+    public List<Transform> getWaypointsForRoom(){
+        List<Transform> l = new List<Transform>();
+        foreach (GameObject tile in roomTiles){
+            for (var i = 0; i < tile.transform.childCount; i++){
+                if (tile.transform.GetChild(i).gameObject.tag == "pathHolder"){
+                    for (var j = 0; j < tile.transform.GetChild(i).childCount; j++){
+                        if(tile.transform.GetChild(i).transform.GetChild(j).gameObject.tag == "PathFindingWAypoint"){
+                            l.Add(tile.transform.GetChild(i).transform.GetChild(j).transform);
+                        }
+                    }
+                }
+            }
+        }
+        return l;
+    }
+
+    public GameObject[,] getRoomTiles(){
+        return roomTiles;
     }
 
     public void changeRoom(string typeOfRoom){
@@ -89,16 +137,16 @@ public class Room : MonoBehaviour{
         if (x == roomSizeMinusOne/2 && y == 1 || x == roomSizeMinusOne-1 && y == roomSizeMinusOne/2 || x == roomSizeMinusOne/2 && y == roomSizeMinusOne-1 || x == 1 && y == roomSizeMinusOne/2){ //if there's a door adjacant to this tile... (3,0+1)(6-1,3)(3,6-1)(0+1,3)
             tileID = 0; //...set this tile to be empty
         }else if (x == 1 && y == 1 || x == roomSizeMinusOne-1 && y == 1 || x == 1 && y == roomSizeMinusOne-1 || x == roomSizeMinusOne-1 && y == roomSizeMinusOne-1 || x == roomSizeMinusOne/2 && y == roomSizeMinusOne/2){ //if tile is a corner or at center of room
-            int r = Random.Range(0,5);
+            int r = UnityEngine.Random.Range(0,5);
             if (r == 0 && roomTreasureCount < roomMaxTreasure){
                 tileID = 3;
                 roomTreasureCount ++;
             }else{
-                tileID = Random.Range(0,3);
+                tileID = UnityEngine.Random.Range(0,3);
             }
         } else if(x == 1 || x == 2 || x == roomSizeMinusOne-1 || x == roomSizeMinusOne-2){ //if tile surrounds where a treasure could be on x axis
             if (y == 1 || y == 2 || y == roomSizeMinusOne-1 || y == roomSizeMinusOne-2 && roomTiles[x,y] != treasureTile){ //if tile surrounds where a treasure could be on y axis, and ISN'T treasure
-                int r = Random.Range(0,3);
+                int r = UnityEngine.Random.Range(0,3);
                 if(r <= 1){
                     tileID = 2;
                 } else if(r == 2){
@@ -108,7 +156,7 @@ public class Room : MonoBehaviour{
                 }                
             }
         } else {
-            tileID = Random.Range(0,2);
+            tileID = UnityEngine.Random.Range(0,2);
         }
         //Set tile based off of tileID
         switch (tileID){
@@ -118,6 +166,7 @@ public class Room : MonoBehaviour{
                 return spikeTile;
             case 2:
                 return enemyTile;
+
             case 3:
                 return treasureTile;
             default:
@@ -125,14 +174,13 @@ public class Room : MonoBehaviour{
         }
     }
 
-    public void setPosition(Vector2 position){
-        globalPosition = position;
-    }
+    
 
     public int indexToUnitPos(int i){
-        i = (5*5+15)*i;
-        return i;
+        return (5*5+15)*i;
     }
+
+
 
     public void createDoor(int dir){
         if (dir == 2){
@@ -149,24 +197,34 @@ public class Room : MonoBehaviour{
         }
     }
 
-    public async void showRoom(){
+    public void showRoom(){        
         for(int i = 0; i < roomSize; i++){
             for(int j = 0; j< roomSize; j++){
                 var position = new Vector3(i*5 + indexToUnitPos(posX), 0, j*5 + indexToUnitPos(posZ));
-                
-
                 if(i == 0 && j == 0 || i == 0 && j == roomSize-1 || i == roomSize-1 && j == 0 || i == roomSize-1 && j == roomSize-1){
-                    Instantiate(roomTiles[i,j], position, Quaternion.identity);
+                    roomTiles[i,j]=(GameObject)Instantiate(roomTiles[i,j], position, Quaternion.identity);
                 }else if(i == 0 || i == roomSize -1){
-                    Instantiate(roomTiles[i,j], position, Quaternion.Euler(Vector3.down * 90));
+                    roomTiles[i,j]=(GameObject)Instantiate(roomTiles[i,j], position, Quaternion.Euler(Vector3.down * 90));
                 }else if ( j== roomSize - 1 || j == 0){
-                    Instantiate(roomTiles[i,j], position, Quaternion.Euler(Vector3.down * 0));
+                    roomTiles[i,j]=(GameObject)Instantiate(roomTiles[i,j], position, Quaternion.Euler(Vector3.down * 0));
                 }else{
-                    Instantiate(roomTiles[i,j], position, Quaternion.identity);
+                    roomTiles[i,j]=(GameObject)Instantiate(roomTiles[i,j], position, Quaternion.identity);
+                }
+            }
+        }
+        giveEnemyWaypoints();
+    }
+
+    void giveEnemyWaypoints(){
+        List<Transform> waypoints = getWaypointsForRoom();
+        for(int i = 1; i < roomSize-1; i++){
+            for(int j = 1; j< roomSize-1; j++){
+                if(roomTiles[i,j].tag == "enemyTile"){
+                    roomTiles[i,j].GetComponentInChildren<Enemy>().setWaypoints(waypoints);
                 }
             }
         }
     }
-
     
 }
+

@@ -11,6 +11,10 @@ public class Floor : MonoBehaviour{
     List<Room> roomsList;
     Room[,] rooms;
     List<Room> spawnedRooms;
+    List<Transform> waypoints;
+    public Transform path;
+    int x;
+    static int y;
 
     public Floor(int floorSize){
         this.floorSize = floorSize;
@@ -18,12 +22,16 @@ public class Floor : MonoBehaviour{
 
     void Start(){
         floorAlgorithm2();
-        //print("created " + count + " rooms.");
         showFloor();
+        waypoints = getAllWaypoints(getTiles());
+        print(waypoints.Count + " waypoints in the map");
+    }
+    void Update(){
+        
     }
 
-    // Update is called once per frame
-    void Update(){
+    public List<Room> getSpawnedRooms(){
+        return spawnedRooms;
     }
 
     public void showFloor(){
@@ -33,6 +41,7 @@ public class Floor : MonoBehaviour{
             count ++;
         }
         print("amount of rooms spawned: " + count);
+        
     }
 
     public void createHallway(int dir, Room r){
@@ -157,6 +166,45 @@ public class Floor : MonoBehaviour{
         return a[num];
     }
 
+    
+
+    //method that returns a list of all tiles in the game
+    public List<Transform> getTiles(){
+        List<Transform> allTiles = new List<Transform>();
+        foreach (Room r in spawnedRooms){
+            GameObject[,] roomTiles = r.getRoomTiles();
+            for (var i = 0; i < roomTiles.Length/7; i++){
+                for (var j = 0; j < roomTiles.Length/7; j++){
+                    allTiles.Add(roomTiles[i,j].transform);
+                }
+            }
+        }
+        return allTiles;
+    }
+    // Method to return all the waypoints from a list of tiles
+    List<Transform> getAllWaypoints(List<Transform> tiles){
+        
+        waypoints = new List<Transform>();
+        foreach (Transform tile in tiles){
+            for (var i = 0; i < tile.childCount; i++){
+                if (tile.GetChild(i).gameObject.tag == "pathHolder"){
+                    for (var j = 0; j < tile.transform.GetChild(i).childCount; j++){
+                        if(tile.GetChild(i).transform.GetChild(j).gameObject.tag == "PathFindingWAypoint"){
+                            waypoints.Add(tile.GetChild(i).transform.GetChild(j).transform);
+                        }
+                    }
+                }
+            }
+        }
+        return waypoints;
+    }
+
+    //draws Gizmos (3d objects that can only be seen in the editor and is not displayed on player camera)
+    void OnDrawGizmos(){
+        
+    }
+
+    //method that makes a room at the coordinate (roomX,0,roomZ)
     public Room makeRoom(int roomX, int roomZ){
         int roomSize = 7;
         var position = new Vector3(roomX, 0, roomZ);

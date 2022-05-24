@@ -9,11 +9,15 @@ TagManager:
   - Door
   - newDoor
   - RoomSpawner
+  - PathFindingWAypoint
+  - floor
+  - pathHolder
+  - path
   - Key
   - Gate
-  - Dungeon Master
-  - Enemy
   - Player Sword
+  - Enemy
+  - enemyTile
   layers:
   - Default
   - TransparentFX
