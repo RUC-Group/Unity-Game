@@ -147,6 +147,7 @@ MonoBehaviour:
   speed: 5
   detectionRange: 5
   waitTime: 0.3
+  longestEdge: 4
 --- !u!54 &769533378008796007
 Rigidbody:
   m_ObjectHideFlags: 0

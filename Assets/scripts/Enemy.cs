@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour{
     public float speed;
     public float detectionRange;
     public float waitTime = .1f;
-    public float longestEdge = 4f;
+    public float longestEdge = 1f;
 
     float lastScan = 0;
 
@@ -86,7 +86,7 @@ public class Enemy : MonoBehaviour{
         //print("waypoints in room" + waypoints.Count);
         float timeStamp = Time.time;
 
-        if(timeStamp<5 || timeStamp - lastScan>3){
+        if(timeStamp<3 || timeStamp - lastScan>3){
             lastScan = timeStamp;
             createGrid();
             //print("room Grid vertices " + roomGrid.GetVertices().Count);
@@ -142,9 +142,9 @@ public class Enemy : MonoBehaviour{
                 targetWaypointIndex++;
                 yield return new WaitForSeconds(waitTime);
             }
+            lastScan=0;
             yield return null;  
         }
-        lastScan=0;
     }
         
     
