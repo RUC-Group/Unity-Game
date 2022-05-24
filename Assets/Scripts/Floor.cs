@@ -5,6 +5,7 @@ using UnityEngine;
 public class Floor : MonoBehaviour{
     public GameObject room;
     public GameObject player;
+    public GameObject playerSword;
     public GameObject hallway;
     int floorSize = 5;
     List<Room> roomsList;
@@ -68,12 +69,12 @@ public class Floor : MonoBehaviour{
         rooms = new Room[floorSize,floorSize];
         spawnedRooms = new List<Room>();
         Room pickedRoom;
-        int numberOfRooms = 10; //Random.Range(99,100);
+        int numberOfRooms = Random.Range(10,15);
         print("number of rooms to spawn: " + numberOfRooms);
-        int indexX = Random.Range(150,151);
-        int indexZ = Random.Range(150,151);
+        int indexX = (int)floorSize/2;
+        int indexZ = (int)floorSize/2;
         
-        rooms[indexX,indexZ] = makeRoom(indexX,indexZ);
+        rooms[indexX,indexZ] = makeRoom(indexX,indexZ,"spawn room");
         pickedRoom = rooms[indexX,indexZ];
         Instantiate(player, new Vector3((5*5+15)*indexX + 12, 10,(5*5+15)*indexZ + 12),Quaternion.Euler(Vector3.down * 0));
         spawnedRooms.Add(pickedRoom);
@@ -144,6 +145,19 @@ public class Floor : MonoBehaviour{
             }
             pickedRoom = pickRoom(spawnedRooms);
         }
+        while(pickedRoom.typeOfRoom!=null){
+            pickedRoom = pickRoom(spawnedRooms);
+        }
+        pickedRoom.changeRoom("end gate room");
+        while(pickedRoom.typeOfRoom!=null){
+            pickedRoom = pickRoom(spawnedRooms);
+        }
+        pickedRoom.changeRoom("key room");
+
+        while(pickedRoom.typeOfRoom!=null){
+            pickedRoom = pickRoom(spawnedRooms);
+        }
+        pickedRoom.changeRoom("key room");
     }
 
 
@@ -197,6 +211,16 @@ public class Floor : MonoBehaviour{
         GameObject newRoomObject = Instantiate(room,position,Quaternion.identity);
         Room newRoom = newRoomObject.GetComponent<Room>();
         newRoom.setRoom(roomX,roomZ,roomSize);
+
+        return newRoom;
+    }
+
+    public Room makeRoom(int roomX, int roomZ, string typeOfRoom){
+        int roomSize = 7;
+        var position = new Vector3(roomX, 0, roomZ);
+        GameObject newRoomObject = Instantiate(room,position,Quaternion.identity);
+        Room newRoom = newRoomObject.GetComponent<Room>();
+        newRoom.setRoom(roomX,roomZ,roomSize,typeOfRoom);
 
         return newRoom;
     }
