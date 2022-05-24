@@ -137,16 +137,16 @@ public class Room : MonoBehaviour{
         if (x == roomSizeMinusOne/2 && y == 1 || x == roomSizeMinusOne-1 && y == roomSizeMinusOne/2 || x == roomSizeMinusOne/2 && y == roomSizeMinusOne-1 || x == 1 && y == roomSizeMinusOne/2){ //if there's a door adjacant to this tile... (3,0+1)(6-1,3)(3,6-1)(0+1,3)
             tileID = 0; //...set this tile to be empty
         }else if (x == 1 && y == 1 || x == roomSizeMinusOne-1 && y == 1 || x == 1 && y == roomSizeMinusOne-1 || x == roomSizeMinusOne-1 && y == roomSizeMinusOne-1 || x == roomSizeMinusOne/2 && y == roomSizeMinusOne/2){ //if tile is a corner or at center of room
-            int r = Random.Range(0,5);
+            int r = UnityEngine.Random.Range(0,5);
             if (r == 0 && roomTreasureCount < roomMaxTreasure){
                 tileID = 3;
                 roomTreasureCount ++;
             }else{
-                tileID = Random.Range(0,3);
+                tileID = UnityEngine.Random.Range(0,3);
             }
         } else if(x == 1 || x == 2 || x == roomSizeMinusOne-1 || x == roomSizeMinusOne-2){ //if tile surrounds where a treasure could be on x axis
             if (y == 1 || y == 2 || y == roomSizeMinusOne-1 || y == roomSizeMinusOne-2 && roomTiles[x,y] != treasureTile){ //if tile surrounds where a treasure could be on y axis, and ISN'T treasure
-                int r = Random.Range(0,3);
+                int r = UnityEngine.Random.Range(0,3);
                 if(r <= 1){
                     tileID = 2;
                 } else if(r == 2){
@@ -156,7 +156,7 @@ public class Room : MonoBehaviour{
                 }                
             }
         } else {
-            tileID = Random.Range(0,2);
+            tileID = UnityEngine.Random.Range(0,2);
         }
         //Set tile based off of tileID
         switch (tileID){
