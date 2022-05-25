@@ -5,8 +5,9 @@ using UnityEngine;
 public class Sword : MonoBehaviour
 {
     public bool active=false;
-    float timeCount = 0.0f;
+
     bool start=false;
+    float timeCount = 0.0f;
     float speed = 5;
     float yRotation = 0;
 
