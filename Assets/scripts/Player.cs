@@ -7,20 +7,15 @@ public class Player : MonoBehaviour{
 
     public GameObject swordGameObject;
     Sword sword;
-
+    GameUI gameUI;
     GameObject model;
-    public int speed;
+
+    int speed = 8;
     int score = 0;
     int health = 100;
-
-    int keyAmount=0;
-
-    bool alive=true;
-
-    float lastDamageTime=0;
-    Door door;
-
-    private GameUI gameUI;
+    int keyAmount = 0;
+    bool alive = true;
+    float lastDamageTime = 0;
 
     // Start is called before the first frame update
     void Start(){
@@ -32,8 +27,7 @@ public class Player : MonoBehaviour{
 
     // Update is called once per frame
     void Update(){
-        sword = swordGameObject.transform.GetComponent<Sword>();
-        model = transform.Find("Capsule").gameObject;
+
         if(alive){
             Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"),0 ,Input.GetAxisRaw("Vertical"));   
             Vector3 direction = input.normalized; 
@@ -49,17 +43,21 @@ public class Player : MonoBehaviour{
         }else{
             Quaternion target = Quaternion.Euler(0,90,90);
             transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime);
-        }
-        if (health <= 0){
             health=0;
             SceneManager.LoadScene(2);
         }
+
+        if (health <= 0){
+            alive = !alive;
+        }
+
         gameUI.healthPoints=health;
         gameUI.score=score;
     }
 
     //hitbox events
     void OnTriggerStay(Collider triggerCollider) {
+
         // walkinto coin/treasure
         if (triggerCollider.tag == "Treasure"){
             Destroy (triggerCollider.gameObject);
@@ -67,10 +65,12 @@ public class Player : MonoBehaviour{
             if(score%10==0) health+=20;
             print("Score: " + score);   
         }
+
         //walk on spikes
         if (triggerCollider.tag == "Spike"){
             getDamage();   
         }
+
         if(triggerCollider.tag == "Key"){
             Destroy (triggerCollider.gameObject);
             GameObject[] keyArray=GameObject.FindGameObjectsWithTag("Key");
@@ -79,6 +79,7 @@ public class Player : MonoBehaviour{
             if(keyAmount==2) gameUI.key2.color=new Color32(255, 255, 225, 225);
             print(keyAmount);
         }
+
         if(triggerCollider.tag == "Gate"){
             if(keyAmount>=2){
                 Destroy (triggerCollider.gameObject);
@@ -91,12 +92,15 @@ public class Player : MonoBehaviour{
     }
 
     public void getDamage(){
+
         float timeStamp = Time.time;
+
         if(timeStamp - lastDamageTime>1){
             health-=10;
             print(health);
             lastDamageTime = timeStamp;
         }
+
         if(health<=0){
             alive=false;
         }
