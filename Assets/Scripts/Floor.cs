@@ -1,37 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Floor : MonoBehaviour{
     public GameObject room;
     public GameObject player;
-    public GameObject playerSword;
     public GameObject hallway;
-    int floorSize = 5;
-    List<Room> roomsList;
-    Room[,] rooms;
-    List<Room> spawnedRooms;
-    List<Transform> waypoints;
-    public Transform path;
-    int x;
-    static int y;
 
-    public Floor(int floorSize){
-        this.floorSize = floorSize;
-    }
+    int floorSize = 31;
+
+    int minRoomsAmount = 10;
+
+    int maxRoomsAmount = 15;
+    Room[,] rooms;
+    List<Room> spawnedRooms = new List<Room>();
+    List<Transform> waypoints = new List<Transform>();
+
 
     void Start(){
-        floorAlgorithm2();
+        floorAlgorithm();
         showFloor();
         waypoints = getAllWaypoints(getTiles());
-        print(waypoints.Count + " waypoints in the map");
-    }
-    void Update(){
-        
-    }
-
-    public List<Room> getSpawnedRooms(){
-        return spawnedRooms;
     }
 
     public void showFloor(){
@@ -40,51 +30,27 @@ public class Floor : MonoBehaviour{
             room.showRoom();
             count ++;
         }
-        print("amount of rooms spawned: " + count);
-        
     }
 
-    public void createHallway(int dir, Room r){
-        Quaternion rotation;
-        Vector3 position;
 
-        if (dir == 2){
-            position = new Vector3(3*5 + r.indexToUnitPos(r.posX),0,-1*5 + r.indexToUnitPos(r.posZ));
-            rotation = Quaternion.Euler(Vector3.down * 90);
-        } else if(dir == 3){
-            position = new Vector3(7*5 + r.indexToUnitPos(r.posX),0,3*5 + r.indexToUnitPos(r.posZ));
-            rotation = Quaternion.Euler(Vector3.down * 0);
-        } else if(dir == 0){
-            position = new Vector3(3*5 + r.indexToUnitPos(r.posX),0,7*5 + r.indexToUnitPos(r.posZ));
-            rotation = Quaternion.Euler(Vector3.down * 90);
-        } else {
-            position = new Vector3(-1*5 + r.indexToUnitPos(r.posX),0,3*5 + r.indexToUnitPos(r.posZ));
-            rotation = Quaternion.Euler(Vector3.down * 0);
-        }
-        Instantiate(hallway, position, rotation);
-    }
-
-    public void floorAlgorithm2(){
-        int floorSize = 1000;
+    public void floorAlgorithm(){
         rooms = new Room[floorSize,floorSize];
-        spawnedRooms = new List<Room>();
-        Room pickedRoom;
-        int numberOfRooms = Random.Range(10,15);
-        print("number of rooms to spawn: " + numberOfRooms);
-        int indexX = (int)floorSize/2;
-        int indexZ = (int)floorSize/2;
+        int numberOfRooms = UnityEngine.Random.Range(minRoomsAmount,maxRoomsAmount);
+        int indexX = maxRoomsAmount/2;
+        int indexZ = maxRoomsAmount/2;
         
         rooms[indexX,indexZ] = makeRoom(indexX,indexZ,"spawn room");
-        pickedRoom = rooms[indexX,indexZ];
+        Room pickedRoom = rooms[indexX,indexZ];
         Instantiate(player, new Vector3((5*5+15)*indexX + 12, 10,(5*5+15)*indexZ + 12),Quaternion.Euler(Vector3.down * 0));
         spawnedRooms.Add(pickedRoom);
         while (numberOfRooms > 0){
-            int dir = Random.Range(0,4);
-            int spawnCount = Random.Range(1,5);
-
+            int dir = UnityEngine.Random.Range(0,4);
+            int spawnCount = UnityEngine.Random.Range(1,5);
+            
             switch (dir){
                 case 0:
                     for (var i = 0; i < spawnCount + 1; i++){
+                        if(numberOfRooms<=0)    break;
                         if (spawnCount != i && rooms[pickedRoom.posX,pickedRoom.posZ-i]==null){
                             Room r = makeRoom(pickedRoom.posX,pickedRoom.posZ-i);
                             Room pr = rooms[pickedRoom.posX,pickedRoom.posZ-i+1];
@@ -99,6 +65,7 @@ public class Floor : MonoBehaviour{
                     break;
                 case 1:
                     for (var i = 0; i < spawnCount + 1; i++){
+                        if(numberOfRooms<=0)    break;
                         if (spawnCount != i && rooms[pickedRoom.posX+i,pickedRoom.posZ]==null){
                             Room r = makeRoom(pickedRoom.posX+i,pickedRoom.posZ);
                             Room pr = rooms[pickedRoom.posX + i -1,pickedRoom.posZ];
@@ -113,6 +80,7 @@ public class Floor : MonoBehaviour{
                     break;
                 case 2:
                     for (var i = 0; i < spawnCount + 1; i++){
+                        if(numberOfRooms<=0)    break;
                         if (spawnCount != i && rooms[pickedRoom.posX,pickedRoom.posZ+ i]==null){
                             Room r = makeRoom(pickedRoom.posX,pickedRoom.posZ+i);
                             Room pr = rooms[pickedRoom.posX,pickedRoom.posZ+i-1];
@@ -125,8 +93,9 @@ public class Floor : MonoBehaviour{
                         }
                     }
                     break;
-                case 3:
+                default:
                     for (var i = 0; i < spawnCount + 1; i++){
+                        if(numberOfRooms<=0)    break;
                         if (spawnCount != i && rooms[pickedRoom.posX-i,pickedRoom.posZ]==null){
                             Room r = makeRoom(pickedRoom.posX-i,pickedRoom.posZ);
                             Room pr = rooms[pickedRoom.posX-i+1,pickedRoom.posZ];
@@ -139,38 +108,73 @@ public class Floor : MonoBehaviour{
                         }
                     }
                     break;
-                default:
-                    print("Error!");
-                    break;
             }
-            pickedRoom = pickRoom(spawnedRooms);
+            pickedRoom = pickRoom();
         }
+
         while(pickedRoom.typeOfRoom!=null){
-            pickedRoom = pickRoom(spawnedRooms);
+            pickedRoom = pickRoom();
         }
         pickedRoom.changeRoom("end gate room");
+
         while(pickedRoom.typeOfRoom!=null){
-            pickedRoom = pickRoom(spawnedRooms);
+            pickedRoom = pickRoom();
         }
         pickedRoom.changeRoom("key room");
 
         while(pickedRoom.typeOfRoom!=null){
-            pickedRoom = pickRoom(spawnedRooms);
+            pickedRoom = pickRoom();
         }
         pickedRoom.changeRoom("key room");
     }
 
+    //method that makes a room at the coordinate (roomX,0,roomZ)
+    public Room makeRoom(int roomX, int roomZ, string typeOfRoom=null){
+        int roomSize = 7;
+        var position = new Vector3(roomX, 0, roomZ);
+        GameObject newRoomObject = Instantiate(room,position,Quaternion.identity);
+        Room newRoom = newRoomObject.GetComponent<Room>();
 
-    public Room pickRoom(List<Room> a){
-        int num = Random.Range(0,a.Count);
-        return a[num];
+        newRoom.setRoom(roomX,roomZ,roomSize,typeOfRoom);
+
+        return newRoom;
+    }
+
+    //methode that randomly picks a already spawned room
+    public Room pickRoom(){
+        return spawnedRooms[UnityEngine.Random.Range(0,spawnedRooms.Count)];
+    }
+
+    public void createHallway(int dir, Room r){
+        Quaternion rotation;
+        Vector3 position;
+        
+        if (dir == 2){
+            position = new Vector3(3*5 + r.indexToUnitPos(r.posX),0,-1*5 + r.indexToUnitPos(r.posZ));
+            rotation = Quaternion.Euler(Vector3.down * 90);
+        } else if(dir == 3){
+            position = new Vector3(7*5 + r.indexToUnitPos(r.posX),0,3*5 + r.indexToUnitPos(r.posZ));
+            rotation = Quaternion.Euler(Vector3.down * 0);
+        } else if(dir == 0){
+            position = new Vector3(3*5 + r.indexToUnitPos(r.posX),0,7*5 + r.indexToUnitPos(r.posZ));
+            rotation = Quaternion.Euler(Vector3.down * 90);
+        } else {
+            position = new Vector3(-1*5 + r.indexToUnitPos(r.posX),0,3*5 + r.indexToUnitPos(r.posZ));
+            rotation = Quaternion.Euler(Vector3.down * 0);
+        }
+
+        Instantiate(hallway, position, rotation);
     }
 
     
+    public List<Room> getSpawnedRooms(){
+        return spawnedRooms;
+    }
 
-    //method that returns a list of all tiles in the game
+    //method that returns a list of the Transform component of all tiles in the game
     public List<Transform> getTiles(){
         List<Transform> allTiles = new List<Transform>();
+
         foreach (Room r in spawnedRooms){
             GameObject[,] roomTiles = r.getRoomTiles();
             for (var i = 0; i < roomTiles.Length/7; i++){
@@ -181,10 +185,10 @@ public class Floor : MonoBehaviour{
         }
         return allTiles;
     }
+
     // Method to return all the waypoints from a list of tiles
-    List<Transform> getAllWaypoints(List<Transform> tiles){
-        
-        waypoints = new List<Transform>();
+    List<Transform> getAllWaypoints(List<Transform> tiles){ 
+
         foreach (Transform tile in tiles){
             for (var i = 0; i < tile.childCount; i++){
                 if (tile.GetChild(i).gameObject.tag == "pathHolder"){
@@ -196,32 +200,7 @@ public class Floor : MonoBehaviour{
                 }
             }
         }
+
         return waypoints;
-    }
-
-    //draws Gizmos (3d objects that can only be seen in the editor and is not displayed on player camera)
-    void OnDrawGizmos(){
-        
-    }
-
-    //method that makes a room at the coordinate (roomX,0,roomZ)
-    public Room makeRoom(int roomX, int roomZ){
-        int roomSize = 7;
-        var position = new Vector3(roomX, 0, roomZ);
-        GameObject newRoomObject = Instantiate(room,position,Quaternion.identity);
-        Room newRoom = newRoomObject.GetComponent<Room>();
-        newRoom.setRoom(roomX,roomZ,roomSize);
-
-        return newRoom;
-    }
-
-    public Room makeRoom(int roomX, int roomZ, string typeOfRoom){
-        int roomSize = 7;
-        var position = new Vector3(roomX, 0, roomZ);
-        GameObject newRoomObject = Instantiate(room,position,Quaternion.identity);
-        Room newRoom = newRoomObject.GetComponent<Room>();
-        newRoom.setRoom(roomX,roomZ,roomSize,typeOfRoom);
-
-        return newRoom;
     }
 }

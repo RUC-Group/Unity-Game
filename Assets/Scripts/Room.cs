@@ -33,7 +33,7 @@ public class Room : MonoBehaviour{
     AdjacencyGraph roomGrid;
     
     //constructor ... kindof XD
-    public void setRoom(int posX, int posZ, int roomSize){
+    /*public void setRoom(int posX, int posZ, int roomSize){
         this.posX=posX;
         this.posZ=posZ;
         this.roomSize=roomSize;
@@ -52,7 +52,7 @@ public class Room : MonoBehaviour{
         }
        
         
-    }   
+    } */
     /*
     AdjacencyGraph createGrid(){
         roomGrid = new AdjacencyGraph();
@@ -110,7 +110,7 @@ public class Room : MonoBehaviour{
                 }
             }
     }
-    public void setRoom(int posX, int posZ, int roomSize, string typeOfRoom){
+    public void setRoom(int posX, int posZ, int roomSize, string typeOfRoom=null){
         this.posX=posX;
         this.posZ=posZ;
         this.roomSize=roomSize;
@@ -123,7 +123,11 @@ public class Room : MonoBehaviour{
                 }else if(i == 0 || i == roomSize -1 || j== roomSize - 1 || j == 0){
                     roomTiles[i,j] = wallTile;
                 }else{
-                    roomTiles[i,j] = emptyTile;
+                    if(typeOfRoom!=null){
+                        roomTiles[i,j] = emptyTile;
+                    }else{
+                        roomTiles[i,j] = pickTile(i,j);
+                    }
                 }
             }
         }
