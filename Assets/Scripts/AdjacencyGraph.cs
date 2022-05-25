@@ -14,10 +14,8 @@ public class AdjacencyGraph{
     }
 
     public void addEdge(Vertex from, Vertex to, float weight){
-        if(!contains(vertecies, from) && contains(vertecies,to)){
-            Debug.Log("missing vertecies from graph");
-        }
-        else{
+        //Add edges to the adjacency graph if the two vertices exist in the adjacency graph
+        if(contains(vertecies, from) && contains(vertecies,to)){
             Edge newE = new Edge(from, to, weight);
             Edge newErev = new Edge(to, from, weight);
             from.addEdgeToList(newE);
@@ -26,10 +24,12 @@ public class AdjacencyGraph{
     }
 
     public List<Vertex> GetVertices(){
+        //return list of all verticies
         return vertecies;
     }
 
     public bool contains(List<Vertex> l, Vertex element){
+        //checks if the given vertex exist in the adjacency graph
         for (var i = 0; i < l.Count; i++){
             if (l[i] == element){
                 return true;
