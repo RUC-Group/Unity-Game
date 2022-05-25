@@ -5,19 +5,10 @@ using UnityEngine;
 public class Sword : MonoBehaviour
 {
     public bool active=false;
-    private float timeCount = 0.0f;
-    private bool start=false;
-
-    private float speed = 5;
+    float timeCount = 0.0f;
+    bool start=false;
+    float speed = 5;
     float yRotation = 0;
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
 
     // Update is called once per frame
     void Update(){
@@ -30,7 +21,6 @@ public class Sword : MonoBehaviour
                 timeCount = 0.0f;
                 active = false;
             }
-            //print(timeCount);
             timeCount = timeCount + Time.deltaTime*2;
         }
     }
