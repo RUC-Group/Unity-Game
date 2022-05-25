@@ -7,6 +7,7 @@ public class MinHeap<T> where T : IComparable<T> {
     Dictionary<T,int> positionTable = new Dictionary<T,int>();
     List<T> minHeap;
     private int size = 0;
+
     // Start is called before the first frame update
     public MinHeap(){
         minHeap = new List<T>();
@@ -61,15 +62,6 @@ public class MinHeap<T> where T : IComparable<T> {
         }
     }
 
-    /*
-    public void decreaseKey(int pos){
-        int currPos = pos;
-        while (comparer.Compare(minHeap[currPos], minHeap[parent(currPos)]) < 0){
-            swap(currPos, parent(currPos));
-            currPos = parent(currPos);
-        }
-    }
-    */
     public T peak(){
         return minHeap[0];
     }
@@ -96,7 +88,6 @@ public class MinHeap<T> where T : IComparable<T> {
         }
     }
 
-    
     public T extractMin(){
         T min = minHeap[0];
         minHeap[0] = minHeap[size-1];
