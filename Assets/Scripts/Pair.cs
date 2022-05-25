@@ -4,8 +4,10 @@ using UnityEngine;
 using System;
 
 public class Pair:IComparable<Pair>{
+
     public Vertex v {get;set;}
     public float d {get; set;}
+    
     //constructor
     public Pair(Vertex v, float d){
         this.v = v;
