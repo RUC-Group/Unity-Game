@@ -50,7 +50,7 @@ public class Player : MonoBehaviour{
             Quaternion target = Quaternion.Euler(0,90,90);
             transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime);
         }
-        if (health < 0){
+        if (health <= 0){
             health=0;
             SceneManager.LoadScene(2);
         }
@@ -72,10 +72,11 @@ public class Player : MonoBehaviour{
             getDamage();   
         }
         if(triggerCollider.tag == "Key"){
-            gameUI.key1.color=new Color32(255, 255, 225, 225);
-            if(keyAmount>0) gameUI.key2.color=new Color32(255, 255, 225, 225);
             Destroy (triggerCollider.gameObject);
-            keyAmount++;
+            GameObject[] keyArray=GameObject.FindGameObjectsWithTag("Key");
+            keyAmount=3-keyArray.Length;
+            if(keyAmount==1) gameUI.key1.color=new Color32(255, 255, 225, 225);
+            if(keyAmount==2) gameUI.key2.color=new Color32(255, 255, 225, 225);
             print(keyAmount);
         }
         if(triggerCollider.tag == "Gate"){
