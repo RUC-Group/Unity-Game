@@ -4,7 +4,6 @@ using UnityEngine;
 using System;
 
 public class Enemy : MonoBehaviour{
-    Dictionary<Vertex, Vertex> pathToPlayer;
     AdjacencyGraph roomGrid;
     List<Transform> waypoints = new List<Transform>();
     Vector3 playerPos;
@@ -13,28 +12,19 @@ public class Enemy : MonoBehaviour{
     Vector3 displacementFromPlayer;
     int health = 100;
     bool enemyAlive = true;
-    int i;
     float detectionRangeMod = 1;
     float distanceToTarget;
-    
-    
-    public float speed;
-    public float detectionRange;
-    public float waitTime = .1f;
-     float longestEdge = 4.5f;
-
+    float speed = 5;
+    float detectionRange = 5;
+    float waitTime = .1f;
+    float longestEdge = 4.5f;
     float lastScan = 0;
-
     List<Vector3> pathToFollow;
-
-    // Start is called before the first frame update
-    void Start() {
-        
-    }
 
     public void setWaypoints(List<Transform> w){
         waypoints.Add(transform);
         waypoints.Add(GameObject.FindGameObjectWithTag("Player").transform);
+
         foreach (Transform waypoint in w){
             waypoints.Add(waypoint);
         }
@@ -42,10 +32,12 @@ public class Enemy : MonoBehaviour{
 
     void createGrid(){
         roomGrid = new AdjacencyGraph();
+
         foreach (Transform waypoint in waypoints){
             Vertex v = new Vertex(waypoint.position);
             roomGrid.addVertex(v);
         }
+
         foreach (Vertex v in roomGrid.GetVertices()){
             foreach (Vertex v2 in roomGrid.GetVertices()){
                 float distBetween = (float)dist(v.pos, v2.pos);
@@ -62,6 +54,7 @@ public class Enemy : MonoBehaviour{
 
     bool checkScanTimer(){
         float timeStamp = Time.time;
+
         if(timeStamp<2 || timeStamp - lastScan>2){
             return true;
         }else{
@@ -73,17 +66,16 @@ public class Enemy : MonoBehaviour{
     void Update(){
         if(health < 0 ){
             killEnemy();
-        }
-        else{
+        }else{
             playerPos = GameObject.FindGameObjectWithTag("Player").transform.position; 
             displacementFromPlayer = playerPos - transform.position;
             directionToPlayer = displacementFromPlayer.normalized;
             velocity = directionToPlayer * speed;
             distanceToTarget = displacementFromPlayer.magnitude;
+
             if(detectionRange * detectionRangeMod > distanceToTarget){
                 followPlayer();
-            }
-            else{
+            }else{
                 returnToIdle();
             }
         }
@@ -93,17 +85,13 @@ public class Enemy : MonoBehaviour{
 
         transform.localScale = new Vector3(1,2,1);
         detectionRangeMod = 4; //expands detection range via multiplication
-        //if enemy is far from player, pursue player
-        //print("waypoints in room" + waypoints.Count);
         float timeStamp = Time.time;
 
         if(checkScanTimer()){
             lastScan = timeStamp;
             createGrid();
-            //print("room Grid vertices " + roomGrid.GetVertices().Count);
             pathToFollow = findPath(dijkstra(), roomGrid.GetVertices()[1]);
             StartCoroutine(followPath(pathToFollow));
-            //transform.Translate(velocity * Time.deltaTime);  
         }
     }
 
@@ -128,17 +116,6 @@ public class Enemy : MonoBehaviour{
     
     //draws Gizmos (3d objects that can only be seen in the editor and is not displayed on player camera)
     void OnDrawGizmos(){
-        /*
-        if(roomGrid !=null){
-            // draw adjacency tree for the enemies
-            foreach (Vertex v in roomGrid.GetVertices()){
-                Gizmos.DrawSphere(v.pos,.3f);
-                foreach (Edge e in v.outEdges){
-                    Gizmos.DrawLine(e.from.pos, e.to.pos);
-                }
-            }
-        }
-        */
         if(pathToFollow != null){
             Vector3 shift = new Vector3(0,2,0);
             for(var i =0; i<pathToFollow.Count; i++){
@@ -151,7 +128,6 @@ public class Enemy : MonoBehaviour{
     }
 
     IEnumerator followPath(List<Vector3> pathPoints){
-        //transform.position = pathPoints[0];
         int targetWaypointIndex = 0;
         Vector3 targetWaypoint = new Vector3(pathPoints[targetWaypointIndex].x,transform.position.y,pathPoints[targetWaypointIndex].z);
         float timeStamp = Time.time;
@@ -160,6 +136,7 @@ public class Enemy : MonoBehaviour{
             timeStamp = Time.time;
             targetWaypoint = new Vector3(pathPoints[targetWaypointIndex].x,transform.position.y,pathPoints[targetWaypointIndex].z);
             transform.position = Vector3.MoveTowards(transform.position,targetWaypoint,speed * Time.deltaTime);
+
             if(Vector3.Distance(transform.position, targetWaypoint) < 0.001f){
                 targetWaypointIndex++;
                 yield return new WaitForSeconds(waitTime);
@@ -176,10 +153,12 @@ public class Enemy : MonoBehaviour{
         List<Vector3> res = new List<Vector3>();
         Vertex temp = target;
         Vertex startVertex = roomGrid.GetVertices()[0];
+
         if (temp != null && startVertex != null){
             while (!temp.Equals(startVertex) && !checkScanTimer()){
                 res.Add(temp.pos);
                 temp = input[temp];
+
                 if(temp==null){
                     temp = startVertex;
                     res = new List<Vector3>();
@@ -190,7 +169,6 @@ public class Enemy : MonoBehaviour{
             res.Add(temp.pos);
             res.Reverse();
         }
-
         return res; 
     }
     
@@ -199,20 +177,18 @@ public class Enemy : MonoBehaviour{
         Dictionary<Vertex,float> d = new Dictionary<Vertex,float>();
         Dictionary<Vertex,Vertex> p = new Dictionary<Vertex,Vertex>();
         MinHeap<Pair> q = new MinHeap<Pair>();
+
         foreach (Vertex v in roomGrid.GetVertices()){
 
             d[v] = 100.0f;
             p[v] = null;
             q.insert(new Pair(v, d[v]));
         }
-        //print(d.Keys.Count);
-        //print("d is this long: " + d.Count);
+
         d[roomGrid.GetVertices()[0]] = 0.0f;
         while (!q.isEmpty()&&!checkScanTimer()){
             Pair u = q.extractMin();
-            //print("in while");
             foreach (Edge e in u.v.outEdges){
-                //print(e.to.pos);
                 float alt = d[u.v] + e.weight;
                 if (alt < d[e.to]){
                     d[e.to] = alt;
