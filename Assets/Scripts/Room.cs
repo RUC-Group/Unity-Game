@@ -4,9 +4,8 @@ using UnityEngine;
 using System;
 
 public class Room : MonoBehaviour{
-    GameObject[,] roomTiles = new GameObject[7,7];
-    List<Enemy> emenyList = new List<Enemy>();
 
+    GameObject[,] roomTiles = new GameObject[7,7];
 
     public GameObject emptyTile;
     public GameObject spikeTile;
@@ -27,49 +26,6 @@ public class Room : MonoBehaviour{
     int roomMaxTreasure = 3;
 
     public string typeOfRoom = null;
-
-    Vector2 globalPosition;
-    
-    AdjacencyGraph roomGrid;
-    
-    //constructor ... kindof XD
-    /*public void setRoom(int posX, int posZ, int roomSize){
-        this.posX=posX;
-        this.posZ=posZ;
-        this.roomSize=roomSize;
-        this.typeOfRoom=null;
-
-        for (var i = 0; i < roomSize; i++){
-            for( var j = 0; j< roomSize; j++){
-                if(i == 0 && j == 0 || i == 0 && j == roomSize-1 || i == roomSize-1 && j == 0 || i == roomSize-1 && j == roomSize-1){
-                    roomTiles[i,j] = cornerTile;
-                }else if(i == 0 || i == roomSize -1 || j== roomSize - 1 || j == 0){
-                    roomTiles[i,j] = wallTile;
-                }else{
-                    roomTiles[i,j] = pickTile(i,j);
-                }
-            }
-        }
-       
-        
-    } */
-    /*
-    AdjacencyGraph createGrid(){
-        roomGrid = new AdjacencyGraph();
-        List<Transform> waypoints = getWaypointsForRoom();
-
-        foreach (Transform waypoint in waypoints){
-            Vertex v = new Vertex(waypoint.position);
-            roomGrid.addVertex(v);
-            for (int i = 0; i < waypoints.Count; i++){
-                if (dist(waypoint.position, waypoints[i].position) < longestEdge && (v.getEdgeList().Count != 8)){
-                    roomGrid.addEdge(v, new Vertex(waypoints[i].position), (float)dist(waypoint.position, waypoints[i].position));
-                }
-            }
-        }
-        return roomGrid;
-    } */
-
     
     
 
