@@ -43,10 +43,7 @@ public class Player : MonoBehaviour{
             {
               sword.attack();
             }
-
         }else{
-            Quaternion target = Quaternion.Euler(0,90,90);
-            transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime);
             health=0;
             SceneManager.LoadScene(2);
         }
@@ -61,8 +58,8 @@ public class Player : MonoBehaviour{
         if (triggerCollider.tag == "Treasure"){
             Destroy (triggerCollider.gameObject);
             score++;
-            if(score%10==0) health+=20;
-            print("Score: " + score);   
+
+            if(score%10==0) health+=20;  
         }
 
         //walk on spikes
@@ -76,16 +73,12 @@ public class Player : MonoBehaviour{
             keyAmount=3-keyArray.Length;
             if(keyAmount==1) gameUI.key1.color=new Color32(255, 255, 225, 225);
             if(keyAmount==2) gameUI.key2.color=new Color32(255, 255, 225, 225);
-            print(keyAmount);
         }
 
         if(triggerCollider.tag == "Gate"){
             if(keyAmount>=2){
                 Destroy (triggerCollider.gameObject);
                 SceneManager.LoadScene(2);
-                print("You can pass");
-            }else{
-                print("You dont have enough keys");
             }
         }
     }
