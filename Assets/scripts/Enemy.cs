@@ -5,6 +5,8 @@ using System;
 
 public class Enemy : MonoBehaviour{
     AdjacencyGraph roomGrid;
+
+    Player player;
     List<Transform> waypoints = new List<Transform>();
     Vector3 playerPos;
     Vector3 velocity;
@@ -65,6 +67,7 @@ public class Enemy : MonoBehaviour{
 
     // Update is called once per frame
     void Update(){
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         if(health < 0 ){
             killEnemy();
         }else{
@@ -75,7 +78,8 @@ public class Enemy : MonoBehaviour{
             distanceToTarget = displacementFromPlayer.magnitude;
 
             if(detectionRange * detectionRangeMod > distanceToTarget){
-                followPlayer();
+                if (distanceToTarget>1.5) followPlayer();
+                else player.getDamage();
             }else{
                 returnToIdle();
             }
@@ -106,7 +110,9 @@ public class Enemy : MonoBehaviour{
         if (triggerCollider.tag == "Spike" && enemyAlive == true){
             health--;
         } else if(triggerCollider.tag == "Player Sword" && enemyAlive == true){
-            health-=25;
+            if(triggerCollider.gameObject.GetComponent<Sword>().active){
+                health-=25;
+            }
         }
     }
 

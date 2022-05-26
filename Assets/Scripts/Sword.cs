@@ -6,7 +6,6 @@ public class Sword : MonoBehaviour
 {
     public bool active=false;
 
-    bool start=false;
     float timeCount = 0.0f;
     float speed = 5;
     float yRotation = 0;
@@ -28,7 +27,6 @@ public class Sword : MonoBehaviour
 
     public void attack(){
         active=true;
-        start=true;
     }
 
     public void updatePosition(Transform transform,Vector3 position){
