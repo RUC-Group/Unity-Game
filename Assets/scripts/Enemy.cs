@@ -42,7 +42,7 @@ public class Enemy : MonoBehaviour{
 
         foreach (Vertex v in roomGrid.GetVertices()){
             foreach (Vertex v2 in roomGrid.GetVertices()){
-                float distBetween = (float)dist(v.pos, v2.pos);
+                float distBetween = Vector3.Distance(v.pos, v2.pos);
 
                 if (distBetween < longestEdge && distBetween != 0) {
                     roomGrid.addEdge(v, v2, distBetween);
@@ -50,10 +50,6 @@ public class Enemy : MonoBehaviour{
             }
         }
     } 
-
-    double dist(Vector3 a, Vector3 b){
-        return Math.Pow(Math.Pow((b.x - a.x),2) + Math.Pow((b.y - a.y),2) + Math.Pow((b.z - a.z),2), (float).5f); // https://www.engineeringtoolbox.com/distance-relationship-between-two-points-d_1854.html
-    }
 
     bool checkScanTimer(){
         float timeStamp = Time.time;
