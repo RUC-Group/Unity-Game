@@ -10,14 +10,15 @@ public class GameUI : MonoBehaviour
     public TMP_Text textScore;
     public RawImage key1;
     public RawImage key2;
+    public Slider mSlider;
 
-    public int healthPoints;
+    public int currHealth;
     public int score;
 
     // Update is called once per frame
-    void Update()
-    {
-        textHp.text = "Health: " + healthPoints.ToString();
+    void Update(){
+        mSlider.value = currHealth;
+        textHp.text = "Health: " + currHealth.ToString();
         textScore.text = "Score: " + score.ToString();
     }
 }

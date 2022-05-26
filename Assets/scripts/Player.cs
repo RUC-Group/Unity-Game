@@ -11,7 +11,7 @@ public class Player : MonoBehaviour{
     GameObject model;
 
     int score = 0;
-    int health = 100;
+    int health = 101;
     int keyAmount = 0;
     float lastDamageTime = 0;
 
@@ -21,6 +21,8 @@ public class Player : MonoBehaviour{
         sword = swordGameObject.transform.GetComponent<Sword>();
         model = transform.Find("Model").gameObject;
         gameUI = GameObject.Find("GameUI").GetComponent<GameUI>();
+        gameUI.currHealth=health;
+        gameUI.score=score;
     }
 
     // Update is called once per frame
@@ -32,11 +34,9 @@ public class Player : MonoBehaviour{
             Vector3 position = velocity * Time.deltaTime;
 
             transform.Translate(position);
-
-            if(position!=Vector3.zero){
+            if (position != Vector3.zero) {
                 model.transform.rotation = Quaternion.LookRotation(position) * Quaternion.Euler(0,270,0);
             }
-
             sword.updatePosition(model.transform,position);
 
             if (Input.GetKeyDown(KeyCode.Space))
@@ -47,7 +47,11 @@ public class Player : MonoBehaviour{
             health=0;
             SceneManager.LoadScene(2);
         }
-        gameUI.healthPoints=health;
+
+        if (health <= 0){
+            alive = !alive;
+        }
+        gameUI.currHealth=health;
         gameUI.score=score;
     }
 
@@ -77,8 +81,7 @@ public class Player : MonoBehaviour{
 
         if(triggerCollider.tag == "Gate"){
             if(keyAmount>=2){
-                Destroy (triggerCollider.gameObject);
-                SceneManager.LoadScene(2);
+                SceneManager.LoadScene(3);
             }
         }
     }

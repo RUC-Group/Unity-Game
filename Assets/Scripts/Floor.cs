@@ -41,7 +41,7 @@ public class Floor : MonoBehaviour{
         
         rooms[indexX,indexZ] = makeRoom(indexX,indexZ,"spawn room");
         Room pickedRoom = rooms[indexX,indexZ];
-        Instantiate(player, new Vector3((5*5+15)*indexX + 12, 10,(5*5+15)*indexZ + 12),Quaternion.Euler(Vector3.down * 0));
+        Instantiate(player, new Vector3((5*5+15)*indexX + 15, 1,(5*5+15)*indexZ + 15),Quaternion.Euler(Vector3.down * 0));
         spawnedRooms.Add(pickedRoom);
         while (numberOfRooms > 0){
             int dir = UnityEngine.Random.Range(0,4);
