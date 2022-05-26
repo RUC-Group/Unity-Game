@@ -70,7 +70,7 @@ public class Player : MonoBehaviour{
         }
 
         //walk on spikes
-        if (triggerCollider.tag == "Spike" || triggerCollider.tag == "Enemy"){
+        if (triggerCollider.tag == "Spike"){
             getDamage();   
         }
 
