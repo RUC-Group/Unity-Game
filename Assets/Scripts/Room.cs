@@ -23,7 +23,7 @@ public class Room : MonoBehaviour{
     public int posZ;
     public int roomSize = 7;
     int roomTreasureCount;
-    int roomMaxTreasure = 3;
+    int roomMaxTreasure = 5;
 
     public string typeOfRoom = null;
     
@@ -91,22 +91,21 @@ public class Room : MonoBehaviour{
 
     GameObject pickTile(int x, int y){
         //Determination of tileID based off of algo
-        //int tileID = Random.Range(0,4);
         int tileID = 0;
         int roomSizeMinusOne = roomSize - 1;
         if (x == roomSizeMinusOne/2 && y == 1 || x == roomSizeMinusOne-1 && y == roomSizeMinusOne/2 || x == roomSizeMinusOne/2 && y == roomSizeMinusOne-1 || x == 1 && y == roomSizeMinusOne/2){ //if there's a door adjacant to this tile... (3,0+1)(6-1,3)(3,6-1)(0+1,3)
             tileID = 0; //...set this tile to be empty
         }else if (x == 1 && y == 1 || x == roomSizeMinusOne-1 && y == 1 || x == 1 && y == roomSizeMinusOne-1 || x == roomSizeMinusOne-1 && y == roomSizeMinusOne-1 || x == roomSizeMinusOne/2 && y == roomSizeMinusOne/2){ //if tile is a corner or at center of room
             int r = UnityEngine.Random.Range(0,5);
-            if (r == 0 && roomTreasureCount < roomMaxTreasure){
-                tileID = 3;
+            if (r < 3 && roomTreasureCount < roomMaxTreasure){
+                tileID = 3; 
                 roomTreasureCount ++;
             }else{
                 tileID = UnityEngine.Random.Range(0,3);
             }
         } else if(x == 1 || x == 2 || x == roomSizeMinusOne-1 || x == roomSizeMinusOne-2){ //if tile surrounds where a treasure could be on x axis
             if (y == 1 || y == 2 || y == roomSizeMinusOne-1 || y == roomSizeMinusOne-2 && roomTiles[x,y] != treasureTile){ //if tile surrounds where a treasure could be on y axis, and ISN'T treasure
-                int r = UnityEngine.Random.Range(0,3);
+                int r = UnityEngine.Random.Range(0,4);
                 if(r <= 1){
                     tileID = 2;
                 } else if(r == 2){
@@ -118,6 +117,7 @@ public class Room : MonoBehaviour{
         } else {
             tileID = UnityEngine.Random.Range(0,2);
         }
+
         //Set tile based off of tileID
         switch (tileID){
             case 0:
@@ -126,7 +126,6 @@ public class Room : MonoBehaviour{
                 return spikeTile;
             case 2:
                 return enemyTile;
-
             case 3:
                 return treasureTile;
             default:
