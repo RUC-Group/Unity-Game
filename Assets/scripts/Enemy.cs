@@ -41,6 +41,7 @@ public class Enemy : MonoBehaviour{
         foreach (Vertex v in roomGrid.GetVertices()){
             foreach (Vertex v2 in roomGrid.GetVertices()){
                 float distBetween = (float)dist(v.pos, v2.pos);
+
                 if (distBetween < longestEdge && distBetween != 0) {
                     roomGrid.addEdge(v, v2, distBetween);
                 }
@@ -85,10 +86,9 @@ public class Enemy : MonoBehaviour{
 
         transform.localScale = new Vector3(1,2,1);
         detectionRangeMod = 4; //expands detection range via multiplication
-        float timeStamp = Time.time;
 
         if(checkScanTimer()){
-            lastScan = timeStamp;
+            lastScan = Time.time;
             createGrid();
             pathToFollow = findPath(dijkstra(), roomGrid.GetVertices()[1]);
             StartCoroutine(followPath(pathToFollow));
