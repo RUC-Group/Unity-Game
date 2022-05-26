@@ -13,15 +13,15 @@ public class Sword : MonoBehaviour
     // Update is called once per frame
     void Update(){
         if(active){
-            if (timeCount<=2){
+            if (yRotation<=135){
+                timeCount = timeCount + Time.deltaTime*2;
                 yRotation += timeCount * speed;
                 transform.rotation=Quaternion.Euler(transform.rotation.eulerAngles.x,transform.rotation.eulerAngles.y-45+yRotation,transform.rotation.eulerAngles.z);
             }else{
+                active=!active;
                 yRotation=0;
                 timeCount = 0.0f;
-                active = false;
             }
-            timeCount = timeCount + Time.deltaTime*2;
         }
     }
 
