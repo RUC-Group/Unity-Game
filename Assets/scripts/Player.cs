@@ -47,10 +47,6 @@ public class Player : MonoBehaviour{
             health=0;
             SceneManager.LoadScene(2);
         }
-
-        if (health <= 0){
-            alive = !alive;
-        }
         gameUI.currHealth=health;
         gameUI.score=score;
     }
