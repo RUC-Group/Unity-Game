@@ -67,7 +67,7 @@ public class Enemy : MonoBehaviour{
     void Update(){
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
   
-        if(health < 0 ){
+        if(health <= 0 ){
             killEnemy();
         }else{
             playerPos = GameObject.FindGameObjectWithTag("Player").transform.position; 
@@ -81,7 +81,7 @@ public class Enemy : MonoBehaviour{
                 float targetAngle = 90 - Mathf.Atan2 (dirToLookTarget.z, dirToLookTarget.x) * Mathf.Rad2Deg;
                 float angle = Mathf.MoveTowardsAngle (transform.eulerAngles.y, targetAngle + 270, turnSpeed * Time.deltaTime);
                 transform.eulerAngles = Vector3.up * angle;
-                if (distanceToTarget>1.5) followPlayer();
+                if (distanceToTarget>1.1) followPlayer();
                 else player.getDamage();
             }else{
                 returnToIdle();
