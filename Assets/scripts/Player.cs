@@ -27,14 +27,17 @@ public class Player : MonoBehaviour{
 
     // Update is called once per frame
     void Update(){
-
         if(alive){
+            //float x = Input.GetAxis("Horizontal");
+            //float z = Input.GetAxis("Vertical");
             Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"),0 ,Input.GetAxisRaw("Vertical"));   
             Vector3 direction = input.normalized; 
             Vector3 velocity = direction * speed;
             Vector3 position = velocity * Time.deltaTime;
             transform.Translate(position);
-            model.transform.rotation = Quaternion.LookRotation(position) * Quaternion.Euler(0,270,0);
+            if(position!=Vector3.zero){
+                model.transform.rotation = Quaternion.LookRotation(position) * Quaternion.Euler(0,270,0);
+            }
             sword.updatePosition(model.transform,position);
             if (Input.GetKeyDown(KeyCode.Space))
             {
