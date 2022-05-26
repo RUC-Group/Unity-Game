@@ -105,8 +105,11 @@ public class Enemy : MonoBehaviour{
         //walk on spikes
         if (triggerCollider.tag == "Spike" && enemyAlive == true){
             health--;
+        } else if(triggerCollider.tag == "Player Sword" && enemyAlive == true){
+            health-=25;
         }
     }
+
     void killEnemy(){
         enemyAlive = false;
         Quaternion target = Quaternion.Euler(0,90,90);
