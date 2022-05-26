@@ -21,7 +21,7 @@ public class Player : MonoBehaviour{
     void Start(){
         swordGameObject=Instantiate(swordGameObject, new Vector3(0, 0,0),Quaternion.Euler(Vector3.down * 0));
         sword = swordGameObject.transform.GetComponent<Sword>();
-        model = transform.Find("Capsule").gameObject;
+        model = transform.Find("Model").gameObject;
         gameUI = GameObject.Find("GameUI").GetComponent<GameUI>();
     }
 
@@ -34,7 +34,7 @@ public class Player : MonoBehaviour{
             Vector3 velocity = direction * speed;
             Vector3 position = velocity * Time.deltaTime;
             transform.Translate(position);
-            model.transform.rotation = Quaternion.LookRotation(position);
+            model.transform.rotation = Quaternion.LookRotation(position) * Quaternion.Euler(0,270,0);
             sword.updatePosition(model.transform,position);
             if (Input.GetKeyDown(KeyCode.Space))
             {

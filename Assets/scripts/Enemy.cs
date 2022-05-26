@@ -21,7 +21,9 @@ public class Enemy : MonoBehaviour{
     float waitTime = .1f;
     float longestEdge = 4.5f;
     float lastScan = 0;
+    int turnSpeed = 360;
     List<Vector3> pathToFollow;
+    float angle;
 
     public void setWaypoints(List<Transform> w){
         waypoints.Add(transform);
@@ -64,6 +66,7 @@ public class Enemy : MonoBehaviour{
     // Update is called once per frame
     void Update(){
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+  
         if(health < 0 ){
             killEnemy();
         }else{
@@ -74,17 +77,22 @@ public class Enemy : MonoBehaviour{
             distanceToTarget = displacementFromPlayer.magnitude;
 
             if(detectionRange * detectionRangeMod > distanceToTarget){
+                Vector3 dirToLookTarget = (player.transform.position - transform.position).normalized;
+                float targetAngle = 90 - Mathf.Atan2 (dirToLookTarget.z, dirToLookTarget.x) * Mathf.Rad2Deg;
+                float angle = Mathf.MoveTowardsAngle (transform.eulerAngles.y, targetAngle + 270, turnSpeed * Time.deltaTime);
+                transform.eulerAngles = Vector3.up * angle;
                 if (distanceToTarget>1.5) followPlayer();
                 else player.getDamage();
             }else{
                 returnToIdle();
             }
         }
+        
     }
 
     void followPlayer(){
-
-        transform.localScale = new Vector3(1,2,1);
+        transform.Find("SpottetMarker").gameObject.SetActive(true);
+        //transform.localScale = new Vector3(1,2,1);
         detectionRangeMod = 4; //expands detection range via multiplication
 
         if(checkScanTimer()){
@@ -92,11 +100,13 @@ public class Enemy : MonoBehaviour{
             createGrid();
             pathToFollow = findPath(dijkstra(), roomGrid.GetVertices()[1]);
             StartCoroutine(followPath(pathToFollow));
+            
         }
     }
 
     void returnToIdle(){
-        transform.localScale = new Vector3(1,1,1);
+        transform.Find("SpottetMarker").gameObject.SetActive(false);
+        //transform.localScale = new Vector3(1,1,1);
         detectionRangeMod = 1;   
     }
 
@@ -113,6 +123,7 @@ public class Enemy : MonoBehaviour{
     }
 
     void killEnemy(){
+        transform.Find("SpottetMarker").gameObject.SetActive(false);
         enemyAlive = false;
         Quaternion target = Quaternion.Euler(0,90,90);
         transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime);
@@ -141,6 +152,8 @@ public class Enemy : MonoBehaviour{
             timeStamp = Time.time;
             targetWaypoint = new Vector3(pathPoints[targetWaypointIndex].x,transform.position.y,pathPoints[targetWaypointIndex].z);
             transform.position = Vector3.MoveTowards(transform.position,targetWaypoint,speed * Time.deltaTime);
+
+            
 
             if(Vector3.Distance(transform.position, targetWaypoint) < 0.001f){
                 targetWaypointIndex++;
