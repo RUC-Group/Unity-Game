@@ -31,7 +31,7 @@ public class Sword : MonoBehaviour
         start=true;
     }
 
-    public async void updatePosition(Transform transform,Vector3 position){
+    public void updatePosition(Transform transform,Vector3 position){
         this.transform.position=new Vector3((float)transform.position.x+(1*Mathf.Sin((this.transform.rotation.eulerAngles.y+45)*Mathf.Deg2Rad)),transform.position.y+1,transform.position.z+(1*Mathf.Cos((this.transform.rotation.eulerAngles.y+45)*Mathf.Deg2Rad)));
         
         if(active){
