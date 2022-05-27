@@ -133,7 +133,7 @@ public class Enemy : MonoBehaviour{
         float timeStamp = Time.time;
 
         if(timeStamp - lastDamageTime>1){
-            health-=25;
+            health-=50;
             lastDamageTime = timeStamp;
         }
     }
