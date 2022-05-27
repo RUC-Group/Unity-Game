@@ -25,6 +25,7 @@ public class Enemy : MonoBehaviour{
     int turnSpeed = 360;
     List<Vector3> pathToFollow;
     float angle;
+    float lastDamageTime = 0;
 
     public void setWaypoints(List<Transform> w){
         waypoints.Add(transform);
@@ -119,11 +120,21 @@ public class Enemy : MonoBehaviour{
     void OnTriggerStay(Collider triggerCollider) {
         //walk on spikes
         if (triggerCollider.tag == "Spike" && enemyAlive == true){
-            health--;
+            getDamage();
         } else if(triggerCollider.tag == "Player Sword" && enemyAlive == true){
             if(triggerCollider.gameObject.GetComponent<Sword>().active){
-                health-=25;
+                getDamage();
             }
+        }
+    }
+
+    public void getDamage(){
+
+        float timeStamp = Time.time;
+
+        if(timeStamp - lastDamageTime>1){
+            health-=25;
+            lastDamageTime = timeStamp;
         }
     }
 

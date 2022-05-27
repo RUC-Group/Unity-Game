@@ -151,9 +151,8 @@ public class Player : MonoBehaviour{
 
         float timeStamp = Time.time;
 
-        if(timeStamp - lastDamageTime>1){
+        if(timeStamp - lastDamageTime>2){
             health-=10;
-            print(health);
             lastDamageTime = timeStamp;
         }
     }
