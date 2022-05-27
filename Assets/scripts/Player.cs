@@ -16,6 +16,8 @@ public class Player : MonoBehaviour{
     int keyAmount = 0;
     float lastDamageTime = 0;
 
+    float lastHeal = 0;
+
     // Start is called before the first frame update
     void Start(){
         swordGameObject=Instantiate(swordGameObject, new Vector3(0, 0,0),Quaternion.Euler(Vector3.down * 0));
@@ -119,7 +121,7 @@ public class Player : MonoBehaviour{
             if(score%10==0) health+=20;  
         }
         if(triggerCollider.tag == "Bonfire" && health < 101){
-            health++;
+            getHealth();
         }
 
         //walk on spikes
@@ -154,6 +156,15 @@ public class Player : MonoBehaviour{
         if(timeStamp - lastDamageTime>2){
             health-=10;
             lastDamageTime = timeStamp;
+        }
+    }
+
+    public void getHealth(){
+        float timeStamp = Time.time;
+
+        if(timeStamp - lastHeal>1){
+            health+=5;
+            lastHeal = timeStamp;
         }
     }
 }
