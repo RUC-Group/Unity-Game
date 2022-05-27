@@ -9,6 +9,7 @@ public class Player : MonoBehaviour{
     Sword sword;
     GameUI gameUI;
     GameObject model;
+    Vector3 input;
 
     int score = 0;
     int health = 101;
@@ -28,7 +29,30 @@ public class Player : MonoBehaviour{
     // Update is called once per frame
     void Update(){
         if(health > 0){
-            Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"),0 ,Input.GetAxisRaw("Vertical"));   
+            float x = Input.GetAxisRaw("Horizontal");
+            float y = Input.GetAxisRaw("Vertical");
+            if(y == 1 && x == 1){
+                input = new Vector3(1,0,0); 
+            }else if(y == 1 && x == 0){
+                input = new Vector3(1,0,1); 
+            }else if(y == 1 && x == -1){
+                input = new Vector3(0,0,1); 
+            }else if(y == 0 && x == -1){
+                input = new Vector3(-1,0,1); 
+            }else if(y == -1 && x == -1){
+                input = new Vector3(-1,0,0); 
+            }else if(y == -1 && x == 0){
+                input = new Vector3(-1,0,-1); 
+            }else if(y == -1 && x == 1){
+                input = new Vector3(0,0,-1); 
+            }else if(y == 0 && x == 1){
+                input = new Vector3(1,0,-1); 
+            }else{
+                input = new Vector3(0,0,0); 
+            }
+          
+
+           // Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"),0 ,Input.GetAxisRaw("Vertical"));   
             Vector3 direction = input.normalized; 
             Vector3 velocity = direction * 8;
             Vector3 position = velocity * Time.deltaTime;
@@ -65,6 +89,11 @@ public class Player : MonoBehaviour{
         //walk on spikes
         if (triggerCollider.tag == "Spike"){
             getDamage();   
+        }
+     
+        if (triggerCollider.tag == "ChineseSuicidePreventionMethod"){
+            transform.position = new Vector3(transform.position.x,4000000,transform.position.z);
+            health -= 50;
         }
 
         if(triggerCollider.tag == "Key"){

@@ -18,6 +18,7 @@ TagManager:
   - Player Sword
   - Enemy
   - enemyTile
+  - ChineseSuicidePreventionMethod
   layers:
   - Default
   - TransparentFX
