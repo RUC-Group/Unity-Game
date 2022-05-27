@@ -19,6 +19,7 @@ TagManager:
   - Enemy
   - enemyTile
   - ChineseSuicidePreventionMethod
+  - RenderSphere
   layers:
   - Default
   - TransparentFX
