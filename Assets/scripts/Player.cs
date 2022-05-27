@@ -73,7 +73,7 @@ public class Player : MonoBehaviour{
             }else if(y == 1 && x == -1){
                 input = new Vector3(0,0,1); 
             }else if(y == 0 && x == -1){
-                input = new Vector3(-1,0,1); 
+                input = new Vector3(-1,0,1);  
             }else if(y == -1 && x == -1){
                 input = new Vector3(-1,0,0); 
             }else if(y == -1 && x == 0){

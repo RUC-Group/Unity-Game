@@ -158,7 +158,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -281.2652, y: -38.472046}
+  m_AnchoredPosition: {x: -281.2652, y: -38.472168}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &72458870
@@ -556,6 +556,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 199a86bbb4a747544906a8659ca62723, type: 3}
+--- !u!1 &856124985 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2699866819425037369, guid: 9891dbd81fe635c4ca832634f72260f8, type: 3}
+  m_PrefabInstance: {fileID: 1684307129}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &856124990
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856124985}
+  serializedVersion: 2
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &862949084
 GameObject:
   m_ObjectHideFlags: 0
@@ -1063,6 +1084,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 72872721395137610, guid: 9891dbd81fe635c4ca832634f72260f8, type: 3}
       propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 2699866819425037369, guid: 9891dbd81fe635c4ca832634f72260f8, type: 3}
+      propertyPath: m_TagString
       value: RenderSphere
       objectReference: {fileID: 0}
     - target: {fileID: 6762954922840352653, guid: 9891dbd81fe635c4ca832634f72260f8, type: 3}
@@ -1224,7 +1249,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 306.31543, y: -30.45642}
+  m_AnchoredPosition: {x: 306.31543, y: -30.456543}
   m_SizeDelta: {x: 575.1708, y: 12.872894}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1819880362
