@@ -136,6 +136,8 @@ public class Enemy : MonoBehaviour{
             health-=50;
             lastDamageTime = timeStamp;
         }
+
+        
     }
 
     void killEnemy(){
