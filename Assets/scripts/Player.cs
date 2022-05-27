@@ -29,6 +29,7 @@ public class Player : MonoBehaviour{
     // Update is called once per frame
     void Update(){
         if(health > 0){
+
             float x = Input.GetAxisRaw("Horizontal");
             float y = Input.GetAxisRaw("Vertical");
             if(y == 1 && x == 1){
@@ -58,11 +59,43 @@ public class Player : MonoBehaviour{
             Vector3 position = velocity * Time.deltaTime;
 
             transform.Translate(position);
-            if (position != Vector3.zero) {
+
+            //Vector3 lookDirection=new Vector3(Input.GetAxisRaw("LookHorizontal"),0 ,Input.GetAxisRaw("LookVertical"));
+            if(position!=Vector3.zero){
                 model.transform.rotation = Quaternion.LookRotation(position) * Quaternion.Euler(0,270,0);
             }
-            sword.updatePosition(model.transform,position);
+            x = Input.GetAxisRaw("LookHorizontal");
+            y = Input.GetAxisRaw("LookVertical");
+            if(y == 1 && x == 1){
+                input = new Vector3(1,0,0); 
+            }else if(y == 1 && x == 0){
+                input = new Vector3(1,0,1); 
+            }else if(y == 1 && x == -1){
+                input = new Vector3(0,0,1); 
+            }else if(y == 0 && x == -1){
+                input = new Vector3(-1,0,1); 
+            }else if(y == -1 && x == -1){
+                input = new Vector3(-1,0,0); 
+            }else if(y == -1 && x == 0){
+                input = new Vector3(-1,0,-1); 
+            }else if(y == -1 && x == 1){
+                input = new Vector3(0,0,-1); 
+            }else if(y == 0 && x == 1){
+                input = new Vector3(1,0,-1); 
+            }else{
+                input = new Vector3(0,0,0); 
+            }
+          
 
+           // Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"),0 ,Input.GetAxisRaw("Vertical"));   
+               direction = input.normalized; 
+                velocity = direction * 8;
+                Vector3 lookDirection = velocity * Time.deltaTime;
+            
+            if(input!=Vector3.zero){
+                model.transform.rotation = Quaternion.LookRotation(lookDirection) * Quaternion.Euler(0,270,0);
+            }
+            sword.updatePosition(model.transform,position);
             if (Input.GetKeyDown(KeyCode.Space))
             {
               sword.attack();
