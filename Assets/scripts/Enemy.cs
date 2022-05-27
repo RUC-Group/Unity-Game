@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 
 public class Enemy : MonoBehaviour{
+    public GameObject coin;
     AdjacencyGraph roomGrid;
 
     Player player;
@@ -66,8 +67,12 @@ public class Enemy : MonoBehaviour{
     // Update is called once per frame
     void Update(){
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-  
-        if(health <= 0 ){
+        if(!enemyAlive){
+            transform.Find("SpottetMarker").gameObject.SetActive(false);
+            Quaternion target = Quaternion.Euler(0,90,90);
+            transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime);
+        }
+        else if(health <= 0){
             killEnemy();
         }else{
             playerPos = GameObject.FindGameObjectWithTag("Player").transform.position; 
@@ -123,10 +128,8 @@ public class Enemy : MonoBehaviour{
     }
 
     void killEnemy(){
-        transform.Find("SpottetMarker").gameObject.SetActive(false);
         enemyAlive = false;
-        Quaternion target = Quaternion.Euler(0,90,90);
-        transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime);
+        Instantiate(coin, transform);
     }
 
     
