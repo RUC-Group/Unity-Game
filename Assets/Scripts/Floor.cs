@@ -36,8 +36,8 @@ public class Floor : MonoBehaviour{
     public void floorAlgorithm(){
         rooms = new Room[floorSize,floorSize];
         int numberOfRooms = UnityEngine.Random.Range(minRoomsAmount,maxRoomsAmount);
-        int indexX = maxRoomsAmount/2;
-        int indexZ = maxRoomsAmount/2;
+        int indexX = maxRoomsAmount-1/2;
+        int indexZ = maxRoomsAmount-1/2;
         
         rooms[indexX,indexZ] = makeRoom(indexX,indexZ,"spawn room");
         Room pickedRoom = rooms[indexX,indexZ];

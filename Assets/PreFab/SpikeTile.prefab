@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3859530270054778393}
   - component: {fileID: 2686264450329360640}
   - component: {fileID: 3824319069872432667}
+  - component: {fileID: 2027914575357590846}
   m_Layer: 0
   m_Name: Cube (7)
   m_TagString: Untagged
@@ -49,7 +50,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 145823938513419657}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -97,6 +98,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2027914575357590846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145823938513419657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 201d359c10b0dfa449d67693a47d489c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1814430448791195156
 GameObject:
   m_ObjectHideFlags: 0
@@ -109,6 +122,7 @@ GameObject:
   - component: {fileID: 7505706377597331857}
   - component: {fileID: 8037365324001695857}
   - component: {fileID: 1018998698624310174}
+  - component: {fileID: 2734649239294040610}
   m_Layer: 0
   m_Name: Cube (6)
   m_TagString: Untagged
@@ -146,7 +160,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1814430448791195156}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -194,6 +208,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2734649239294040610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814430448791195156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 201d359c10b0dfa449d67693a47d489c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2670472023551235756
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,6 +232,7 @@ GameObject:
   - component: {fileID: 3383328698930399810}
   - component: {fileID: 263451887042643077}
   - component: {fileID: 6893754420748512051}
+  - component: {fileID: 7290393472318034033}
   m_Layer: 0
   m_Name: Cube (8)
   m_TagString: Untagged
@@ -243,7 +270,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2670472023551235756}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -291,6 +318,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7290393472318034033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2670472023551235756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 201d359c10b0dfa449d67693a47d489c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4501640392279846359
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,6 +385,7 @@ GameObject:
   - component: {fileID: 5308460574138825568}
   - component: {fileID: 7111884961189313527}
   - component: {fileID: 693208028380807599}
+  - component: {fileID: 2199953259593366646}
   m_Layer: 0
   m_Name: Cube (9)
   m_TagString: Untagged
@@ -383,7 +423,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4784504027737679005}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -431,6 +471,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2199953259593366646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4784504027737679005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 201d359c10b0dfa449d67693a47d489c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5331008896160155665
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,6 +495,7 @@ GameObject:
   - component: {fileID: 8800306393488487708}
   - component: {fileID: 8961819192713777921}
   - component: {fileID: 1145847140125317906}
+  - component: {fileID: 3068270745207859576}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -480,7 +533,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5331008896160155665}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -523,11 +576,23 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5331008896160155665}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3068270745207859576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5331008896160155665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 201d359c10b0dfa449d67693a47d489c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5449526213494355827
 GameObject:
   m_ObjectHideFlags: 0
@@ -540,6 +605,7 @@ GameObject:
   - component: {fileID: 61255439636011320}
   - component: {fileID: 2903784327919051397}
   - component: {fileID: 6167790343639395953}
+  - component: {fileID: 6737941240478553786}
   m_Layer: 0
   m_Name: Cube (3)
   m_TagString: Untagged
@@ -577,7 +643,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5449526213494355827}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -625,6 +691,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6737941240478553786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5449526213494355827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 201d359c10b0dfa449d67693a47d489c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5517064040457228868
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,6 +715,7 @@ GameObject:
   - component: {fileID: 4847567778858989032}
   - component: {fileID: 8503525543755535735}
   - component: {fileID: 6745998841612931034}
+  - component: {fileID: 5912718046000246877}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -674,7 +753,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5517064040457228868}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -717,11 +796,23 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5517064040457228868}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5912718046000246877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5517064040457228868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 201d359c10b0dfa449d67693a47d489c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6268771399256283083
 GameObject:
   m_ObjectHideFlags: 0
@@ -831,6 +922,7 @@ GameObject:
   - component: {fileID: 8810908656613697942}
   - component: {fileID: 3915237176605834453}
   - component: {fileID: 3306338658000168526}
+  - component: {fileID: 8132200292421198630}
   m_Layer: 0
   m_Name: Cube (10)
   m_TagString: Untagged
@@ -868,7 +960,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6369112023051271733}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -916,6 +1008,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8132200292421198630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6369112023051271733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 201d359c10b0dfa449d67693a47d489c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7160715947984459252
 GameObject:
   m_ObjectHideFlags: 0
@@ -928,6 +1032,7 @@ GameObject:
   - component: {fileID: 2920819096259153070}
   - component: {fileID: 1763738517369319173}
   - component: {fileID: 5959932264885983509}
+  - component: {fileID: 6208491973581634295}
   m_Layer: 0
   m_Name: Cube (5)
   m_TagString: Untagged
@@ -965,7 +1070,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7160715947984459252}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1013,6 +1118,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6208491973581634295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7160715947984459252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 201d359c10b0dfa449d67693a47d489c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8047761786518102330
 GameObject:
   m_ObjectHideFlags: 0
@@ -1025,6 +1142,7 @@ GameObject:
   - component: {fileID: 3474797319464654028}
   - component: {fileID: 6050547005543515700}
   - component: {fileID: 3844100759536566997}
+  - component: {fileID: 2411162272335742756}
   m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Untagged
@@ -1062,7 +1180,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8047761786518102330}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1110,6 +1228,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2411162272335742756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8047761786518102330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 201d359c10b0dfa449d67693a47d489c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8442457889377275994
 GameObject:
   m_ObjectHideFlags: 0
@@ -1122,6 +1252,7 @@ GameObject:
   - component: {fileID: 8522717096047791257}
   - component: {fileID: 6038421251055960347}
   - component: {fileID: 5290243732999033365}
+  - component: {fileID: 8940124797803008226}
   m_Layer: 0
   m_Name: Cube (4)
   m_TagString: Untagged
@@ -1159,7 +1290,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8442457889377275994}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1207,3 +1338,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8940124797803008226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8442457889377275994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 201d359c10b0dfa449d67693a47d489c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
