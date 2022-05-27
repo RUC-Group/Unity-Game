@@ -14,6 +14,7 @@ public class Room : MonoBehaviour{
     public GameObject wallTile;
     public GameObject cornerTile;
     public GameObject door;
+    public GameObject bonfireTile;
 
     public GameObject keyTile;
 
@@ -81,6 +82,9 @@ public class Room : MonoBehaviour{
                 }else{
                     if(typeOfRoom!=null){
                         roomTiles[i,j] = emptyTile;
+                        if(typeOfRoom == "spawn room"){
+                            roomTiles[3,3] = bonfireTile;
+                        }
                     }else{
                         roomTiles[i,j] = pickTile(i,j);
                     }

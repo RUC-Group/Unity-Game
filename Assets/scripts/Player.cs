@@ -85,6 +85,9 @@ public class Player : MonoBehaviour{
 
             if(score%10==0) health+=20;  
         }
+        if(triggerCollider.tag == "Bonfire" && health < 101){
+            health++;
+        }
 
         //walk on spikes
         if (triggerCollider.tag == "Spike"){
