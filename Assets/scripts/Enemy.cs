@@ -180,7 +180,6 @@ public class Enemy : MonoBehaviour{
                 if(temp==null){
                     temp = startVertex;
                     res = new List<Vector3>();
-                    print("temp is null");
                     break;
                 }
             }
