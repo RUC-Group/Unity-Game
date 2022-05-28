@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/StartMenu.unity
-    guid: caeb247412775774fae007e175fd9f14
+    path: Assets/Scenes/PogStartMenu.unity
+    guid: 0e34f7c3e46722741a270ab570052b8b
   - enabled: 1
     path: Assets/Scenes/Floor.unity
     guid: ee9dfa6e1a56cb542b5ba364008c2ebf
@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Win screen.unity
     guid: bc04350358f05b64387bdc62fb582c74
+  - enabled: 0
+    path: Assets/Scenes/StartMenu.unity
+    guid: caeb247412775774fae007e175fd9f14
   m_configObjects: {}
