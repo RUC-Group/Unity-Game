@@ -21,6 +21,9 @@ TagManager:
   - ChineseSuicidePreventionMethod
   - RenderSphere
   - Bonfire
+  - chest
+  - chestLid
+  - menu
   layers:
   - Default
   - TransparentFX

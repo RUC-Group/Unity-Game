@@ -11,6 +11,8 @@ public class Player : MonoBehaviour{
     GameObject model;
     Vector3 input;
     public GameObject coin;
+    public Transform pauseMenu;
+    public GameObject what;
 
     float lastScan = 0;
     int score = 0;
@@ -38,6 +40,15 @@ public class Player : MonoBehaviour{
 
     // Update is called once per frame
     void Update(){
+        if(Input.GetKeyDown(KeyCode.Escape)){
+            GameObject tempCanvas = GameObject.Find("PauseMenu");
+            print("temp");
+            if(tempCanvas != null){
+               tempCanvas.GetComponent<Canvas>().enabled = true; 
+               print("temp is not null");
+            }
+        }
+
         if(health > 0){
             
             // movement direction
