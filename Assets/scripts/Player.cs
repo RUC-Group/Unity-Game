@@ -10,13 +10,18 @@ public class Player : MonoBehaviour{
     GameUI gameUI;
     GameObject model;
     Vector3 input;
+    public GameObject coin;
 
+    float lastScan = 0;
     int score = 0;
     int health = 101;
     int keyAmount = 0;
     float lastDamageTime = 0;
-
+    float timeStamp;
     float lastHeal = 0;
+    float lastStamina = 0;
+    int stamina = 101;
+    int maxStamina = 101;
 
     // Start is called before the first frame update
     void Start(){
@@ -24,14 +29,18 @@ public class Player : MonoBehaviour{
         sword = swordGameObject.transform.GetComponent<Sword>();
         model = transform.Find("Model").gameObject;
         gameUI = GameObject.Find("GameUI").GetComponent<GameUI>();
-        gameUI.currHealth=health;
-        gameUI.score=score;
+        gameUI.currHealth = health;
+        gameUI.score = score;
+        gameUI.stamina = stamina;
     }
+
+   
 
     // Update is called once per frame
     void Update(){
         if(health > 0){
-
+            
+            // movement direction
             float x = Input.GetAxisRaw("Horizontal");
             float y = Input.GetAxisRaw("Vertical");
             if(y == 1 && x == 1){
@@ -53,8 +62,18 @@ public class Player : MonoBehaviour{
             }else{
                 input = new Vector3(0,0,0); 
             }
-          
 
+            // Dash
+            if(Input.GetKeyDown(KeyCode.LeftShift) && stamina > 50){
+                lastScan = Time.time;
+                StartCoroutine(dash(transform.Find("Model").Find("Dash Destination").position + new Vector3(0,1,0)));
+                stamina -= 50;
+            }
+            if(stamina<maxStamina){
+                addStamina(5);
+
+            }
+          
            // Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"),0 ,Input.GetAxisRaw("Vertical"));   
             Vector3 direction = input.normalized; 
             Vector3 velocity = direction * 8;
@@ -66,6 +85,7 @@ public class Player : MonoBehaviour{
             if(position!=Vector3.zero){
                 model.transform.rotation = Quaternion.LookRotation(position) * Quaternion.Euler(0,270,0);
             }
+            // look direction
             x = Input.GetAxisRaw("LookHorizontal");
             y = Input.GetAxisRaw("LookVertical");
             if(y == 1 && x == 1){
@@ -98,16 +118,18 @@ public class Player : MonoBehaviour{
                 model.transform.rotation = Quaternion.LookRotation(lookDirection) * Quaternion.Euler(0,270,0);
             }
             sword.updatePosition(model.transform,position);
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-              sword.attack();
+            if (Input.GetKeyDown(KeyCode.Space) && stamina>10){
+                stamina-=20;
+                sword.attack();
             }
+
         }else{
             health=0;
             SceneManager.LoadScene(2);
         }
-        gameUI.currHealth=health;
-        gameUI.score=score;
+        gameUI.stamina = stamina;
+        gameUI.currHealth = health;
+        gameUI.score = score;
     }
 
     //hitbox events
@@ -127,6 +149,13 @@ public class Player : MonoBehaviour{
         //walk on spikes
         if (triggerCollider.tag == "Spike"){
             getDamage();   
+        }
+
+        if(triggerCollider.tag == "chest"){
+            if(!triggerCollider.GetComponent<Chest>().open){
+                Instantiate(coin,triggerCollider.transform);
+            }
+            triggerCollider.GetComponent<Chest>().open = true;
         }
      
         if (triggerCollider.tag == "ChineseSuicidePreventionMethod"){
@@ -149,13 +178,34 @@ public class Player : MonoBehaviour{
         }
     }
 
-    public void getDamage(){
-
+    bool checkScanTimer(int input){
         float timeStamp = Time.time;
+        return timeStamp<input || timeStamp - lastScan>input;
+    }
+
+
+    IEnumerator dash(Vector3 destination){
+        while (Vector3.Distance(transform.position, destination) > 0.5f){
+            transform.position = Vector3.MoveTowards(transform.position,destination ,1);
+            yield return null;
+        }
+    }
+
+    public void getDamage(){
+        timeStamp = Time.time;
 
         if(timeStamp - lastDamageTime>2){
             health-=10;
             lastDamageTime = timeStamp;
+        }
+    }
+
+    private void addStamina(int staminaToAdd){
+        float timeStamp = Time.time;
+
+        if(timeStamp - lastStamina>.5){
+            stamina+=staminaToAdd;
+            lastStamina = timeStamp;
         }
     }
 
@@ -166,5 +216,9 @@ public class Player : MonoBehaviour{
             health+=5;
             lastHeal = timeStamp;
         }
+    }
+
+    private void OnDrawGizmos() {
+        Gizmos.DrawSphere(transform.Find("Model").Find("Dash Destination").position, .3f);
     }
 }

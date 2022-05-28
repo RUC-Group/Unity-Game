@@ -60,6 +60,7 @@ MonoBehaviour:
   bonfireTile: {fileID: 8344478322166641870, guid: f3b763d0ff6953e42aa85da45cba9e1b, type: 3}
   bigEnemy: {fileID: 4845998946723634470, guid: e62e39609876f564492375c3bc9bd26b, type: 3}
   hordeEnemy: {fileID: 4845998946723634470, guid: 141b80536d3a6a548a10b8afb17059cb, type: 3}
+  chestTile: {fileID: 8543264395353692672, guid: 735a76f6fff255343a61a0b9027408e9, type: 3}
   keyTile: {fileID: 1381629703879152785, guid: 9dd67957639b8b34e876c3abed93a323, type: 3}
   endGate: {fileID: 4543572776158442085, guid: 24388152d293f614c92e640a1ad1a4a7, type: 3}
   posX: 0

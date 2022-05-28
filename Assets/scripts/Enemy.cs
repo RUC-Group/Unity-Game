@@ -57,12 +57,7 @@ public class Enemy : MonoBehaviour{
 
     bool checkScanTimer(){
         float timeStamp = Time.time;
-
-        if(timeStamp<2 || timeStamp - lastScan>2){
-            return true;
-        }else{
-            return false;
-        }
+        return timeStamp<2 || timeStamp - lastScan>2;
     }
 
     // Update is called once per frame

@@ -23,6 +23,7 @@ public class Room : MonoBehaviour{
     public GameObject bonfireTile;
     public GameObject bigEnemy;
     public GameObject hordeEnemy;
+    public GameObject chestTile;
 
     public GameObject keyTile;
 
@@ -145,9 +146,19 @@ public class Room : MonoBehaviour{
             case 2:
                 return pickEnemy();
             case 3:
-                return treasureTile;
+                return pickTreasure();
             default:
                 return null;
+        }
+    }
+
+    GameObject pickTreasure(){
+        int r = UnityEngine.Random.Range(0,3);
+        switch (r){
+            case 0:
+                return chestTile;
+            default:
+                return treasureTile;
         }
     }
 
