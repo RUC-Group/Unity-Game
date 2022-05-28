@@ -18,10 +18,6 @@ public class MenuFade : MonoBehaviour{
             c = mat.color;
             c.a = alpha;
             mat.color = c;
-            print(alpha);
-        }else{
-            print(alpha);
         }
-        
     }
 }

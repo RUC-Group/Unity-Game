@@ -26,6 +26,8 @@ public class Player : MonoBehaviour{
     float lastStamina = 0;
     int stamina = 101;
     int maxStamina = 101;
+    int disableTime = 0;
+    GameObject infoBoard;
 
     // Start is called before the first frame update
     void Start(){
@@ -146,11 +148,11 @@ public class Player : MonoBehaviour{
         gameUI.stamina = stamina;
         gameUI.currHealth = health;
         gameUI.score = score;
+        disableTime--;
     }
 
     //hitbox events
     void OnTriggerStay(Collider triggerCollider) {
-
         // walkinto coin/treasure
         if (triggerCollider.tag == "Treasure"){
             Destroy (triggerCollider.gameObject);
@@ -168,8 +170,14 @@ public class Player : MonoBehaviour{
         }
 
         if(triggerCollider.tag == "chest"){
+            infoBoard = GameObject.Find("ChestInfo");
+            if(!triggerCollider.transform.GetComponent<Chest>().open){
+                infoBoard.transform.GetChild(0).GetComponent<Canvas>().enabled = true;
+            }
+            disableTime = 100;
             if(Input.GetKeyDown(KeyCode.E)){
-                if(!triggerCollider.GetComponent<Chest>().open){
+                infoBoard.transform.GetChild(0).GetComponent<Canvas>().enabled = false;
+                if(!triggerCollider.transform.GetComponent<Chest>().open){
                     Instantiate(coin,triggerCollider.transform);
                 }
                 triggerCollider.GetComponent<Chest>().open = true;
@@ -177,7 +185,7 @@ public class Player : MonoBehaviour{
         }
      
         if (triggerCollider.tag == "ChineseSuicidePreventionMethod"){
-            transform.position = new Vector3(transform.position.x,4000000,transform.position.z);
+            transform.position = new Vector3(transform.position.x,20,transform.position.z);
             health -= 50;
         }
 
@@ -190,11 +198,18 @@ public class Player : MonoBehaviour{
         }
 
         if(triggerCollider.tag == "Gate"){
+            infoBoard = GameObject.Find("keyInfo");
+            infoBoard.transform.GetChild(0).GetComponent<Canvas>().enabled = true;
+            disableTime = 100;
             if(keyAmount>=2){
                 SceneManager.LoadScene(3);
             }
         }
+        if(disableTime<0 && infoBoard != null){
+            infoBoard.transform.GetChild(0).GetComponent<Canvas>().enabled = false;
+        }
     }
+    
 
     bool checkScanTimer(int input){
         float timeStamp = Time.time;
