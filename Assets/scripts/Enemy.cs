@@ -117,9 +117,7 @@ public class Enemy : MonoBehaviour{
         if (triggerCollider.tag == "Spike" && enemyAlive == true){
             getDamage();
         } else if(triggerCollider.tag == "Player Sword" && enemyAlive == true){
-            if(triggerCollider.gameObject.GetComponent<Sword>().active){
-                getDamage();
-            }
+            getDamage();
         }
     }
 
