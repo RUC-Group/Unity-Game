@@ -40,12 +40,11 @@ public class Player : MonoBehaviour{
 
     // Update is called once per frame
     void Update(){
-        if(Input.GetKeyDown(KeyCode.Escape)){
-            GameObject tempCanvas = GameObject.Find("PauseMenu");
-            print("temp");
+        GameObject tempCanvas = GameObject.Find("PauseMenu");
+        GameObject tempOptionCanvas = GameObject.Find("PauseOPTIONSmenu");
+        if(Input.GetKeyDown(KeyCode.Escape) && !tempCanvas.GetComponent<Canvas>().enabled && !tempOptionCanvas.GetComponent<Canvas>().enabled){
             if(tempCanvas != null){
                tempCanvas.GetComponent<Canvas>().enabled = true; 
-               print("temp is not null");
             }
         }
 
