@@ -49,9 +49,17 @@ MonoBehaviour:
   enemyTile: {fileID: 4845998946723634470, guid: 87f1c292901476e40ba8bf0ed058ccec, type: 3}
   treasureTile: {fileID: 307916289412118429, guid: 393f62cab674c1445850faaf38b83ae2, type: 3}
   wallTile: {fileID: 7948942339734267596, guid: fe2fac0da242450438be926476c7e7e4, type: 3}
+  symbolwall: {fileID: 7948942339734267596, guid: a1fd58bc5a62c8441b1760f9233f1536, type: 3}
+  swordNShieldwall: {fileID: 7948942339734267596, guid: bcd75be85fd60a54ab55af971ac59083, type: 3}
+  gobletWall: {fileID: 7948942339734267596, guid: 421db3dd475228848a988abbf75ed966, type: 3}
+  headwall: {fileID: 7948942339734267596, guid: 942a75d401369524688fb4842a05ead9, type: 3}
+  cagewall: {fileID: 7948942339734267596, guid: e12b2565aa1634845a9061d122dd1133, type: 3}
+  bookwall: {fileID: 7948942339734267596, guid: 1c87c647f3db6c5488fe92a65f6ccc15, type: 3}
   cornerTile: {fileID: 8941676268904225611, guid: a8bbaa10d6daea641b79f6a9f1ad9d0d, type: 3}
   door: {fileID: 8447505780591899700, guid: 1c807c91a2652544e8f76067c556a55c, type: 3}
   bonfireTile: {fileID: 8344478322166641870, guid: f3b763d0ff6953e42aa85da45cba9e1b, type: 3}
+  bigEnemy: {fileID: 4845998946723634470, guid: e62e39609876f564492375c3bc9bd26b, type: 3}
+  hordeEnemy: {fileID: 4845998946723634470, guid: 141b80536d3a6a548a10b8afb17059cb, type: 3}
   keyTile: {fileID: 1381629703879152785, guid: 9dd67957639b8b34e876c3abed93a323, type: 3}
   endGate: {fileID: 4543572776158442085, guid: 24388152d293f614c92e640a1ad1a4a7, type: 3}
   posX: 0

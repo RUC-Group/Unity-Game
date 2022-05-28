@@ -12,9 +12,17 @@ public class Room : MonoBehaviour{
     public GameObject enemyTile;
     public GameObject treasureTile;
     public GameObject wallTile;
+    public GameObject symbolwall;
+    public GameObject swordNShieldwall;
+    public GameObject gobletWall;
+    public GameObject headwall;
+    public GameObject cagewall;
+    public GameObject bookwall; 
     public GameObject cornerTile;
     public GameObject door;
     public GameObject bonfireTile;
+    public GameObject bigEnemy;
+    public GameObject hordeEnemy;
 
     public GameObject keyTile;
 
@@ -78,7 +86,13 @@ public class Room : MonoBehaviour{
                 if(i == 0 && j == 0 || i == 0 && j == roomSize-1 || i == roomSize-1 && j == 0 || i == roomSize-1 && j == roomSize-1){
                     roomTiles[i,j] = cornerTile;
                 }else if(i == 0 || i == roomSize -1 || j== roomSize - 1 || j == 0){
-                    roomTiles[i,j] = wallTile;
+                    if(j== roomSize - 1){
+                        roomTiles[i,j] = pickWall();
+                    }else if(i == roomSize -1){
+                        roomTiles[i,j] = pickWall();
+                    }else{
+                        roomTiles[i,j] = wallTile;
+                    }
                 }else{
                     if(typeOfRoom!=null){
                         roomTiles[i,j] = emptyTile;
@@ -129,11 +143,46 @@ public class Room : MonoBehaviour{
             case 1:
                 return spikeTile;
             case 2:
-                return enemyTile;
+                return pickEnemy();
             case 3:
                 return treasureTile;
             default:
                 return null;
+        }
+    }
+
+    public GameObject pickEnemy(){
+        int r = UnityEngine.Random.Range(0,3);
+        return enemyTile;
+        /* issue with the horde tile, rn  it just returns normal enemies always
+        switch (r){
+            case 0:
+                return bigEnemy;
+            case 1:
+                return hordeEnemy;
+            default:
+                return enemyTile;
+        }
+        */
+    }
+
+    public GameObject pickWall(){
+        int r = UnityEngine.Random.Range(0,10);
+        switch (r){
+            case 0:
+                return cagewall;
+            case 1:
+                return headwall;
+            case 2:
+                return swordNShieldwall;
+            case 3:
+                return gobletWall;
+            case 4:
+                return symbolwall;
+            case 5: 
+                return bookwall;
+            default:
+                return wallTile;
         }
     }
 
@@ -166,10 +215,14 @@ public class Room : MonoBehaviour{
                 var position = new Vector3(i*5 + indexToUnitPos(posX), 0, j*5 + indexToUnitPos(posZ));
                 if(i == 0 && j == 0 || i == 0 && j == roomSize-1 || i == roomSize-1 && j == 0 || i == roomSize-1 && j == roomSize-1){
                     roomTiles[i,j]=(GameObject)Instantiate(roomTiles[i,j], position, Quaternion.identity);
-                }else if(i == 0 || i == roomSize -1){
+                }else if(i == 0){
                     roomTiles[i,j]=(GameObject)Instantiate(roomTiles[i,j], position, Quaternion.Euler(Vector3.down * 90));
-                }else if ( j== roomSize - 1 || j == 0){
+                }else if ( j== roomSize - 1){
                     roomTiles[i,j]=(GameObject)Instantiate(roomTiles[i,j], position, Quaternion.Euler(Vector3.down * 0));
+                }else if(i == roomSize -1){
+                    roomTiles[i,j]=(GameObject)Instantiate(roomTiles[i,j], position, Quaternion.Euler(Vector3.down * 270));
+                }else if (j == 0){
+                    roomTiles[i,j]=(GameObject)Instantiate(roomTiles[i,j], position, Quaternion.Euler(Vector3.down * 180));
                 }else{
                     roomTiles[i,j]=(GameObject)Instantiate(roomTiles[i,j], position, Quaternion.identity);
                 }

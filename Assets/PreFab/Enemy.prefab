@@ -240,7 +240,6 @@ GameObject:
   - component: {fileID: 3893057909575831368}
   - component: {fileID: 3690707493203247943}
   - component: {fileID: 3394420812707782042}
-  - component: {fileID: 4314984788622865314}
   m_Layer: 0
   m_Name: Nose
   m_TagString: Untagged
@@ -326,18 +325,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4314984788622865314
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2225411433377605252}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 201d359c10b0dfa449d67693a47d489c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2681700528838523730
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,7 +337,6 @@ GameObject:
   - component: {fileID: 6268406526710924320}
   - component: {fileID: 6450408228342087948}
   - component: {fileID: 1875632913814431766}
-  - component: {fileID: 7402857353290799472}
   m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
@@ -436,18 +422,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7402857353290799472
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2681700528838523730}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 201d359c10b0dfa449d67693a47d489c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3856922155288152411
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,7 +566,6 @@ GameObject:
   - component: {fileID: 5964835233540926090}
   - component: {fileID: 2296173662344595942}
   - component: {fileID: 6257544097456867289}
-  - component: {fileID: 4116821042662084360}
   m_Layer: 0
   m_Name: Feet
   m_TagString: Untagged
@@ -678,18 +651,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4116821042662084360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4433477732476576177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 201d359c10b0dfa449d67693a47d489c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4611891696198488449
 GameObject:
   m_ObjectHideFlags: 0
@@ -702,7 +663,6 @@ GameObject:
   - component: {fileID: 6561136544152499221}
   - component: {fileID: 7402566034370367690}
   - component: {fileID: 5515664555869777320}
-  - component: {fileID: 7502164215426489055}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -788,18 +748,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7502164215426489055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4611891696198488449}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 201d359c10b0dfa449d67693a47d489c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4954298947193060502
 GameObject:
   m_ObjectHideFlags: 0
@@ -890,7 +838,6 @@ GameObject:
   - component: {fileID: 5401985101172949810}
   - component: {fileID: 5821218003608529139}
   - component: {fileID: 6203630512202888374}
-  - component: {fileID: 474967552089238847}
   m_Layer: 0
   m_Name: Cloth cover
   m_TagString: Untagged
@@ -976,18 +923,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &474967552089238847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7646057399897312171}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 201d359c10b0dfa449d67693a47d489c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &9097597959172098703
 GameObject:
   m_ObjectHideFlags: 0
@@ -1000,7 +935,6 @@ GameObject:
   - component: {fileID: 1892056214485180207}
   - component: {fileID: 5312733901406525185}
   - component: {fileID: 5057202996798138457}
-  - component: {fileID: 3923601065631195910}
   m_Layer: 0
   m_Name: Hair
   m_TagString: Untagged
@@ -1086,15 +1020,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3923601065631195910
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9097597959172098703}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 201d359c10b0dfa449d67693a47d489c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
