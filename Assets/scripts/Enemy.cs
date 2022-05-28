@@ -118,7 +118,6 @@ public class Enemy : MonoBehaviour{
             getDamage();
         } else if(triggerCollider.tag == "Player Sword" && enemyAlive == true){
             getDamage();
-            print("Auch");
         }
     }
 
