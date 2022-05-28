@@ -6,6 +6,9 @@ using System;
 public class Enemy : MonoBehaviour{
     public GameObject coin;
     AdjacencyGraph roomGrid;
+    public float speed = 5;
+    public int health = 100;
+    public int damage = 10;
 
     Player player;
     List<Transform> waypoints = new List<Transform>();
@@ -13,19 +16,19 @@ public class Enemy : MonoBehaviour{
     Vector3 velocity;
     Vector3 directionToPlayer;
     Vector3 displacementFromPlayer;
-    int health = 100;
     bool enemyAlive = true;
     float detectionRangeMod = 1;
     float distanceToTarget;
-    float speed = 5;
-    float detectionRange = 5;
+    float detectionRange = 20;
     float waitTime = .1f;
     float longestEdge = 4.5f;
     float lastScan = 0;
+    float timeStamp;
     int turnSpeed = 360;
     List<Vector3> pathToFollow;
     float angle;
     float lastDamageTime = 0;
+    float lastDamageDealtTime = 0;
 
     public void setWaypoints(List<Transform> w){
         waypoints.Add(transform);
@@ -56,7 +59,7 @@ public class Enemy : MonoBehaviour{
     } 
 
     bool checkScanTimer(){
-        float timeStamp = Time.time;
+        timeStamp = Time.time;
         return timeStamp<2 || timeStamp - lastScan>2;
     }
 
@@ -77,13 +80,19 @@ public class Enemy : MonoBehaviour{
             velocity = directionToPlayer * speed;
             distanceToTarget = displacementFromPlayer.magnitude;
 
-            if(detectionRange * detectionRangeMod > distanceToTarget){
+            if(detectionRange> distanceToTarget){
                 Vector3 dirToLookTarget = (player.transform.position - transform.position).normalized;
                 float targetAngle = 90 - Mathf.Atan2 (dirToLookTarget.z, dirToLookTarget.x) * Mathf.Rad2Deg;
                 float angle = Mathf.MoveTowardsAngle (transform.eulerAngles.y, targetAngle + 270, turnSpeed * Time.deltaTime);
                 transform.eulerAngles = Vector3.up * angle;
                 if (distanceToTarget>1.1) followPlayer();
-                else player.getDamage();
+                else {
+                    timeStamp = Time.time;
+                    if(timeStamp - lastDamageDealtTime>2){
+                        player.takeDamage(damage);
+                        lastDamageDealtTime = timeStamp;
+                    }
+                }
             }else{
                 returnToIdle();
             }
@@ -93,8 +102,6 @@ public class Enemy : MonoBehaviour{
 
     void followPlayer(){
         transform.Find("SpottetMarker").gameObject.SetActive(true);
-        //transform.localScale = new Vector3(1,2,1);
-        detectionRangeMod = 4; //expands detection range via multiplication
 
         if(checkScanTimer()){
             lastScan = Time.time;
@@ -107,7 +114,6 @@ public class Enemy : MonoBehaviour{
 
     void returnToIdle(){
         transform.Find("SpottetMarker").gameObject.SetActive(false);
-        //transform.localScale = new Vector3(1,1,1);
         detectionRangeMod = 1;   
     }
 
@@ -115,13 +121,13 @@ public class Enemy : MonoBehaviour{
     void OnTriggerStay(Collider triggerCollider) {
         //walk on spikes
         if (triggerCollider.tag == "Spike" && enemyAlive == true){
-            getDamage();
+            takeDamage();
         } else if(triggerCollider.tag == "Player Sword" && enemyAlive == true){
-            getDamage();
+            takeDamage();
         }
     }
 
-    public void getDamage(){
+    public void takeDamage(){
 
         float timeStamp = Time.time;
 

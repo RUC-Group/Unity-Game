@@ -164,14 +164,16 @@ public class Player : MonoBehaviour{
 
         //walk on spikes
         if (triggerCollider.tag == "Spike"){
-            getDamage();   
+            takeDamage(10);   
         }
 
         if(triggerCollider.tag == "chest"){
-            if(!triggerCollider.GetComponent<Chest>().open){
-                Instantiate(coin,triggerCollider.transform);
+            if(Input.GetKeyDown(KeyCode.E)){
+                if(!triggerCollider.GetComponent<Chest>().open){
+                    Instantiate(coin,triggerCollider.transform);
+                }
+                triggerCollider.GetComponent<Chest>().open = true;
             }
-            triggerCollider.GetComponent<Chest>().open = true;
         }
      
         if (triggerCollider.tag == "ChineseSuicidePreventionMethod"){
@@ -207,11 +209,11 @@ public class Player : MonoBehaviour{
         }
     }
 
-    public void getDamage(){
+    public void takeDamage(int input){
         timeStamp = Time.time;
 
         if(timeStamp - lastDamageTime>2){
-            health-=10;
+            health-=input;
             lastDamageTime = timeStamp;
         }
     }
