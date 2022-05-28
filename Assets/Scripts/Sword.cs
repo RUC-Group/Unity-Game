@@ -7,7 +7,7 @@ public class Sword : MonoBehaviour
     public bool active=false;
 
     float timeCount = 0.0f;
-    float speed = 5;
+    float speed = 20;
     float yRotation = 0;
 
     // Update is called once per frame
