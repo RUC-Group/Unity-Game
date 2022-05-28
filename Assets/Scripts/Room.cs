@@ -164,8 +164,8 @@ public class Room : MonoBehaviour{
 
     public GameObject pickEnemy(){
         int r = UnityEngine.Random.Range(0,3);
-        return enemyTile;
-        /* issue with the horde tile, rn  it just returns normal enemies always
+        //return enemyTile;
+        // issue with the horde tile, rn  it just returns normal enemies always
         switch (r){
             case 0:
                 return bigEnemy;
@@ -174,7 +174,6 @@ public class Room : MonoBehaviour{
             default:
                 return enemyTile;
         }
-        */
     }
 
     public GameObject pickWall(){
@@ -247,7 +246,10 @@ public class Room : MonoBehaviour{
         for(int i = 1; i < roomSize-1; i++){
             for(int j = 1; j< roomSize-1; j++){
                 if(roomTiles[i,j].tag == "enemyTile"){
-                    roomTiles[i,j].GetComponentInChildren<Enemy>().setWaypoints(waypoints);
+                    Enemy[] enemies = roomTiles[i,j].GetComponentsInChildren<Enemy>();
+                    foreach (Enemy enemy in enemies){
+                        enemy.setWaypoints(waypoints);
+                    }
                 }
             }
         }
