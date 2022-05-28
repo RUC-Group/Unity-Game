@@ -141,6 +141,8 @@ public class Enemy : MonoBehaviour{
 
     void killEnemy(){
         enemyAlive = false;
+        Destroy(transform.GetComponent<Rigidbody>());
+        Destroy(transform.GetComponent<BoxCollider>());
         Instantiate(coin, transform);
     }
 
