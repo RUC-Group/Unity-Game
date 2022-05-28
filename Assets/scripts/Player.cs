@@ -6,7 +6,9 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour{
 
     public GameObject swordGameObject;
-    Sword sword;
+    Sword swordModel;
+
+    BoxCollider swordHitBox;
     GameUI gameUI;
     GameObject model;
     Vector3 input;
@@ -27,9 +29,10 @@ public class Player : MonoBehaviour{
 
     // Start is called before the first frame update
     void Start(){
-        swordGameObject=Instantiate(swordGameObject, new Vector3(0, 0,0),Quaternion.Euler(Vector3.down * 0));
-        sword = swordGameObject.transform.GetComponent<Sword>();
+        //swordGameObject=Instantiate(swordGameObject, new Vector3(0, 0,0),Quaternion.Euler(Vector3.down * 0));
+        swordModel = transform.Find("sword").gameObject.transform.GetComponent<Sword>();
         model = transform.Find("Model").gameObject;
+        swordHitBox = model.transform.Find("SwordHitbox").gameObject.transform.GetComponent<BoxCollider>();
         gameUI = GameObject.Find("GameUI").GetComponent<GameUI>();
         gameUI.currHealth = health;
         gameUI.score = score;
@@ -128,10 +131,13 @@ public class Player : MonoBehaviour{
             if(input!=Vector3.zero){
                 model.transform.rotation = Quaternion.LookRotation(lookDirection) * Quaternion.Euler(0,270,0);
             }
-            sword.updatePosition(model.transform,position);
-            if (Input.GetKeyDown(KeyCode.Space) && stamina>10){
+            swordModel.updatePosition(model.transform,position);
+            if (Input.GetKeyDown(KeyCode.Space) && stamina>10 && !swordModel.active){
                 stamina-=20;
-                sword.attack();
+                swordModel.attack();
+                swordHitBox.enabled=true;
+            }else{
+                swordHitBox.enabled=false;
             }
 
         }else{
