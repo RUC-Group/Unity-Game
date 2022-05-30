@@ -166,7 +166,11 @@ public class Player : MonoBehaviour{
 
         //walk on spikes
         if (triggerCollider.tag == "Spike"){
-            takeDamage(10);   
+            timeStamp = Time.time;
+            if(timeStamp - lastDamageTime>2){
+                takeDamage(10);
+                lastDamageTime = timeStamp;
+            }  
         }
 
         if(triggerCollider.tag == "chest"){
@@ -225,12 +229,7 @@ public class Player : MonoBehaviour{
     }
 
     public void takeDamage(int input){
-        timeStamp = Time.time;
-
-        if(timeStamp - lastDamageTime>2){
-            health-=input;
-            lastDamageTime = timeStamp;
-        }
+        health-=input;
     }
 
     private void addStamina(int staminaToAdd){
