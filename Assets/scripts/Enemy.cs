@@ -85,7 +85,7 @@ public class Enemy : MonoBehaviour{
                 float targetAngle = 90 - Mathf.Atan2 (dirToLookTarget.z, dirToLookTarget.x) * Mathf.Rad2Deg;
                 float angle = Mathf.MoveTowardsAngle (transform.eulerAngles.y, targetAngle + 270, turnSpeed * Time.deltaTime);
                 transform.eulerAngles = Vector3.up * angle;
-                if (distanceToTarget>1.1) followPlayer();
+                if (distanceToTarget>2) followPlayer();
                 else {
                     timeStamp = Time.time;
                     if(timeStamp - lastDamageDealtTime>2){
