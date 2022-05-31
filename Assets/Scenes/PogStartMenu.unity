@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.465
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.25617418, g: 0.26171318, b: 0.24571326, a: 0.465}
+  m_IndirectSpecularColor: {r: 0.25617415, g: 0.26171318, b: 0.24571326, a: 0.465}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -598,8 +598,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 114, y: -53}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 234, y: -7.0808716}
+  m_SizeDelta: {x: 593.1719, y: 14.1618}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &20112148
 MonoBehaviour:
@@ -621,7 +621,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SLASH
+  m_text: S l a s h
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f8061b29b1a7d274e832cc67d33450c9, type: 2}
   m_sharedMaterial: {fileID: 4866205206733222491, guid: f8061b29b1a7d274e832cc67d33450c9, type: 2}
@@ -630,15 +630,15 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4286677503
-  m_fontColor: {r: 1, g: 0.504717, b: 0.504717, a: 1}
+    rgba: 4278237183
+  m_fontColor: {r: 1, g: 0.71795446, b: 0, a: 1}
   m_enableVertexGradient: 1
   m_colorMode: 2
   m_fontColorGradient:
-    topLeft: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
-    topRight: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
-    bottomLeft: {r: 1, g: 0, b: 0, a: 1}
-    bottomRight: {r: 1, g: 0, b: 0, a: 1}
+    topLeft: {r: 0.2264151, g: 0.22086152, b: 0.22086152, a: 1}
+    topRight: {r: 0.2264151, g: 0.22086152, b: 0.22086152, a: 1}
+    bottomLeft: {r: 1, g: 0.56101966, b: 0, a: 1}
+    bottomRight: {r: 1, g: 0.56101966, b: 0, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
@@ -6628,6 +6628,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 769533378008796007, guid: a6e918058c4eeba4a9684409acb48467, type: 3}
+      propertyPath: m_Constraints
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 910070966058621680, guid: a6e918058c4eeba4a9684409acb48467, type: 3}
       propertyPath: coin
       value: 
@@ -9605,6 +9609,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 769533378008796007, guid: a6e918058c4eeba4a9684409acb48467, type: 3}
+      propertyPath: m_Constraints
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 910070966058621680, guid: a6e918058c4eeba4a9684409acb48467, type: 3}
       propertyPath: coin
       value: 
@@ -10774,6 +10782,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 769533378008796007, guid: a6e918058c4eeba4a9684409acb48467, type: 3}
+      propertyPath: m_Constraints
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 910070966058621680, guid: a6e918058c4eeba4a9684409acb48467, type: 3}
       propertyPath: coin
       value: 
@@ -32143,6 +32155,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 769533378008796007, guid: a6e918058c4eeba4a9684409acb48467, type: 3}
+      propertyPath: m_Constraints
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 910070966058621680, guid: a6e918058c4eeba4a9684409acb48467, type: 3}
       propertyPath: coin
       value: 
@@ -33655,6 +33671,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 769533378008796007, guid: a6e918058c4eeba4a9684409acb48467, type: 3}
+      propertyPath: m_Constraints
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 910070966058621680, guid: a6e918058c4eeba4a9684409acb48467, type: 3}
       propertyPath: coin
       value: 
@@ -47294,6 +47314,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 769533378008796007, guid: a6e918058c4eeba4a9684409acb48467, type: 3}
+      propertyPath: m_Constraints
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 910070966058621680, guid: a6e918058c4eeba4a9684409acb48467, type: 3}
       propertyPath: coin
       value: 
@@ -48333,6 +48357,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 769533378008796007, guid: a6e918058c4eeba4a9684409acb48467, type: 3}
+      propertyPath: m_Constraints
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 910070966058621680, guid: a6e918058c4eeba4a9684409acb48467, type: 3}
       propertyPath: coin
       value: 
@@ -61894,6 +61922,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 769533378008796007, guid: a6e918058c4eeba4a9684409acb48467, type: 3}
+      propertyPath: m_Constraints
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 910070966058621680, guid: a6e918058c4eeba4a9684409acb48467, type: 3}
       propertyPath: coin
       value: 
@@ -67738,6 +67770,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 769533378008796007, guid: a6e918058c4eeba4a9684409acb48467, type: 3}
+      propertyPath: m_Constraints
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 910070966058621680, guid: a6e918058c4eeba4a9684409acb48467, type: 3}
       propertyPath: coin
       value: 
