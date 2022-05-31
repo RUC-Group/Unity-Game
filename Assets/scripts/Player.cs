@@ -51,9 +51,7 @@ public class Player : MonoBehaviour{
         GameObject tempCanvas = GameObject.Find("PauseMenu");
         GameObject tempOptionCanvas = GameObject.Find("PauseOPTIONSmenu");
         if(Input.GetKeyDown(KeyCode.Escape) && !tempCanvas.GetComponent<Canvas>().enabled && !tempOptionCanvas.GetComponent<Canvas>().enabled){
-            if(tempCanvas != null){
-               tempCanvas.GetComponent<Canvas>().enabled = true; 
-            }
+            tempCanvas.GetComponent<Canvas>().enabled = true; 
         }
 
         if(health > 0){
@@ -160,8 +158,8 @@ public class Player : MonoBehaviour{
         disableTime--;
     }
 
-    //hitbox events
 
+    //hitbox events
     void OnTriggerStay(Collider triggerCollider){
         if(triggerCollider.tag == "Bonfire" && health < 101){
             getHealth();
@@ -207,6 +205,10 @@ public class Player : MonoBehaviour{
      
 
         if(triggerCollider.tag == "Key"){
+            AudioSource a = triggerCollider.GetComponent<AudioSource>();
+            a.Play();
+            print(a.clip);
+            print("abe");
             Destroy (triggerCollider.gameObject);
             GameObject[] keyArray=GameObject.FindGameObjectsWithTag("Key");
             keyAmount=3-keyArray.Length;

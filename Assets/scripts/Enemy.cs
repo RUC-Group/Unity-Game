@@ -120,18 +120,17 @@ public class Enemy : MonoBehaviour{
     //hitbox events
     void OnTriggerStay(Collider triggerCollider) {
         //walk on spikes
-        if (triggerCollider.tag == "Spike" && enemyAlive == true){
+        if (triggerCollider.tag == "Spike" && enemyAlive){
             takeDamage(10);
-        } else if(triggerCollider.tag == "Player Sword" && enemyAlive == true){
+        } else if(triggerCollider.tag == "Player Sword" && enemyAlive){
             takeDamage(25);
         }
     }
 
     public void takeDamage( int damage){
-
         float timeStamp = Time.time;
-
         if(timeStamp - lastDamageTime>1){
+
             health-=damage;
             lastDamageTime = timeStamp;
         }

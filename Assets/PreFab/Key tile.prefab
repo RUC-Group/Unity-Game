@@ -45,6 +45,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Key
       objectReference: {fileID: 0}
+    - target: {fileID: 529399293551668214, guid: 1efde2e3029d35649b85dc1b7d5be98b, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 5fd789680d38d434098421429dbba040, type: 3}
+    - target: {fileID: 529399293551668214, guid: 1efde2e3029d35649b85dc1b7d5be98b, type: 3}
+      propertyPath: reverbZoneMixCustomCurve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1505818771345433948, guid: 1efde2e3029d35649b85dc1b7d5be98b, type: 3}
       propertyPath: m_Size.x
       value: 10
