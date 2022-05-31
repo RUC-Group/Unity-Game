@@ -152,14 +152,8 @@ public class Player : MonoBehaviour{
     }
 
     //hitbox events
-    void OnTriggerStay(Collider triggerCollider) {
-        // walkinto coin/treasure
-        if (triggerCollider.tag == "Treasure"){
-            Destroy (triggerCollider.gameObject);
-            score++;
 
-            if(score%10==0) health+=20;  
-        }
+    void OnTriggerStay(Collider triggerCollider){
         if(triggerCollider.tag == "Bonfire" && health < 101){
             getHealth();
         }
@@ -171,6 +165,20 @@ public class Player : MonoBehaviour{
                 takeDamage(10);
                 lastDamageTime = timeStamp;
             }  
+        }
+
+        if (triggerCollider.tag == "ChineseSuicidePreventionMethod"){
+            transform.position = new Vector3(transform.position.x,20,transform.position.z);
+            health -= 50;
+        }
+    }
+    void OnTriggerExit(Collider triggerCollider) {
+        // walkinto coin/treasure
+        if (triggerCollider.tag == "Treasure"){
+            Destroy (triggerCollider.gameObject);
+            score++;
+
+            if(score%10==0) health+=20;  
         }
 
         if(triggerCollider.tag == "chest"){
@@ -188,10 +196,6 @@ public class Player : MonoBehaviour{
             }
         }
      
-        if (triggerCollider.tag == "ChineseSuicidePreventionMethod"){
-            transform.position = new Vector3(transform.position.x,20,transform.position.z);
-            health -= 50;
-        }
 
         if(triggerCollider.tag == "Key"){
             Destroy (triggerCollider.gameObject);
