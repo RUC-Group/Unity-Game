@@ -13,7 +13,7 @@ public class MenuFade : MonoBehaviour{
 
     // Update is called once per frame
     void Update(){
-        if(alpha > 0){
+        if(alpha >= 0){
             alpha -= .01f;
             c = mat.color;
             c.a = alpha;

@@ -186,7 +186,7 @@ public class Player : MonoBehaviour{
             if(!triggerCollider.transform.GetComponent<Chest>().open){
                 infoBoard.transform.GetChild(0).GetComponent<Canvas>().enabled = true;
             }
-            disableTime = 100;
+            disableTime = 50;
             if(Input.GetKeyDown(KeyCode.E)){
                 infoBoard.transform.GetChild(0).GetComponent<Canvas>().enabled = false;
                 if(!triggerCollider.transform.GetComponent<Chest>().open){
@@ -208,7 +208,7 @@ public class Player : MonoBehaviour{
         if(triggerCollider.tag == "Gate"){
             infoBoard = GameObject.Find("keyInfo");
             infoBoard.transform.GetChild(0).GetComponent<Canvas>().enabled = true;
-            disableTime = 100;
+            disableTime = 50;
             if(keyAmount>=2){
                 SceneManager.LoadScene(3);
             }
