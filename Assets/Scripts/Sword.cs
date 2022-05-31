@@ -5,6 +5,7 @@ using UnityEngine;
 public class Sword : MonoBehaviour
 {
     public bool active=false;
+    
 
     float timeCount = 0.0f;
     float speed = 60;

@@ -82,7 +82,7 @@ public class Player : MonoBehaviour{
             if(Input.GetKeyDown(KeyCode.LeftShift) && stamina > 50){
                 lastScan = Time.time;
                 StartCoroutine(dash(transform.Find("Model").Find("Dash Destination").position + new Vector3(0,1,0)));
-                stamina -= 50;
+                stamina -= 30;
             }
             if(stamina<maxStamina){
                 addStamina(5);
