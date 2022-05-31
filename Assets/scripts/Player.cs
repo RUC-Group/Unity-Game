@@ -86,7 +86,6 @@ public class Player : MonoBehaviour{
             }
             if(stamina<maxStamina){
                 addStamina(5);
-
             }
           
            // Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"),0 ,Input.GetAxisRaw("Vertical"));   

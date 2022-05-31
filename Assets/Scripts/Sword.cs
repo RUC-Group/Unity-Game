@@ -31,15 +31,11 @@ public class Sword : MonoBehaviour
     }
 
     public void updatePosition(Transform transform,Vector3 position){
-        this.transform.position=new Vector3(
-                                            (float)transform.position.x+(1*Mathf.Sin((this.transform.rotation.eulerAngles.y+45)*Mathf.Deg2Rad)),
-                                            transform.position.y,
-                                            transform.position.z+(1*Mathf.Cos((this.transform.rotation.eulerAngles.y+45)*Mathf.Deg2Rad))
-                                            );
         if(active){
             this.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x+90,transform.rotation.eulerAngles.y-20,transform.rotation.eulerAngles.z-60);
         }else{
             this.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x,transform.rotation.eulerAngles.y,transform.rotation.eulerAngles.z+60);
         }
+        this.transform.position=new Vector3((float)transform.position.x+(1*Mathf.Sin((this.transform.rotation.eulerAngles.y+45)*Mathf.Deg2Rad)),transform.position.y,transform.position.z+(1*Mathf.Cos((this.transform.rotation.eulerAngles.y+45)*Mathf.Deg2Rad)));
     }
 }
