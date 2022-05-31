@@ -13,8 +13,8 @@ public class Player : MonoBehaviour{
     GameObject model;
     Vector3 input;
     public GameObject coin;
-    public Transform pauseMenu;
-    public GameObject what;
+    public AudioClip[] footsteps;
+    public AudioSource audioSource;
 
     float lastScan = 0;
     int score = 0;
@@ -27,10 +27,13 @@ public class Player : MonoBehaviour{
     int stamina = 101;
     int maxStamina = 101;
     int disableTime = 0;
+    bool SoundPlaying = false;
+    float lastFootStep = 0;
     GameObject infoBoard;
 
     // Start is called before the first frame update
     void Start(){
+        audioSource = GetComponent<AudioSource>();
         //swordGameObject=Instantiate(swordGameObject, new Vector3(0, 0,0),Quaternion.Euler(Vector3.down * 0));
         swordModel = transform.Find("sword").gameObject.transform.GetComponent<Sword>();
         model = transform.Find("Model").gameObject;
@@ -54,7 +57,6 @@ public class Player : MonoBehaviour{
         }
 
         if(health > 0){
-            
             // movement direction
             float x = Input.GetAxisRaw("Horizontal");
             float y = Input.GetAxisRaw("Vertical");
@@ -78,6 +80,19 @@ public class Player : MonoBehaviour{
                 input = new Vector3(0,0,0); 
             }
 
+            //footsteps
+            timeStamp = Time.time;
+            if(input != Vector3.zero && !SoundPlaying){
+                var i = UnityEngine.Random.Range(0,footsteps.Length);
+                AudioClip footstepClip = footsteps[i]; 
+                audioSource.clip = footstepClip;
+                SoundPlaying = true;
+                audioSource.Play();
+                lastFootStep = timeStamp;
+            }else if(SoundPlaying && timeStamp - lastFootStep>.5){
+                SoundPlaying = false;
+            }
+
             // Dash
             if(Input.GetKeyDown(KeyCode.LeftShift) && stamina > 50){
                 lastScan = Time.time;
@@ -87,15 +102,10 @@ public class Player : MonoBehaviour{
             if(stamina<maxStamina){
                 addStamina(5);
             }
-          
-           // Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"),0 ,Input.GetAxisRaw("Vertical"));   
             Vector3 direction = input.normalized; 
             Vector3 velocity = direction * 8;
             Vector3 position = velocity * Time.deltaTime;
-
             transform.Translate(position);
-
-            //Vector3 lookDirection=new Vector3(Input.GetAxisRaw("LookHorizontal"),0 ,Input.GetAxisRaw("LookVertical"));
             if(position!=Vector3.zero){
                 model.transform.rotation = Quaternion.LookRotation(position) * Quaternion.Euler(0,270,0);
             }

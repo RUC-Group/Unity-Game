@@ -2,14 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sword : MonoBehaviour
-{
+public class Sword : MonoBehaviour{
     public bool active=false;
+    AudioSource audioSource;
+    public AudioClip[] swings;
+    AudioClip swing;
     
 
     float timeCount = 0.0f;
     float speed = 60;
     float yRotation = 0;
+    public void Start() {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     // Update is called once per frame
     void Update(){
@@ -25,8 +30,15 @@ public class Sword : MonoBehaviour
             }
         }
     }
+    private void playSwing(){
+        var i = UnityEngine.Random.Range(0,swings.Length);
+        swing = swings[i];
+        audioSource.clip = swing;
+        audioSource.Play();
+    }
 
     public void attack(){
+        playSwing();
         active=true;
     }
 
