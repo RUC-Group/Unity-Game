@@ -93,8 +93,7 @@ public class Player : MonoBehaviour{
             }
 
             // Dash
-            if(Input.GetKeyDown(KeyCode.LeftShift) && stamina > 50){
-                lastScan = Time.time;
+            if(Input.GetKeyDown(KeyCode.LeftShift) && stamina >=30){
                 StartCoroutine(dash(transform.Find("Model").Find("Dash Destination").position + new Vector3(0,1,0)));
                 stamina -= 30;
             }
