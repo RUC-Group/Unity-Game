@@ -50,15 +50,11 @@ public class MinHeap<T> where T : IComparable<T> {
         size++;
         decreaseKey(size-1);
     }
-
-    private void decreaseKey(int i) {
-        for (int left = leftChild(i); left < minHeap.Count; left = leftChild(i)) {
-            int smallest = minHeap[left].CompareTo(minHeap[i]) <= 0 ? left : i;
-            int right = rightChild(i);
-            if (right < minHeap.Count && minHeap[right].CompareTo(minHeap[smallest]) <= 0) smallest = right;
-            if (smallest == i) return;
-            (minHeap[i], minHeap[smallest]) = (minHeap[smallest], minHeap[i]);
-            i = smallest;
+    public void decreaseKey(int pos){
+        int currPos=pos;
+        while (minHeap[currPos].CompareTo(minHeap[parent(currPos)])<0){
+            swap(currPos,parent(currPos));
+            currPos=parent(currPos);
         }
     }
 

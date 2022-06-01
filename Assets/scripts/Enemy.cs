@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour{
     public float speed = 5;
     public int health = 100;
     public int damage = 10;
+    Dictionary<Vertex,Vertex> dijkstraRes;
 
     Player player;
     List<Transform> waypoints = new List<Transform>();
@@ -41,10 +42,11 @@ public class Enemy : MonoBehaviour{
 
     void createGrid(){
         roomGrid = new AdjacencyGraph();
-
+        int i = 0;
         foreach (Transform waypoint in waypoints){
-            Vertex v = new Vertex(waypoint.position);
+            Vertex v = new Vertex(waypoint.position,i);
             roomGrid.addVertex(v);
+            i++;
         }
 
         foreach (Vertex v in roomGrid.GetVertices()){
@@ -100,15 +102,18 @@ public class Enemy : MonoBehaviour{
         
     }
 
-    void followPlayer(){
-        transform.Find("SpottetMarker").gameObject.SetActive(true);
-
+    void followPlayer(){  
+        if(pathToFollow != null){
+            transform.Find("SpottetMarker").gameObject.SetActive(true);
+        }else{
+            transform.Find("SpottetMarker").gameObject.SetActive(false);
+        }
         if(checkScanTimer()){
             lastScan = Time.time;
             createGrid();
-            pathToFollow = findPath(dijkstra(), roomGrid.GetVertices()[1]);
+            dijkstraRes = dijkstra();
+            pathToFollow = findPath(dijkstraRes, roomGrid.GetVertices()[1]);
             StartCoroutine(followPath(pathToFollow));
-            
         }
     }
 
@@ -147,16 +152,44 @@ public class Enemy : MonoBehaviour{
 
     
     //draws Gizmos (3d objects that can only be seen in the editor and is not displayed on player camera)
-    void OnDrawGizmos(){
+    private void OnDrawGizmos(){
+        
         if(pathToFollow != null){
-            Vector3 shift = new Vector3(0,2,0);
+            Gizmos.color = Color.yellow;
+            Vector3 shift = new Vector3(0,5,0);
             for(var i =0; i<pathToFollow.Count; i++){
                 Gizmos.DrawSphere(pathToFollow[i] + shift, .3f);
                 if(i < pathToFollow.Count - 1){
                     Gizmos.DrawLine(pathToFollow[i] + shift, pathToFollow[1+i] + shift);
                 }
             }
+        }/*
+        if(dijkstraRes !=null){
+            Gizmos.color = Color.green;
+
+            Vector3 shift = new Vector3(0,2,0);
+            foreach (Vertex v in dijkstraRes.Keys){
+                if(v.outEdges.Count < 0){
+                    Gizmos.color = Color.red;
+                }else{
+                    Gizmos.color = Color.green;
+                }
+                Gizmos.DrawSphere(v.pos + shift, .3f);
+                if(dijkstraRes[v]!=null){
+                    Gizmos.DrawLine(v.pos + shift,dijkstraRes[v].pos + shift);
+                }
+            }
         }
+        if(roomGrid != null){
+            Gizmos.color = Color.white;
+            foreach (Vertex v in roomGrid.GetVertices()){
+                Gizmos.DrawSphere(v.pos, .3f);
+                foreach (Edge e in v.outEdges){
+                    Gizmos.DrawLine(e.from.pos,e.to.pos);
+                }
+            }
+        }*/
+        
     }
 
     IEnumerator followPath(List<Vector3> pathPoints){
@@ -190,14 +223,15 @@ public class Enemy : MonoBehaviour{
 
         if (temp != null && startVertex != null){
             while (!temp.Equals(startVertex) && !checkScanTimer()){
-                res.Add(temp.pos);
-                temp = input[temp];
-
-                if(temp==null){
+                if(input[temp]==null){
                     temp = startVertex;
                     res = new List<Vector3>();
                     break;
+                }else{
+                    res.Add(temp.pos);
+                    temp = input[temp];
                 }
+
             }
             res.Add(temp.pos);
             res.Reverse();
@@ -210,22 +244,32 @@ public class Enemy : MonoBehaviour{
         Dictionary<Vertex,float> d = new Dictionary<Vertex,float>();
         Dictionary<Vertex,Vertex> p = new Dictionary<Vertex,Vertex>();
         MinHeap<Pair> q = new MinHeap<Pair>();
+        List<Pair> vertexPairs = new List<Pair>();
 
         foreach (Vertex v in roomGrid.GetVertices()){
-
             d[v] = 100.0f;
             p[v] = null;
-            q.insert(new Pair(v, d[v]));
+            Pair newPair = new Pair(v, d[v]);
+            vertexPairs.Add(newPair);
+            q.insert(newPair);
         }
-
         d[roomGrid.GetVertices()[0]] = 0.0f;
-        while (!q.isEmpty()&&!checkScanTimer()){
+        Pair pair = vertexPairs[0];
+        pair.d = d[roomGrid.GetVertices()[0]];
+        var pos = q.getPosition(pair);
+        q.decreaseKey(pos);
+        while (!q.isEmpty()){
             Pair u = q.extractMin();
+            print("pair" + u.d);
             foreach (Edge e in u.v.outEdges){
                 float alt = d[u.v] + e.weight;
                 if (alt < d[e.to]){
                     d[e.to] = alt;
                     p[e.to] = u.v;
+                     pair = vertexPairs[e.to.index];
+                    pair.d = d[e.to];
+                    pos = q.getPosition(pair);
+                    q.decreaseKey(pos);
                 }
             }
         }
