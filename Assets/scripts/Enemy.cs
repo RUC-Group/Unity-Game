@@ -260,7 +260,6 @@ public class Enemy : MonoBehaviour{
         q.decreaseKey(pos);
         while (!q.isEmpty()){
             Pair u = q.extractMin();
-            print("pair" + u.d);
             foreach (Edge e in u.v.outEdges){
                 float alt = d[u.v] + e.weight;
                 if (alt < d[e.to]){
