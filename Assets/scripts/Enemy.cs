@@ -155,7 +155,7 @@ public class Enemy : MonoBehaviour{
     private void OnDrawGizmos(){
         
         if(pathToFollow != null){
-            Gizmos.color = Color.yellow;
+            Gizmos.color = Color.white;
             Vector3 shift = new Vector3(0,5,0);
             for(var i =0; i<pathToFollow.Count; i++){
                 Gizmos.DrawSphere(pathToFollow[i] + shift, .3f);
@@ -163,7 +163,7 @@ public class Enemy : MonoBehaviour{
                     Gizmos.DrawLine(pathToFollow[i] + shift, pathToFollow[1+i] + shift);
                 }
             }
-        }/*
+        }
         if(dijkstraRes !=null){
             Gizmos.color = Color.green;
 
@@ -188,8 +188,7 @@ public class Enemy : MonoBehaviour{
                     Gizmos.DrawLine(e.from.pos,e.to.pos);
                 }
             }
-        }*/
-        
+        } 
     }
 
     IEnumerator followPath(List<Vector3> pathPoints){
