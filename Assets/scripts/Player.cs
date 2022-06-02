@@ -30,6 +30,7 @@ public class Player : MonoBehaviour{
     bool SoundPlaying = false;
     float lastFootStep = 0;
     GameObject infoBoard;
+    public AudioSource a;
 
     // Start is called before the first frame update
     void Start(){
@@ -178,6 +179,8 @@ public class Player : MonoBehaviour{
             health -= 50;
         }
     }
+
+
     void OnTriggerExit(Collider triggerCollider) {
         // walkinto coin/treasure
         if (triggerCollider.tag == "Treasure"){
@@ -204,15 +207,14 @@ public class Player : MonoBehaviour{
      
 
         if(triggerCollider.tag == "Key"){
-            AudioSource a = triggerCollider.GetComponent<AudioSource>();
             a.Play();
-            print(a.clip);
-            print("abe");
-            Destroy (triggerCollider.gameObject);
             GameObject[] keyArray=GameObject.FindGameObjectsWithTag("Key");
             keyAmount=3-keyArray.Length;
             if(keyAmount==1) gameUI.key1.color=new Color32(255, 255, 225, 225);
             if(keyAmount==2) gameUI.key2.color=new Color32(255, 255, 225, 225);
+            Destroy(triggerCollider.gameObject);
+            
+            
         }
 
         if(triggerCollider.tag == "Gate"){
@@ -236,7 +238,7 @@ public class Player : MonoBehaviour{
 
 
     IEnumerator dash(Vector3 destination){
-        while (Vector3.Distance(transform.position, destination) > 0.5f){
+        while (Vector3.Distance(transform.position, destination) > 1f){
             transform.position = Vector3.MoveTowards(transform.position,destination ,1);
             yield return null;
         }
