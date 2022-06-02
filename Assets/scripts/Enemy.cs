@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour{
     public int health = 100;
     public int damage = 10;
     Dictionary<Vertex,Vertex> dijkstraRes;
+    double timeOfDeath;
 
     Player player;
     List<Transform> waypoints = new List<Transform>();
@@ -21,8 +22,10 @@ public class Enemy : MonoBehaviour{
     bool enemyAlive = true;
     float distanceToTarget;
     float detectionRange = 20;
+    float lasthop;
+    bool lastHopUp = false;
     float waitTime = .1f;
-    float longestEdge = 4.5f;
+    float longestEdge = 3;
     float lastScan = 0;
     float timeStamp;
     int turnSpeed = 360;
@@ -67,6 +70,13 @@ public class Enemy : MonoBehaviour{
 
     // Update is called once per frame
     void Update(){
+        timeStamp = Time.time;
+        if(timeStamp-timeOfDeath> 2 && !enemyAlive){
+            transform.position -= new Vector3(0,.01f,0);
+        }
+         if(timeStamp-timeOfDeath> 10 && !enemyAlive){
+            Destroy(transform.gameObject);
+        }
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         if(!enemyAlive){
             transform.Find("SpottetMarker").gameObject.SetActive(false);
@@ -127,17 +137,23 @@ public class Enemy : MonoBehaviour{
         if (triggerCollider.tag == "Spike" && enemyAlive){
             takeDamage(10);
         } else if(triggerCollider.tag == "Player Sword" && enemyAlive){
-            Quaternion knockbackDirection = Quaternion.Inverse(transform.rotation);
-            Vector3 knockbackVector = new Vector3(knockbackDirection.ToEulerAngles().x,0,knockbackDirection.ToEulerAngles().z).normalized;
-            transform.Translate(knockbackVector);
-            takeDamage(25);
+            if(timeStamp - lasthop>.2f && !lastHopUp){
+                transform.position = transform.position + new Vector3(0,.5f,0); 
+                lasthop = timeStamp;
+                lastHopUp = true;
+            }else if(timeStamp - lasthop>.2f && lastHopUp){
+                transform.position = transform.position + new Vector3(0,-.5f,0); 
+                lasthop = timeStamp;
+                lastHopUp = false;
+            }
+            takeDamage(35);
         }
     }
 
     public void takeDamage( int damage){
-        a.Play();
         float timeStamp = Time.time;
         if(timeStamp - lastDamageTime>1){
+            a.Play();
             health-=damage;
             lastDamageTime = timeStamp;
         }
@@ -147,12 +163,16 @@ public class Enemy : MonoBehaviour{
         enemyAlive = false;
         Destroy(transform.GetComponent<Rigidbody>());
         Destroy(transform.GetComponent<BoxCollider>());
-        Instantiate(coin, transform);
+        timeOfDeath = Time.time;
+        var position = transform.position + new Vector3(0,1,0);
+        Instantiate(coin, position, Quaternion.Euler(Vector3.down * 0));
+        
     }
 
     
     //draws Gizmos (3d objects that can only be seen in the editor and is not displayed on player camera)
     private void OnDrawGizmos(){
+        
         if(pathToFollow != null){
             Gizmos.color = Color.white;
             Vector3 shift = new Vector3(0,5,0);

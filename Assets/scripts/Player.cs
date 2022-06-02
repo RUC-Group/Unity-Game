@@ -99,8 +99,9 @@ public class Player : MonoBehaviour{
                 StartCoroutine(dash(transform.Find("Model").Find("Dash Destination").position + new Vector3(0,1,0)));
                 stamina -= 30;
             }
+            //stamina
             if(stamina<maxStamina){
-                addStamina(5);
+                addStamina(10);
             }
             Vector3 direction = input.normalized; 
             Vector3 velocity = direction * 8;
@@ -175,6 +176,22 @@ public class Player : MonoBehaviour{
         if(triggerCollider.tag == "Bonfire" && health < 101){
             getHealth();
         }
+        
+        if(triggerCollider.tag == "chest"){
+            infoBoard = GameObject.Find("ChestInfo");
+            if(!triggerCollider.transform.GetComponent<Chest>().open){
+                infoBoard.transform.GetChild(0).GetComponent<Canvas>().enabled = true;
+            }
+            disableTime = 50;
+            if(Input.GetKeyDown(KeyCode.E)){
+                print("E");
+                infoBoard.transform.GetChild(0).GetComponent<Canvas>().enabled = false;
+                if(!triggerCollider.transform.GetComponent<Chest>().open){
+                    Instantiate(coin,triggerCollider.transform);
+                }
+                triggerCollider.GetComponent<Chest>().open = true;
+            }
+        }
 
         //walk on spikes
         if (triggerCollider.tag == "Spike"){
@@ -199,21 +216,6 @@ public class Player : MonoBehaviour{
             score++;
 
             if(score%10==0) health+=20;  
-        }
-
-        if(triggerCollider.tag == "chest"){
-            infoBoard = GameObject.Find("ChestInfo");
-            if(!triggerCollider.transform.GetComponent<Chest>().open){
-                infoBoard.transform.GetChild(0).GetComponent<Canvas>().enabled = true;
-            }
-            disableTime = 50;
-            if(Input.GetKeyDown(KeyCode.E)){
-                infoBoard.transform.GetChild(0).GetComponent<Canvas>().enabled = false;
-                if(!triggerCollider.transform.GetComponent<Chest>().open){
-                    Instantiate(coin,triggerCollider.transform);
-                }
-                triggerCollider.GetComponent<Chest>().open = true;
-            }
         }
      
 
