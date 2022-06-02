@@ -161,6 +161,7 @@ public class Enemy : MonoBehaviour{
 
     void killEnemy(){
         enemyAlive = false;
+        transform.GetComponent<Rigidbody>().isKinematic=false;
         Destroy(transform.GetComponent<Rigidbody>());
         Destroy(transform.GetComponent<BoxCollider>());
         timeOfDeath = Time.time;
