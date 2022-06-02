@@ -176,7 +176,7 @@ public class Player : MonoBehaviour{
         if(triggerCollider.tag == "Bonfire" && health < 101){
             getHealth();
         }
-        
+
         if(triggerCollider.tag == "chest"){
             infoBoard = GameObject.Find("ChestInfo");
             if(!triggerCollider.transform.GetComponent<Chest>().open){
@@ -184,7 +184,7 @@ public class Player : MonoBehaviour{
             }
             disableTime = 50;
             if(Input.GetKeyDown(KeyCode.E)){
-                print("E");
+                triggerCollider.GetComponent<AudioSource>().Play();
                 infoBoard.transform.GetChild(0).GetComponent<Canvas>().enabled = false;
                 if(!triggerCollider.transform.GetComponent<Chest>().open){
                     Instantiate(coin,triggerCollider.transform);
