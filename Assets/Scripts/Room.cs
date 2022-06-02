@@ -98,11 +98,7 @@ public class Room : MonoBehaviour{
                     if(typeOfRoom!=null){
                         roomTiles[i,j] = emptyTile;
                         if(typeOfRoom == "spawn room"){
-                            roomTiles[3,3] = enemyTile;
-                            roomTiles[2,2] = spikeTile;
-                            roomTiles[4,4] = spikeTile;
-                            roomTiles[2,4] = spikeTile;
-                            roomTiles[4,2] = spikeTile;
+                            roomTiles[3,3] = bonfireTile;
                         }
                     }else{
                         roomTiles[i,j] = pickTile(i,j);
