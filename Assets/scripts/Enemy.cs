@@ -127,6 +127,9 @@ public class Enemy : MonoBehaviour{
         if (triggerCollider.tag == "Spike" && enemyAlive){
             takeDamage(10);
         } else if(triggerCollider.tag == "Player Sword" && enemyAlive){
+            Quaternion knockbackDirection = Quaternion.Inverse(transform.rotation);
+            Vector3 knockbackVector = new Vector3(knockbackDirection.ToEulerAngles().x,0,knockbackDirection.ToEulerAngles().z).normalized;
+            transform.Translate(knockbackVector);
             takeDamage(25);
         }
     }
