@@ -5,7 +5,7 @@ using System;
 
 public class Room : MonoBehaviour{
 
-    GameObject[,] roomTiles = new GameObject[7,7];
+    GameObject[,] roomTiles;
 
     public GameObject emptyTile;
     public GameObject spikeTile;
@@ -31,7 +31,7 @@ public class Room : MonoBehaviour{
 
     public int posX; 
     public int posZ;
-    public int roomSize = 7;
+    public int roomSize;
     int roomTreasureCount;
     int roomMaxTreasure = 5;
 
@@ -81,6 +81,7 @@ public class Room : MonoBehaviour{
         this.posZ=posZ;
         this.roomSize=roomSize;
         this.typeOfRoom=typeOfRoom;
+        this.roomTiles = new GameObject[roomSize,roomSize];
     	
         for (var i = 0; i < roomSize; i++){
             for( var j = 0; j< roomSize; j++){
@@ -98,7 +99,7 @@ public class Room : MonoBehaviour{
                     if(typeOfRoom!=null){
                         roomTiles[i,j] = emptyTile;
                         if(typeOfRoom == "spawn room"){
-                            roomTiles[3,3] = bonfireTile;
+                            roomTiles[(int)roomSize/2,(int)roomSize/2] = bonfireTile;
                         }
                     }else{
                         roomTiles[i,j] = pickTile(i,j);
@@ -199,23 +200,23 @@ public class Room : MonoBehaviour{
     
 
     public int indexToUnitPos(int i){
-        return (5*5+15)*i;
+        return ((roomSize-2)*5+15)*i;
     }
 
 
 
     public void createDoor(int dir){
         if (dir == 2){
-            roomTiles[3,0] = door;
+            roomTiles[(int)roomSize/2,0] = door;
             
         } else if(dir == 3){
-            roomTiles[6,3] = door;
+            roomTiles[roomSize-1,(int)roomSize/2] = door;
             
         } else if(dir == 0){
-            roomTiles[3,6] = door;
+            roomTiles[(int)roomSize/2,roomSize-1] = door;
             
         } else {
-            roomTiles[0,3] = door;
+            roomTiles[0,(int)roomSize/2] = door;
         }
     }
 

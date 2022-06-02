@@ -16,19 +16,21 @@ public class Player : MonoBehaviour{
     public AudioClip[] footsteps;
     public AudioSource audioSource;
 
+    bool lastHopUp = false;
     float lastScan = 0;
     int score = 0;
     int health = 101;
     int keyAmount = 0;
     float lastDamageTime = 0;
-    float timeStamp;
+    float lastFootStep = 0;
+    float lasthop = 0;
     float lastHeal = 0;
     float lastStamina = 0;
+    float timeStamp;
     int stamina = 101;
     int maxStamina = 101;
     int disableTime = 0;
     bool SoundPlaying = false;
-    float lastFootStep = 0;
     GameObject infoBoard;
     public AudioSource a;
 
@@ -105,6 +107,16 @@ public class Player : MonoBehaviour{
             Vector3 position = velocity * Time.deltaTime;
             transform.Translate(position);
             if(position!=Vector3.zero){
+                timeStamp = Time.time;
+                if(timeStamp - lasthop>.2f && !lastHopUp){
+                    model.transform.position = model.transform.position + new Vector3(0,.5f,0); 
+                    lasthop = timeStamp;
+                    lastHopUp = true;
+                }else if(timeStamp - lasthop>.2f && lastHopUp){
+                    model.transform.position = model.transform.position + new Vector3(0,-.5f,0); 
+                    lasthop = timeStamp;
+                    lastHopUp = false;
+                }
                 model.transform.rotation = Quaternion.LookRotation(position) * Quaternion.Euler(0,270,0);
             }
             // look direction
@@ -131,10 +143,9 @@ public class Player : MonoBehaviour{
             }
           
 
-           // Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"),0 ,Input.GetAxisRaw("Vertical"));   
-               direction = input.normalized; 
-                velocity = direction * 8;
-                Vector3 lookDirection = velocity * Time.deltaTime;
+            direction = input.normalized; 
+            velocity = direction * 8;
+            Vector3 lookDirection = velocity * Time.deltaTime;
             
             if(input!=Vector3.zero){
                 model.transform.rotation = Quaternion.LookRotation(lookDirection) * Quaternion.Euler(0,270,0);

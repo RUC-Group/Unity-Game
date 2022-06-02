@@ -11,6 +11,7 @@ public class Floor : MonoBehaviour{
     int floorSize = 31;
 
     int minRoomsAmount = 10;
+    int roomSize;
 
     int maxRoomsAmount = 15;
     Room[,] rooms;
@@ -41,7 +42,7 @@ public class Floor : MonoBehaviour{
         
         rooms[indexX,indexZ] = makeRoom(indexX,indexZ,"spawn room");
         Room pickedRoom = rooms[indexX,indexZ];
-        Instantiate(player, new Vector3((5*5+15)*indexX + 19, 1,(5*5+15)*indexZ + 15),Quaternion.Euler(Vector3.down * 0));
+        Instantiate(player, new Vector3(((roomSize-2)*5+15)*indexX + 19, 1,((roomSize-2)*5+15)*indexZ + 15),Quaternion.Euler(Vector3.down * 0));
         spawnedRooms.Add(pickedRoom);
         while (numberOfRooms > 0){
             int dir = UnityEngine.Random.Range(0,4);
@@ -130,7 +131,7 @@ public class Floor : MonoBehaviour{
 
     //method that makes a room at the coordinate (roomX,0,roomZ)
     public Room makeRoom(int roomX, int roomZ, string typeOfRoom=null){
-        int roomSize = 7;
+        roomSize = 7;
         var position = new Vector3(roomX, 0, roomZ);
         GameObject newRoomObject = Instantiate(room,position,Quaternion.identity);
         Room newRoom = newRoomObject.GetComponent<Room>();
@@ -150,16 +151,16 @@ public class Floor : MonoBehaviour{
         Vector3 position;
         
         if (dir == 2){
-            position = new Vector3(3*5 + r.indexToUnitPos(r.posX),0,-1*5 + r.indexToUnitPos(r.posZ));
+            position = new Vector3(((int)roomSize/2)*5 + r.indexToUnitPos(r.posX),0,-1*5 + r.indexToUnitPos(r.posZ));
             rotation = Quaternion.Euler(Vector3.down * 90);
         } else if(dir == 3){
-            position = new Vector3(7*5 + r.indexToUnitPos(r.posX),0,3*5 + r.indexToUnitPos(r.posZ));
+            position = new Vector3((roomSize)*5 + r.indexToUnitPos(r.posX),0,(((int)roomSize/2))*5 + r.indexToUnitPos(r.posZ));
             rotation = Quaternion.Euler(Vector3.down * 0);
         } else if(dir == 0){
-            position = new Vector3(3*5 + r.indexToUnitPos(r.posX),0,7*5 + r.indexToUnitPos(r.posZ));
+            position = new Vector3(((int)roomSize/2)*5 + r.indexToUnitPos(r.posX),0,(roomSize)*5 + r.indexToUnitPos(r.posZ));
             rotation = Quaternion.Euler(Vector3.down * 90);
         } else {
-            position = new Vector3(-1*5 + r.indexToUnitPos(r.posX),0,3*5 + r.indexToUnitPos(r.posZ));
+            position = new Vector3(-1*5 + r.indexToUnitPos(r.posX),0,(( (int)roomSize/2))*5 + r.indexToUnitPos(r.posZ));
             rotation = Quaternion.Euler(Vector3.down * 0);
         }
 
@@ -177,8 +178,8 @@ public class Floor : MonoBehaviour{
 
         foreach (Room r in spawnedRooms){
             GameObject[,] roomTiles = r.getRoomTiles();
-            for (var i = 0; i < roomTiles.Length/7; i++){
-                for (var j = 0; j < roomTiles.Length/7; j++){
+            for (var i = 0; i < roomTiles.Length/roomSize; i++){
+                for (var j = 0; j < roomTiles.Length/roomSize; j++){
                     allTiles.Add(roomTiles[i,j].transform);
                 }
             }

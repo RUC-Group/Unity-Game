@@ -17,8 +17,8 @@ public class Enemy : MonoBehaviour{
     Vector3 velocity;
     Vector3 directionToPlayer;
     Vector3 displacementFromPlayer;
+    public AudioSource a;
     bool enemyAlive = true;
-    float detectionRangeMod = 1;
     float distanceToTarget;
     float detectionRange = 20;
     float waitTime = .1f;
@@ -119,7 +119,6 @@ public class Enemy : MonoBehaviour{
 
     void returnToIdle(){
         transform.Find("SpottetMarker").gameObject.SetActive(false);
-        detectionRangeMod = 1;   
     }
 
     //hitbox events
@@ -133,14 +132,12 @@ public class Enemy : MonoBehaviour{
     }
 
     public void takeDamage( int damage){
+        a.Play();
         float timeStamp = Time.time;
         if(timeStamp - lastDamageTime>1){
-
             health-=damage;
             lastDamageTime = timeStamp;
         }
-
-        
     }
 
     void killEnemy(){
@@ -153,7 +150,6 @@ public class Enemy : MonoBehaviour{
     
     //draws Gizmos (3d objects that can only be seen in the editor and is not displayed on player camera)
     private void OnDrawGizmos(){
-        
         if(pathToFollow != null){
             Gizmos.color = Color.white;
             Vector3 shift = new Vector3(0,5,0);
@@ -179,7 +175,7 @@ public class Enemy : MonoBehaviour{
                     Gizmos.DrawLine(v.pos + shift,dijkstraRes[v].pos + shift);
                 }
             }
-        }
+        }/*
         if(roomGrid != null){
             Gizmos.color = Color.white;
             foreach (Vertex v in roomGrid.GetVertices()){
@@ -188,21 +184,17 @@ public class Enemy : MonoBehaviour{
                     Gizmos.DrawLine(e.from.pos,e.to.pos);
                 }
             }
-        } 
+        } */
     }
 
     IEnumerator followPath(List<Vector3> pathPoints){
         int targetWaypointIndex = 0;
         Vector3 targetWaypoint = new Vector3(pathPoints[targetWaypointIndex].x,transform.position.y,pathPoints[targetWaypointIndex].z);
         float timeStamp = Time.time;
-
         while (targetWaypointIndex<= pathPoints.Count-1 && !checkScanTimer()){
             timeStamp = Time.time;
             targetWaypoint = new Vector3(pathPoints[targetWaypointIndex].x,transform.position.y,pathPoints[targetWaypointIndex].z);
             transform.position = Vector3.MoveTowards(transform.position,targetWaypoint,speed * Time.deltaTime);
-
-            
-
             if(Vector3.Distance(transform.position, targetWaypoint) < 0.001f){
                 targetWaypointIndex++;
                 yield return new WaitForSeconds(waitTime);
@@ -219,7 +211,6 @@ public class Enemy : MonoBehaviour{
         List<Vector3> res = new List<Vector3>();
         Vertex temp = target;
         Vertex startVertex = roomGrid.GetVertices()[0];
-
         if (temp != null && startVertex != null){
             while (!temp.Equals(startVertex) && !checkScanTimer()){
                 if(input[temp]==null){
@@ -230,7 +221,6 @@ public class Enemy : MonoBehaviour{
                     res.Add(temp.pos);
                     temp = input[temp];
                 }
-
             }
             res.Add(temp.pos);
             res.Reverse();
