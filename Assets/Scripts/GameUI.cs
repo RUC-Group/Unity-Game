@@ -21,6 +21,6 @@ public class GameUI : MonoBehaviour{
         healthSlider.value = currHealth;
         staminaSlider.value = stamina;
         textHp.text = "Health: " + currHealth.ToString();
-        textScore.text = "Score: " + score.ToString();
+        textScore.text = "Gold: " + score.ToString();
     }
 }

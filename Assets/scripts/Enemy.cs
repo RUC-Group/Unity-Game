@@ -97,10 +97,10 @@ public class Enemy : MonoBehaviour{
                 float targetAngle = 90 - Mathf.Atan2 (dirToLookTarget.z, dirToLookTarget.x) * Mathf.Rad2Deg;
                 float angle = Mathf.MoveTowardsAngle (transform.eulerAngles.y, targetAngle + 270, turnSpeed * Time.deltaTime);
                 transform.eulerAngles = Vector3.up * angle;
-                if (distanceToTarget>2) followPlayer();
+                if (distanceToTarget>1.5f) followPlayer();
                 else {
                     timeStamp = Time.time;
-                    if(timeStamp - lastDamageDealtTime>2){
+                    if(timeStamp - lastDamageDealtTime>2 && !player.invincible){
                         player.takeDamage(damage);
                         lastDamageDealtTime = timeStamp;
                     }
@@ -136,7 +136,9 @@ public class Enemy : MonoBehaviour{
         //walk on spikes
         if (triggerCollider.tag == "Spike" && enemyAlive){
             takeDamage(10);
-        } else if(triggerCollider.tag == "Player Sword" && enemyAlive){
+        } 
+        if(triggerCollider.tag == "Player Sword" && enemyAlive){
+            print("sword");
             if(timeStamp - lasthop>.2f && !lastHopUp){
                 transform.position = transform.position + new Vector3(0,.5f,0); 
                 lasthop = timeStamp;
@@ -153,7 +155,6 @@ public class Enemy : MonoBehaviour{
     public void takeDamage( int damage){
         float timeStamp = Time.time;
         if(timeStamp - lastDamageTime>1){
-            a.Play();
             health-=damage;
             lastDamageTime = timeStamp;
         }

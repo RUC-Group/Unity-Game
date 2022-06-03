@@ -20,6 +20,7 @@ public class Player : MonoBehaviour{
     float lastScan = 0;
     int score = 0;
     int health = 101;
+    public bool invincible {get;set;}
     int keyAmount = 0;
     float lastDamageTime = 0;
     float lastFootStep = 0;
@@ -45,6 +46,8 @@ public class Player : MonoBehaviour{
         gameUI.currHealth = health;
         gameUI.score = score;
         gameUI.stamina = stamina;
+        invincible=false;
+
     }
 
    
@@ -96,6 +99,7 @@ public class Player : MonoBehaviour{
 
             // Dash
             if(Input.GetKeyDown(KeyCode.LeftShift) && stamina >=30){
+                invincible = true;
                 StartCoroutine(dash(transform.Find("Model").Find("Dash Destination").position + new Vector3(0,1,0)));
                 stamina -= 30;
             }
@@ -196,7 +200,7 @@ public class Player : MonoBehaviour{
         //walk on spikes
         if (triggerCollider.tag == "Spike"){
             timeStamp = Time.time;
-            if(timeStamp - lastDamageTime>2){
+            if(timeStamp - lastDamageTime>2 && !invincible){
                 takeDamage(10);
                 lastDamageTime = timeStamp;
             }  
@@ -255,6 +259,7 @@ public class Player : MonoBehaviour{
             transform.position = Vector3.MoveTowards(transform.position,destination ,1);
             yield return null;
         }
+        invincible = false;
     }
 
     public void takeDamage(int input){

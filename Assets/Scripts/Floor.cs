@@ -10,10 +10,10 @@ public class Floor : MonoBehaviour{
 
     int floorSize = 31;
 
-    int minRoomsAmount = 10;
+    int minRoomsAmount = 5;
     int roomSize;
 
-    int maxRoomsAmount = 15;
+    int maxRoomsAmount = 10;
     Room[,] rooms;
     List<Room> spawnedRooms = new List<Room>();
     List<Transform> waypoints = new List<Transform>();
