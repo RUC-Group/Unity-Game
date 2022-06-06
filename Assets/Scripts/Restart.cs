@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Restart : MonoBehaviour
 {
+    //Load main menu scene, which is sceneBuildIndex 0
     public void returnToMainMenu(){
         SceneManager.LoadScene(0);
     }
