@@ -16,7 +16,7 @@ public class GameUI : MonoBehaviour{
     public int stamina;
     public int score;
 
-    // Update is called once per frame
+    // Update is called once per frame.
     void Update(){
         healthSlider.value = currHealth;
         staminaSlider.value = stamina;
