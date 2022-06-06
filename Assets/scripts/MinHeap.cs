@@ -24,24 +24,26 @@ public class MinHeap<T> where T : IComparable<T> {
         return size <= 0;
     }
 
+    //returns the position of the parent of pos
     private int parent(int pos){
         return (pos-1)/2;
     }
 
+    //returns the position of the left child of pos 
     private int leftChild(int pos){
         return pos*2 + 1;
     }
 
+    //returns the position of the right child of pos
     private int rightChild(int pos){
         return pos * 2 + 2; 
     }
 
+    // swaps two values with eachother
     private void swap(int pos1, int pos2){
         T temp = minHeap[pos1];
-
         minHeap[pos1] = minHeap[pos2];
         minHeap[pos2] = temp;
-
         positionTable[minHeap[pos1]] = pos1;
         positionTable[minHeap[pos2]] = pos2;
         
@@ -64,16 +66,19 @@ public class MinHeap<T> where T : IComparable<T> {
         }
     }
 
+    //returns the smallest value without deleting it
     public T peak(){
         return minHeap[0];
     }
-
+    
+    //sees if the calue in the given pos is in the right position
     private bool moveDown(int pos){
         bool leftSmaller = leftChild(pos) < size && minHeap[leftChild(pos)].CompareTo(minHeap[pos]) < 0;
         bool rightSmaller = rightChild(pos) < size && minHeap[rightChild(pos)].CompareTo(minHeap[pos]) < 0;
         return leftSmaller || rightSmaller;
     }
 
+    // sifts the value in the heap up
     public void increaseKey(int pos){
         int currPos = pos;
         while(moveDown(currPos)){
@@ -89,7 +94,6 @@ public class MinHeap<T> where T : IComparable<T> {
             }
         }
     }
-
 
     //extracts the item with the smallest value in the MinHeap
     public T extractMin(){
