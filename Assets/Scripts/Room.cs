@@ -56,10 +56,12 @@ public class Room : MonoBehaviour{
         return l;
     }
 
+    //returns 2d array containing all tiles in the rooms
     public GameObject[,] getRoomTiles(){
         return roomTiles;
     }
 
+    //change the nature of the room
     public void changeRoom(string typeOfRoom){
         this.typeOfRoom=typeOfRoom;
         for (var i = 1; i < roomSize-1; i++){
@@ -76,6 +78,8 @@ public class Room : MonoBehaviour{
                 }
             }
     }
+
+    //room constructor
     public void setRoom(int posX, int posZ, int roomSize, string typeOfRoom=null){
         this.posX=posX;
         this.posZ=posZ;
@@ -119,6 +123,7 @@ public class Room : MonoBehaviour{
         }
     }
 
+    //picks a random tile based on position
     GameObject pickTile(int x, int y){
         //Determination of tileID based off of algo
         int tileID = 0;
@@ -163,6 +168,7 @@ public class Room : MonoBehaviour{
         }
     }
 
+    //pick a random treasure tile
     GameObject pickTreasure(){
         int r = UnityEngine.Random.Range(0,3);
         switch (r){
@@ -173,6 +179,8 @@ public class Room : MonoBehaviour{
         }
     }
 
+
+    //pick a random enemy type
     public GameObject pickEnemy(){
         int r = UnityEngine.Random.Range(0,3);
         //return enemyTile;
@@ -187,6 +195,7 @@ public class Room : MonoBehaviour{
         }
     }
 
+    //pick a random wall type
     public GameObject pickWall(){
         int r = UnityEngine.Random.Range(0,10);
         switch (r){
@@ -208,13 +217,13 @@ public class Room : MonoBehaviour{
     }
 
     
-
+    //translate the index in the floor room array to global position
     public int indexToUnitPos(int i){
         return ((roomSize-2)*5+15)*i;
     }
 
 
-
+    //create a door tile at the desired dir
     public void createDoor(int dir){
         if (dir == 2){
             roomTiles[(int)roomSize/2,0] = door;
@@ -230,6 +239,7 @@ public class Room : MonoBehaviour{
         }
     }
 
+    //Instantiate every gameObject in the roomTiles array
     public void showRoom(){        
         for(int i = 0; i < roomSize; i++){
             for(int j = 0; j< roomSize; j++){
@@ -252,6 +262,7 @@ public class Room : MonoBehaviour{
         giveEnemyWaypoints();
     }
 
+    //give every enemy in the room the list of waypoints
     void giveEnemyWaypoints(){
         List<Transform> waypoints = getWaypointsForRoom();
         for(int i = 1; i < roomSize-1; i++){

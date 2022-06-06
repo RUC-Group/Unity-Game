@@ -25,6 +25,7 @@ public class Floor : MonoBehaviour{
         waypoints = getAllWaypoints(getTiles());
     }
 
+    //Instantiate every gameObject inside of room
     public void showFloor(){
         int count = 0;
         foreach(Room room in spawnedRooms){
@@ -34,6 +35,7 @@ public class Floor : MonoBehaviour{
     }
 
 
+    //create a random layout of rooms
     public void floorAlgorithm(){
         rooms = new Room[floorSize,floorSize];
         int numberOfRooms = UnityEngine.Random.Range(minRoomsAmount,maxRoomsAmount);
@@ -146,6 +148,7 @@ public class Floor : MonoBehaviour{
         return spawnedRooms[UnityEngine.Random.Range(0,spawnedRooms.Count)];
     }
 
+    //creates a hallwayTile 
     public void createHallway(int dir, Room r){
         Quaternion rotation;
         Vector3 position;
@@ -167,7 +170,7 @@ public class Floor : MonoBehaviour{
         Instantiate(hallway, position, rotation);
     }
 
-    
+    //returns the list of spawned rooms
     public List<Room> getSpawnedRooms(){
         return spawnedRooms;
     }

@@ -13,11 +13,13 @@ public class MinHeap<T> where T : IComparable<T> {
         minHeap = new List<T>();
         this.size = 0;
     }
-    
+
+    //return index position of item
     public int getPosition(T item){
         return positionTable[item];
     }
 
+    //returns true or false if MinHeap empty
     public bool isEmpty(){
         return size <= 0;
     }
@@ -45,12 +47,15 @@ public class MinHeap<T> where T : IComparable<T> {
         
     }
 
+    //insert item into MinHeap
     public void insert(T item){
         minHeap.Add(item);
         positionTable[item] = size;
         size++;
         decreaseKey(size-1);
     }
+
+    //resorts the MinHeap
     public void decreaseKey(int pos){
         int currPos=pos;
         while (minHeap[currPos].CompareTo(minHeap[parent(currPos)])<0){
@@ -85,6 +90,8 @@ public class MinHeap<T> where T : IComparable<T> {
         }
     }
 
+
+    //extracts the item with the smallest value in the MinHeap
     public T extractMin(){
         T min = minHeap[0];
         minHeap[0] = minHeap[size-1];

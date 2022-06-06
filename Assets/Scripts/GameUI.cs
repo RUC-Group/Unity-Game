@@ -17,7 +17,7 @@ public class GameUI : MonoBehaviour{
     public int stamina;
     public int score;
 
-    // Update is called once per frame gets the players current stamina, health and gold amount 
+    // Update is called once per frame gets the players current stamina, health and gold amount
     void Update(){
         healthSlider.value = currHealth;
         staminaSlider.value = stamina;

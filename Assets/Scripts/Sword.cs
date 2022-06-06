@@ -16,7 +16,7 @@ public class Sword : MonoBehaviour{
         audioSource = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
+    // Update is called once per frame. increases sword rotation every frame to do swing animation
     void Update(){
         if(active){
             if (yRotation<=160){
@@ -30,6 +30,8 @@ public class Sword : MonoBehaviour{
             }
         }
     }
+
+    //starts swing sound
     private void playSwing(){
         var i = UnityEngine.Random.Range(0,swings.Length);
         swing = swings[i];
@@ -37,11 +39,13 @@ public class Sword : MonoBehaviour{
         audioSource.Play();
     }
 
+    //calls playSwing() and flips active variable
     public void attack(){
         playSwing();
         active=true;
     }
 
+    //puts sword gameObject on the player. different base rotation based on whether sword idle or swinging
     public void updatePosition(Transform transform,Vector3 position){
         if(active){
             this.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x+90,transform.rotation.eulerAngles.y-20,transform.rotation.eulerAngles.z-60);

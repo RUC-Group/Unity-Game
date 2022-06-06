@@ -6,12 +6,13 @@ public class Key : MonoBehaviour{
     bool up = true;
     int currTime = -5;
     int rotate = 0;
-    // Start is called before the first frame update
+    
+    // Start is called before the first frame update, determine initial orientation relative to world
     void Start(){
         rotate = UnityEngine.Random.Range(0,180); 
     }
 
-    // Update is called once per frame
+    // Update is called once per frame, determine key movement to be bobbing up and down whilst rotating
     void Update(){
         if(up){
             currTime++;
