@@ -5,44 +5,46 @@ using System;
 
 public class Enemy : MonoBehaviour{
     public GameObject coin;
-    AdjacencyGraph roomGrid;
     public float speed = 5;
     public int health = 100;
     public int damage = 10;
-    Dictionary<Vertex,Vertex> dijkstraRes;
-    double timeOfDeath;
+    public AudioSource a;
 
+    Dictionary<Vertex,Vertex> dijkstraRes;
+    AdjacencyGraph roomGrid;
     Player player;
     List<Transform> waypoints = new List<Transform>();
+    List<Vector3> pathToFollow;
     Vector3 playerPos;
     Vector3 velocity;
     Vector3 directionToPlayer;
     Vector3 displacementFromPlayer;
-    public AudioSource a;
+
     bool enemyAlive = true;
+    bool lastHopUp = false;
+    double timeOfDeath;
     float distanceToTarget;
     float detectionRange = 20;
     float lasthop;
-    bool lastHopUp = false;
     float waitTime = .1f;
     float longestEdge = 3;
     float lastScan = 0;
     float timeStamp;
-    int turnSpeed = 360;
-    List<Vector3> pathToFollow;
     float angle;
     float lastDamageTime = 0;
     float lastDamageDealtTime = 0;
+    int turnSpeed = 360;
 
+    // set the list of waypoints in the enemy to the list of transforms given, w
     public void setWaypoints(List<Transform> w){
         waypoints.Add(transform);
         waypoints.Add(GameObject.FindGameObjectWithTag("Player").transform);
-
         foreach (Transform waypoint in w){
             waypoints.Add(waypoint);
         }
     }
 
+    // creates an adjacency graph, where the enemy can walk
     void createGrid(){
         roomGrid = new AdjacencyGraph();
         int i = 0;
@@ -51,11 +53,9 @@ public class Enemy : MonoBehaviour{
             roomGrid.addVertex(v);
             i++;
         }
-
         foreach (Vertex v in roomGrid.GetVertices()){
             foreach (Vertex v2 in roomGrid.GetVertices()){
                 float distBetween = Vector3.Distance(v.pos, v2.pos);
-
                 if (distBetween < longestEdge && distBetween != 0) {
                     roomGrid.addEdge(v, v2, distBetween);
                 }
@@ -63,6 +63,7 @@ public class Enemy : MonoBehaviour{
         }
     } 
 
+    // method that checks if 2 seconds have passed from now(timestamp) until a moment (lastScan)
     bool checkScanTimer(){
         timeStamp = Time.time;
         return timeStamp<2 || timeStamp - lastScan>2;
@@ -71,20 +72,25 @@ public class Enemy : MonoBehaviour{
     // Update is called once per frame
     void Update(){
         timeStamp = Time.time;
+        //if enemy died more than 2 seconds ago, sink into the ground
         if(timeStamp-timeOfDeath> 2 && !enemyAlive){
             transform.position -= new Vector3(0,.01f,0);
         }
-         if(timeStamp-timeOfDeath> 10 && !enemyAlive){
+        // if enemy died more than 10 seconds ago, delete enemy
+        if(timeStamp-timeOfDeath> 10 && !enemyAlive){
             Destroy(transform.gameObject);
         }
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        // if enemy is dead, turn off spottet marker and lay down
         if(!enemyAlive){
             transform.Find("SpottetMarker").gameObject.SetActive(false);
             Quaternion target = Quaternion.Euler(0,90,90);
             transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime);
         }
+        // if enemy is below 0 health but not dead, kill enemy
         else if(health <= 0){
             killEnemy();
+        // else if enemy is alive    
         }else{
             playerPos = GameObject.FindGameObjectWithTag("Player").transform.position; 
             displacementFromPlayer = playerPos - transform.position;
@@ -92,12 +98,16 @@ public class Enemy : MonoBehaviour{
             velocity = directionToPlayer * speed;
             distanceToTarget = displacementFromPlayer.magnitude;
 
+            // if player is within detectionrange
             if(detectionRange> distanceToTarget){
                 Vector3 dirToLookTarget = (player.transform.position - transform.position).normalized;
                 float targetAngle = 90 - Mathf.Atan2 (dirToLookTarget.z, dirToLookTarget.x) * Mathf.Rad2Deg;
                 float angle = Mathf.MoveTowardsAngle (transform.eulerAngles.y, targetAngle + 270, turnSpeed * Time.deltaTime);
                 transform.eulerAngles = Vector3.up * angle;
-                if (distanceToTarget>1.5f) followPlayer();
+                //if distance to the player is below 1.5 follow the player 
+                if (distanceToTarget>1.5f) {
+                    followPlayer();    
+                } // else dmg the player 
                 else {
                     timeStamp = Time.time;
                     if(timeStamp - lastDamageDealtTime>2 && !player.invincible){
@@ -105,13 +115,14 @@ public class Enemy : MonoBehaviour{
                         lastDamageDealtTime = timeStamp;
                     }
                 }
-            }else{
+            } // else if the player is not within detection distance, return to idle
+            else{
                 returnToIdle();
             }
         }
         
     }
-
+    // method that activates dijkstra's algorithm and makes the enemy follow the player
     void followPlayer(){  
         if(pathToFollow != null){
             transform.Find("SpottetMarker").gameObject.SetActive(true);
@@ -127,6 +138,7 @@ public class Enemy : MonoBehaviour{
         }
     }
 
+    // returns to idle
     void returnToIdle(){
         transform.Find("SpottetMarker").gameObject.SetActive(false);
     }
@@ -137,6 +149,7 @@ public class Enemy : MonoBehaviour{
         if (triggerCollider.tag == "Spike" && enemyAlive){
             takeDamage(10);
         } 
+        // collide with the players sword
         if(triggerCollider.tag == "Player Sword" && enemyAlive){
             print("sword");
             if(timeStamp - lasthop>.2f && !lastHopUp){
@@ -152,6 +165,7 @@ public class Enemy : MonoBehaviour{
         }
     }
 
+    // deal damage to the enemy
     public void takeDamage( int damage){
         float timeStamp = Time.time;
         if(timeStamp - lastDamageTime>1){
@@ -160,6 +174,7 @@ public class Enemy : MonoBehaviour{
         }
     }
 
+    // kill enemy
     void killEnemy(){
         enemyAlive = false;
         transform.GetComponent<Rigidbody>().isKinematic=false;
@@ -172,9 +187,10 @@ public class Enemy : MonoBehaviour{
     }
 
     
-    //draws Gizmos (3d objects that can only be seen in the editor and is not displayed on player camera)
+    //draws Gizmos (3d objects that can only be seen in the editor and is not displayed on player camera)--- feel free to uncomment which ever to see their effect----
     private void OnDrawGizmos(){
-        
+        /*
+        // shows in a form of gizmos, the path the enemy will follow to the player
         if(pathToFollow != null){
             Gizmos.color = Color.white;
             Vector3 shift = new Vector3(0,5,0);
@@ -185,9 +201,10 @@ public class Enemy : MonoBehaviour{
                 }
             }
         }
+
+        // shows in a form of gizmos, the result dijkstra returns
         if(dijkstraRes !=null){
             Gizmos.color = Color.green;
-
             Vector3 shift = new Vector3(0,2,0);
             foreach (Vertex v in dijkstraRes.Keys){
                 if(v.outEdges.Count < 0){
@@ -200,7 +217,9 @@ public class Enemy : MonoBehaviour{
                     Gizmos.DrawLine(v.pos + shift,dijkstraRes[v].pos + shift);
                 }
             }
-        }/*
+        }
+
+        // shows in a form of gizmos, the adjacency graph
         if(roomGrid != null){
             Gizmos.color = Color.white;
             foreach (Vertex v in roomGrid.GetVertices()){
@@ -212,6 +231,7 @@ public class Enemy : MonoBehaviour{
         } */
     }
 
+    // method that follows a path in the form of vector3
     IEnumerator followPath(List<Vector3> pathPoints){
         int targetWaypointIndex = 0;
         Vector3 targetWaypoint = new Vector3(pathPoints[targetWaypointIndex].x,transform.position.y,pathPoints[targetWaypointIndex].z);
@@ -229,9 +249,7 @@ public class Enemy : MonoBehaviour{
         }
     }
         
-    
-
-    
+    // takes the output from dijkstra's algorthm as unput and one specific vertes and returns a list of vecter3's 
     List<Vector3> findPath(Dictionary<Vertex,Vertex> input, Vertex target){
         List<Vector3> res = new List<Vector3>();
         Vertex temp = target;
@@ -253,7 +271,7 @@ public class Enemy : MonoBehaviour{
         return res; 
     }
     
-
+    //dijkstras algorithm, takes an adjacency graph and returns the shortest path from the enemy to every point in the graph 
     Dictionary<Vertex,Vertex> dijkstra(){
         Dictionary<Vertex,float> d = new Dictionary<Vertex,float>();
         Dictionary<Vertex,Vertex> p = new Dictionary<Vertex,Vertex>();

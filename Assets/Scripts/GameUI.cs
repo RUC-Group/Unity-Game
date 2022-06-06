@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+//GameUI used in the UI canvas in unity
 public class GameUI : MonoBehaviour{
     public TMP_Text textHp;
     public TMP_Text textScore;
@@ -16,7 +17,7 @@ public class GameUI : MonoBehaviour{
     public int stamina;
     public int score;
 
-    // Update is called once per frame
+    // Update is called once per frame gets the players current stamina, health and gold amount 
     void Update(){
         healthSlider.value = currHealth;
         staminaSlider.value = stamina;

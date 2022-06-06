@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+// pair used inside of dijkstra's algorithm in player
 public class Pair:IComparable<Pair>{
-
     public Vertex v {get;set;}
     public float d {get; set;}
     
-    //constructor
+    //constructor of pair
     public Pair(Vertex v, float d){
         this.v = v;
         this.d = d;

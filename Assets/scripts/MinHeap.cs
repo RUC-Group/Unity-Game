@@ -13,6 +13,7 @@ public class MinHeap<T> where T : IComparable<T> {
         minHeap = new List<T>();
         this.size = 0;
     }
+    
     public int getPosition(T item){
         return positionTable[item];
     }
